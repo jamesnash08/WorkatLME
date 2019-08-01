@@ -1,0 +1,79 @@
+<div>
+    <table>
+        <tr>
+            <th>Terminal</th>
+            <th>State</th>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td><input [ngModel]="terminal" (ngModelChange)="terminal=$event.toUpperCase()" maxlength="3" (keyup.enter)="getShip()"></td>
+            <td><input [ngModel]="state" (ngModelChange)="state=$event.toUpperCase()" maxlength="2" (keyup.enter)="getShip()"></td>
+            <td><input type="date" name="fromdate" [(ngModel)]="fromdate" (keyup.enter)="getShip()"></td>
+            <td><input type="date" name="todate" [(ngModel)]="todate" (keyup.enter)="getShip()"></td>
+            <td><button (click)="getShip(terminal)" (keyup.enter)="getShip()">Submit</button></td>
+            <td><input type="radio" name="ship" id="outship" value="OUT" [(ngModel)]="laneState"><label for="outship">Outbound</label></td>
+            <td><input type="radio" name="ship" id="inship" value="IN" [(ngModel)]="laneState"><label for="inship">Inbound</label></td>
+        </tr>
+        <tr>
+            <td colspan="4"><label>{{err}}</label></td>
+        </tr>
+    </table>
+</div>
+
+<table>
+    <tr>
+        <td>Work Days</td>
+        <td>{{workDays}}</td>
+    </tr>
+</table>
+
+<!-- <table *ngIf="displaytable[laneState]">
+    <tr>
+        <th *ngFor="let key of objectkeys(titles);" (click)="sortByKey(key)">
+            <span *ngIf="titles[key]">{{titles[key]}}</span>
+            <span *ngIf="!titles[key]">{{key}}</span>
+        </th>
+    </tr>
+    <tr *ngFor="let row of displaytable[laneState]; let odd=odd; let even=even;" [ngClass]="{'odd':odd,'even':even}">
+        <td *ngFor="let key of objectkeys(titles);" [title]="titles[key]">{{row[key]}}</td>
+    </tr>
+</table> -->
+
+<table *ngIf="displaytable[laneState]">
+    <!-- <tr>
+         <th *ngFor="let key of objectkeys(titles);" (click)="sortByKey(key)">
+            <span *ngIf="titles[key]">{{titles[key]}}</span>
+            <span *ngIf="!titles[key]">{{key}}</span>
+        </th>
+    </tr> -->
+    <tr style="border-top:2px solid black;">
+            <td colspan="2" *ngFor="let key of objectkeys(metrix);">{{metrix[key]}}</td>
+    </tr>
+    <tr style="border-bottom:2px solid black;">
+            <td colspan="2" *ngFor="let key of objectkeys(metrix);">{{displayMetrix(displayTotal[laneState][key])}}</td>
+        </tr>
+    <ng-container *ngFor="let group of objectkeys(displaytable[laneState]); let odd=odd; let even=even;">
+            
+            <tr style="border-bottom:2px solid black;">
+                <td colspan="2" *ngFor="let key of objectkeys(metrix);">{{displayMetrix(displaytable[laneState][group][key])}}</td>
+            </tr>    
+        </ng-container>
+    <ng-container *ngFor="let group of objectkeys(displaytable[laneState]); let odd=odd; let even=even;">
+        <tr style="border-top:2px solid black;">
+            <td colspan="2" *ngFor="let key of objectkeys(metrix);">{{metrix[key]}}</td>
+        </tr>
+        <tr style="border-bottom:2px solid black;">
+            <td colspan="2" *ngFor="let key of objectkeys(metrix);">{{displaytable[laneState][group][key]}}</td>
+        </tr>
+
+        <tr><th *ngFor="let key of objectkeys(titles);">{{titles[key]}}</th></tr>
+        <tr *ngFor="let row of displaytable[laneState][group].ROWS; let odd=odd; let even=even;" [ngClass]="{'odd':odd,'even':even}">
+            <td *ngFor="let key of objectkeys(titles);" [title]="titles[key]">{{row[key]}}</td>
+        </tr>
+
+    </ng-container>
+</table>

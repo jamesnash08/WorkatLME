@@ -1,0 +1,47 @@
+<div>
+  <table>
+    <tr>
+      <th>Terminal</th>
+      <th>From Date</th>
+      <th>To Date</th>
+      <th>Select Login</th>
+      <th>Select Logout</th>
+      <th>Select Both</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td><input [ngModel]="terminal" (ngModelChange)="terminal=$event.toUpperCase()" maxlength="3" (keyup.enter)="getpnmiles(terminal)"></td>
+      <td><input type="date" name="fromdate" [(ngModel)]="fromDate"></td>
+      <td><input type="date" name="todate" [(ngModel)]="toDate"></td>
+      <td><input type="radio" name="checkType" [(ngModel)]="checkType" value="Login">Login</td>
+      <td><input type="radio" name="checkType" [(ngModel)]="checkType" value="Logout">Logout</td>
+      <td><input type="radio" name="checkType" [(ngModel)]="checkType" value="Both">Both</td>
+      <td><button (click)="getpnmiles(terminal)" (keyup.enter)="getpnmiles(terminal)">Submit</button></td>
+      <td><button (click)="exportExcel()">Export To Excel</button></td>
+    </tr>
+
+    <tr>
+      <td colspan="4"><label>{{err}}</label></td>
+    </tr>
+
+  </table>
+
+</div>
+<table *ngIf="displaytable.length > 0" style="width:100%;">
+  <thead>
+    <tr>
+      <th *ngFor="let key of objectkeys(titles);" (click)="sortByKey(key)">
+        {{titles[key]}}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let row of displaytable; let odd=odd; let even=even;">
+    <tr *ngIf="checkDate( row );" [ngClass]="{'odd':odd,'even':even}">
+      <td *ngFor="let key of objectkeys(titles);">
+          {{row[key]}}
+      </td>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>

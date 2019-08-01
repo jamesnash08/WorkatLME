@@ -1,0 +1,22 @@
+<table>
+	<thead>
+			<tr *ngIf="selectedTRM!=''" (click)="selectedTRM=''" style="cursor: pointer;"><th>Back</th></tr>
+		<tr><th>TRM</th><th *ngIf="selectedTRM!=''">SCAC</th><th *ngIf="selectedTRM!=''">Zip</th><th *ngIf="selectedTRM!=''">Customer</th>
+			<th><button (click)="exportExcel()">Export to Excel</button></th></tr>
+	</thead>
+	<tbody>
+		<ng-container *ngFor="let key of objectkeys(tabledata);">
+			<tr (click)="selectedTRM = key" *ngIf="selectedTRM==''" style="cursor: pointer;">
+				<td>{{key}}</td>
+			</tr>
+		<ng-container *ngIf="selectedTRM==key">
+			<tr *ngFor="let row of tabledata[key]">
+				<td>{{row.PTTRMA}}</td>
+				<td>{{row.PTILSCAC}}</td>
+				<td>{{row.PUCZB}}</td>
+				<td>{{row.PUCZBNAM}}</td>
+			</tr>
+		</ng-container>
+	</ng-container>
+	</tbody>
+</table>

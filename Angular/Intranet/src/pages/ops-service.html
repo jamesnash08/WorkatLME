@@ -1,0 +1,28 @@
+<table id="tableID" style="width:100%; border-collapse:collapse;" *ngIf="tabledisplay['CGO']">
+    <!-- <colgroup *ngFor="let row of tablelabels; let odd=odd; let even=even">
+        <col *ngIf="odd" [ngClass]="{odd: odd, even: even}">
+    </colgroup> -->
+    <tr class="GridViewScrollHeader">
+        <th class="GridViewFreeze"><label></label> </th>
+        <th *ngFor="let date of objectkeys(tabledisplay['CGO']).reverse(); let j = index;">{{returnMDY(date)}}</th>
+        <!-- style="width:60px;" -->
+    </tr>
+    <tr *ngFor="let key of objectkeys(tabledisplay); let i = index; let odd=odd; let even=even" class="GridViewScrollItem"
+        [ngClass]="{oddrow: odd, evenrow: even}">
+        <!-- [ngClass]="{oddrow: odd, evenrow: even}" -->
+        <td class="GridViewFreeze"><label>{{key}}</label></td>
+        <td *ngFor="let date of objectkeys(tabledisplay['CGO']).reverse(); let j = index;" style="text-align:right;">
+            <!-- right; width:60px; -->
+            <label *ngIf="tabledisplay[key][date]">{{tabledisplay[key][date]}}</label>
+        </td>
+    </tr>
+
+    <tr *ngFor="let key of objectkeys(tableTotals); let i = index; let odd=odd; let even=even" class="GridViewScrollItem">
+        <!-- [ngClass]="{oddrow: odd, evenrow: even}" -->
+        <td class="GridViewFreeze"><label>{{key}}</label></td>
+        <td *ngFor="let date of objectkeys(tabledisplay['CGO']).reverse(); let j = index;" style="text-align:right;">
+            <!-- right; width:60px; -->
+            <label *ngIf="tableTotals[key][date]">{{tableTotals[key][date].PCT}}</label>
+        </td>
+    </tr>
+</table>

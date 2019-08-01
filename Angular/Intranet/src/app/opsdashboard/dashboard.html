@@ -1,0 +1,77 @@
+<div *ngIf="trmscreen">
+	<label>Select Terminal:</label><input type="text" maxlength="3" [(ngModel)]="trm" placeholder="Terminal" (keyup)="trm=trm.toUpperCase()"
+	 (keyup.enter)="getTRMData(trm)">
+	<button (click)="getTRMData(trm)">Submit</button><label>{{errmsg}}</label><button (click)="Print()" style="position: absolute; right:0px;">Print</button>
+</div>
+<div style="width:100%;">
+	<button class="tabButton" *ngFor="let tab of tabData;" [ngStyle]="{'background-color': tab.bgcolor, 'color':tab.color}" (click)="tableState=tab.name; periodSelect=''; selectedPeriod=''; selectedYear=''">{{tab.label}}</button>
+	<!-- <button class="tabButton">OPS</button>
+	<button class="tabButton">Cross Dock</button> -->
+</div>
+
+<div id="TableID" style="width:100%; min-height:100%; height:auto;" class="tabOverlay" [ngStyle]="{'background-color':getTabColor()}">
+
+	<ng-container *ngIf="years[tableState]">
+		<div *ngFor="let year of years[tableState]; let y = index">
+			<div *ngFor="let months of years[tableState][y]; let x = index" style="display:inline-block">
+				<label *ngIf="x == 0" style="font-size: 24px;">Year 20{{years[tableState][y][0]}}</label>
+				<ng-container *ngIf="x > 0">
+					<input type="radio" name="period" value="{{y}}-{{x}}" [(ngModel)]="periodSelect" id="radio{{y}}-{{x}}" style="display:none">
+					<label for="radio{{y}}-{{x}}" 
+					[ngClass]="{'LMEButton':periodSelect != y + '-' + x, 'LMEButtonPress':periodSelect == y + '-' + x}"
+					(click)="selectPeriod(years[tableState][y][0],years[tableState][y][x],tableState)" style="width:80px; margin-right:5px; cursor:pointer;">Period: {{years[tableState][y][x]}}</label>
+				</ng-container>
+			</div>
+		</div>
+	</ng-container>
+
+	<br>
+	<div id="Print" class="printable" style="height:auto;">
+	<table *ngIf="showTable()" style="height:auto;">
+		<thead>
+			<tr>
+				<th *ngIf="tabledisplay[tableState][0].TRM != 'ALL' && tableState != 'HOURS'">TRM</th>
+				<th *ngIf="tableState != 'HOURS'">Date</th>
+				<ng-container *ngFor="let key of tableKeys[tableState]">
+					<th *ngIf="cellCheck(key)" [ngClass]="{'tablebreak':key=='tablebreak'}" (click)="selectGraph(key)" style="cursor:pointer;">
+						<ng-container *ngIf="key!='tablebreak'">{{tableLabels[tableState][key]}}</ng-container>
+					</th>
+				</ng-container>
+			</tr>
+		</thead>
+		<tr *ngFor="let row of tabledisplay[tableState]; let i = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">
+				<!-- (click)="router.navigate(['/opsDashboard/'+row.TRM.toUpperCase()]);" -->
+			<td *ngIf="row.TRM != 'ALL' && tableState != 'HOURS'" >{{row.TRM}}</td>
+			<td (click)="getDate(row.DATE)" *ngIf="tableState != 'HOURS'">{{returnMDY(row.DATE)}}</td>
+
+			<ng-container *ngFor="let key of tableKeys[tableState]; let j = index;">
+				<td *ngIf="cellCheck(key)" [ngClass]="{'tablebreak':key=='tablebreak'}" (click)="getHours(row.DATE,row.TRM,key)" >
+						<!-- (contextmenu)="myapp.openContextMenu($event,key,true)" -->
+					<ng-container *ngIf="key!='tablebreak'">{{displayCell(row,key)}}</ng-container>
+				</td>
+			</ng-container>
+		</tr>
+		<tr *ngFor="let row of tabletotals[tableState]; let i = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">
+			<td *ngIf="tabledisplay[tableState][0].TRM != 'ALL'">{{row.TRM}}</td>
+			<td>{{row.DATE}}</td>
+			<ng-container *ngFor="let key of tableKeys[tableState]; let j = index;">
+				<td *ngIf="cellCheck(key)" [ngClass]="{'tablebreak':key=='tablebreak'}">
+					<ng-container *ngIf="key!='tablebreak'">{{displayCell(row,key)}}</ng-container>
+				</td>
+				
+			</ng-container>
+		</tr>
+	</table>
+
+	<div class="prolist" id="navto" *ngIf="lineChartData.length > 0">
+
+		<button (click)="lineChartData=[]">Close Chart</button>
+		<!-- <button class="print" (click)="Print()">Print</button><br> -->
+
+		<div id="canvasdiv">
+			<canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabel" [options]="lineChartOptions" [colors]="lineChartColors"
+			 [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+		</div>
+	</div>
+</div>
+</div>

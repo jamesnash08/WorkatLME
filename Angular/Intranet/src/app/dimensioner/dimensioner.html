@@ -1,0 +1,98 @@
+<div style="position:relative;width:50%;display: inline-block; vertical-align: top;">
+    <label>Search for</label><input [(ngModel)]="searchVal" (keyup)="checkSearch(searchVal)" (keyup.enter)="changeSearch(searchOption,searchVal)">
+    <button (click)="changeSearch(searchOption,searchVal)">Search</button>
+    <label *ngIf="searchBool"> Items found: {{tableSearch.length}}</label>
+    <button (click)="exportExcel()">Export to Excel</button>
+    <br>
+    <label>Search by</label>
+    <input type="radio" name="search" value="PRO" [(ngModel)]="searchOption" id="searchPRO">
+    <label for="searchPRO">PRO</label>
+
+    <input type="radio" name="search" value="BILLTO" [(ngModel)]="searchOption" id="searchPayor">
+    <label for="searchPayor">Payor</label>
+
+    <input type="radio" name="search" value="SHIPPER" [(ngModel)]="searchOption" id="searchShipper">
+    <label for="searchShipper">Shipper</label>
+
+    <input type="radio" name="search" value="EMP" [(ngModel)]="searchOption" id="searchEMP">
+    <label for="searchEMP">Employee</label>
+
+    <table *ngIf="tableSearch.length > 0">
+        <thead style="display:block;">
+            <tr>
+                <!-- (click)="sortByKey(tableCYMD, row)" class="selectableTH" -->
+                <th *ngFor="let key of detaillabels; let j = index;" style="width:80px;">{{key}}</th>
+            </tr>
+        </thead>
+        <tbody style="height: 90%; width:100%; overflow-y: scroll; display: block;" id="tablebody">
+            <tr *ngFor="let row of tableSearch;let odd=odd; let even=even">
+                <td *ngFor="let td of detaillabels" [ngClass]="{oddrow: odd, evenrow: even}" style="width:80px; text-align: right;">
+                    {{getValue(row[td],td)}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="width: 100%; height: 100%; min-height: 90%; overflow: scroll; background-color: white;" *ngIf="keyTRM=='' && keyCYMD=='' && !searchBool">
+
+    <table style="width:auto;" *ngIf="tablelabels.length > 0">
+        <colgroup>
+            <col>
+        </colgroup>
+        <colgroup *ngFor="let row of tablelabels; let odd=odd; let even=even">
+            <col [ngClass]="{odd: odd, even: even}">
+            <!-- <col *ngIf="even" style="border: 1px solid rgb(255, 255, 255);"> -->
+        </colgroup>
+        <thead>
+            <tr>
+                <th></th>
+                <th *ngFor="let row of tablelabels; let j = index;" style="width:60px;">{{row}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--  -->
+            <tr *ngFor="let key of objectkeys(tabledata).reverse(); let i = index; let odd=odd; let even=even"
+                [ngClass]="{oddrow: odd, evenrow: even}" class="selectableTD" (click)="setCYMDTable(key)">
+                <td>{{returnMDY(key)}}</td>
+                <td *ngFor="let row2 of tablelabels; let j = index;" style="text-align: right; width:90px;">
+                    <ng-container *ngIf="tabledata[key]">
+                        <ng-container *ngIf="tabledata[key][row2]">
+                            <label style="text-align: left; width: 40px;">Scans</label>
+                            <label style="text-align: right; width: 40px;">{{tabledata[key][row2].length}}</label>
+                            <label style="text-align: left; width: 40px;">Weighed</label>
+                            <label style="text-align: right; width: 40px;">{{tableweighed[key][row2].length}}</label>
+                            <label style="text-align: left; width: 40px;">Pros</label>
+                            <label style="text-align: right; width: 40px;">{{tablepros[key][row2].scans}}</label>
+                            <label style="text-align: left; width: 40px;">Weighed</label>
+                            <label style="text-align: right; width: 40px;">{{tablepros[key][row2].weighed}}</label>
+                        </ng-container>
+                    </ng-container>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<!-- 2nd level -->
+<div style="width: 100%; height: 100%; min-height: 90%; overflow: scroll; background-color: white;" *ngIf="keyCYMD!=''">
+    <button (click)="keyCYMD=''">Back</button>
+    <table style="width:auto; height: calc(100% - 26px);">
+        <colgroup *ngFor="let row of detaillabels; let odd=odd; let even=even">
+            <col [ngClass]="{odd: odd, even: even}">
+        </colgroup>
+        <thead style="display:block;">
+            <tr>
+                <th *ngFor="let row of detaillabels; let j = index;" (click)="sortByKey(tableCYMD, row)" style="width:80px;"
+                    class="selectableTH">{{row}}</th>
+            </tr>
+        </thead>
+        <tbody style="height: 90%; width:100%; overflow-y: scroll; display: block;" id="tablebody">
+            <tr *ngFor="let row of tableCYMD;let odd=odd; let even=even">
+                <td *ngFor="let td of detaillabels" [ngClass]="{oddrow: odd, evenrow: even}" style="width:80px; text-align: right;">
+                    {{getValue(row[td],td)}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

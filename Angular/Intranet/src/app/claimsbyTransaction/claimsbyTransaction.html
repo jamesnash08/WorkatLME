@@ -1,0 +1,123 @@
+<div *ngFor="let rad of years; let i = index;" style="display:inline-block">
+<input type="radio" name="years"  value="{{i}}" [(ngModel)]="year" id="radio{{i}}" style="display:none"><label for="radio{{i}}" [ngClass]="{'LMEButton':year != i,'LMEButtonPress':year == i}">Year 20{{rad}}</label>
+</div>
+
+
+<h2  style="display:inline;" *ngIf="monthlyTotals[year]">Year 20{{years[year]}} - {{claimsType}} - {{revterm[revtype]}} Cost: {{getTotals(monthlyTotals[year][monthlyTotals[year].length-1][0][revtype],monthlyTotals[year][monthlyTotals[year].length-1][1][revtype],monthlyTotals[year][monthlyTotals[year].length-1][2][revtype],monthlyTotals[year][monthlyTotals[year].length-1][3][revtype],monthlyTotals[year][monthlyTotals[year].length-1][4][revtype],monthlyTotals[year][monthlyTotals[year].length-1][5][revtype],monthlyTotals[year][monthlyTotals[year].length-1][6][revtype],monthlyTotals[year][monthlyTotals[year].length-1][7][revtype],monthlyTotals[year][monthlyTotals[year].length-1][8][revtype],monthlyTotals[year][monthlyTotals[year].length-1][9][revtype],monthlyTotals[year][monthlyTotals[year].length-1][10][revtype],monthlyTotals[year][monthlyTotals[year].length-1][11][revtype])}}</h2>
+
+<div style="position:absolute; right:10px; display:inline-block"  *ngIf="monthlyTotals[year]">
+
+<input type="radio" name="revtype"  value="rev" [(ngModel)]="revtype" style="display:none" id="revtyperev"><label for="revtyperev" [ngClass]="{'LMEButton':revtype != 'rev','LMEButtonPress':revtype == 'rev'}">Total Claims</label>
+<input type="radio" name="revtype"  value="damage" [(ngModel)]="revtype" style="display:none" id="revtypedamage"><label for="revtypedamage" [ngClass]="{'LMEButton':revtype != 'damage','LMEButtonPress':revtype == 'damage'}">Damaged</label>
+<input type="radio" name="revtype"  value="shortage" [(ngModel)]="revtype" style="display:none" id="revtypeshortage"><label for="revtypeshortage" [ngClass]="{'LMEButton':revtype != 'shortage','LMEButtonPress':revtype == 'shortage'}">Shortage</label>
+
+<button  (click)="Print()">Print</button>
+</div>
+
+
+<div id="Print">
+<div id = "OverflowDiv">
+<table class="selectableData" *ngIf="years[0] > 0 && Xpos==-1 && lineChartData.length == 0">
+<thead>
+<tr>
+<th>Terminal</th>
+<th>January</th>
+<th>February</th>
+<th>March</th>
+<th>April</th>
+<th>May</th>
+<th>June</th>
+<th>July</th>
+<th>August</th>
+<th>September</th>
+<th>October</th>
+<th>November</th>
+<th>December</th>
+<th>Totals</th>
+</tr>
+</thead>
+<!-- <tbody *ngIf="Xpos=-1"> -->
+<tr *ngFor="let row of monthlyTotals[year]; let i = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">
+<td style="text-align:left;" [ngClass]="{'selectableTD':true}" (click)="selectGraph(i)">{{terminals[i]}}</td>
+<td [ngClass]="{'selectableTD':terminals[i]!='TTL' && cell[revtype]!=0}"  *ngFor="let cell of row; let j = index;"><label *ngIf="cell[revtype]!=0 && terminals[i]!='TTL'" (click)="selectPros(year,i,j)">{{numberWithCommasDecimal(cell[revtype])}}</label><label *ngIf="terminals[i]=='TTL' && cell[revtype]!=0">{{numberWithCommasDecimal(cell[revtype])}}</label></td>
+<td><label>{{getTotals(monthlyTotals[year][i][0][revtype],monthlyTotals[year][i][1][revtype],monthlyTotals[year][i][2][revtype],monthlyTotals[year][i][3][revtype],monthlyTotals[year][i][4][revtype],monthlyTotals[year][i][5][revtype],monthlyTotals[year][i][6][revtype],monthlyTotals[year][i][7][revtype],monthlyTotals[year][i][8][revtype],monthlyTotals[year][i][9][revtype],monthlyTotals[year][i][10][revtype],monthlyTotals[year][i][11][revtype])}}</label></td>
+<!-- <td style="text-align:left;">{{terminals[i]}}</td> -->
+
+</tr>
+<tr><!-- totals section --></tr>
+<!-- </tbody> -->
+</table>
+</div>
+
+<div class="prolist" id="navto" *ngIf="Xpos > -1">
+
+<button (click)="Xpos=-1">Close Pro List</button> <button class="print" (click)="Print()">Print</button><br>
+<h1>20{{years[Xpos]}} - {{months[Zpos]}} - {{terminals[Ypos]}} - {{revtype}}</h1>
+<div id="OverflowDiv">
+<table>
+<thead>
+<tr>
+<th>CL Year</th>
+<th>CLAIM#</th>
+<th>PRO</th>
+<!-- <th>Terminal</th> -->
+<th>BILL DATE</th>
+<th>Rec Date</th>
+<th>Tran Date</th>
+<th>CL Code</th>
+
+<th>Status</th>
+<th style="max-width:75px;">Approved</th>
+<th>Reason</th>
+</tr>
+</thead>
+<ng-container *ngFor="let row of monthlyPros[Xpos][Ypos][Zpos]; let i = index; let odd=odd; let even=even">
+<tr *ngIf="(row.CLIDSC == 'VISIBLE DAMAGE           ' && revtype == 'damage') || row.CLIDSC == 'CONCEALED DAMAGE         ' && revtype == 'damage' || (row.CLIDSC == 'SHORTAGE                 ' && revtype == 'shortage') || revtype == 'rev'" [ngClass]="{odd: odd, even: even}" class="selectableTR">
+<td>{{row.CLYEAR}}</td>
+<td>{{row.CLAIM}}</td>
+<td class="contextmenu">{{row.PRO}}</td>
+<!-- <td>{{row.CLSCAC}}</td> -->
+<td>{{returnMDY(row.CLBLDD)}}</td>
+<td>{{returnMDY(row.CLRECD)}}</td>
+<td>{{returnMDY(row.CLTRND)}}</td>
+<td>{{row.CLIDSC}}</td>
+<td>{{row.CLSTAT}}</td>
+<td style="text-align:right"><label style="text-align:right; width:100%; padding-right:10px;">{{row.CLYRA}}</label></td>
+<td>{{row.CLNOT1.trim()}}&nbsp;{{row.CLNOT2.trim()}}</td>
+</tr>
+</ng-container>
+</table>
+</div>
+</div>
+
+<div class="prolist" id="navto" *ngIf="lineChartData.length > 0">
+
+<button (click)="revtype='rev';lineChartData=[]">Close Chart</button>
+
+<!-- <input type="radio" name="shipmentsbool"  value="true" [(ngModel)]="terminalShipmentsBoolean" style="display:none" id="shipbooltrue"><label for="shipbooltrue" [ngClass]="{'LMEButton':terminalShipmentsBoolean,'LMEButtonPress':!terminalShipmentsBoolean}" (click)="selectGraphShipments(this.lsttrm)">Show Shipments</label>
+<input type="radio" name="shipmentsbool"  value="false" [(ngModel)]="terminalShipmentsBoolean" style="display:none" id="shipboolfalse"><label for="shipboolfalse" [ngClass]="{'LMEButton':!terminalShipmentsBoolean,'LMEButtonPress': terminalShipmentsBoolean}" (click)="selectGraphShipments(this.lsttrm)">Hide Shipments</label>  -->
+
+<h1 style="display:inline-block">{{this.terminals[this.lsttrm]}} - {{claimsType}} - {{revterm[revtype]}}</h1>
+
+<div style="position:absolute; right:10px; display:inline-block"  *ngIf="monthlyTotals[year]">
+<input type="radio" name="revtype"  value="ratio" [(ngModel)]="revtype" style="display:none" id="revtyperatio"><label for="revtyperatio" [ngClass]="{'LMEButton':revtype != 'ratio','LMEButtonPress':revtype == 'ratio'}" (click)="selectGraph2('ratio')">Ratio</label>
+<input type="radio" name="revtype"  value="rev" [(ngModel)]="revtype" style="display:none" id="revtyperev"><label for="revtyperev" [ngClass]="{'LMEButton':revtype != 'rev','LMEButtonPress':revtype == 'rev'}" (click)="selectGraph2('rev')">Total Claims</label>
+<input type="radio" name="revtype"  value="damage" [(ngModel)]="revtype" style="display:none" id="revtypedamage"><label for="revtypedamage" [ngClass]="{'LMEButton':revtype != 'damage','LMEButtonPress':revtype == 'damage'}" (click)="selectGraph2('damage')">Damaged</label>
+<input type="radio" name="revtype"  value="shortage" [(ngModel)]="revtype" style="display:none" id="revtypeshortage"><label for="revtypeshortage" [ngClass]="{'LMEButton':revtype != 'shortage','LMEButtonPress':revtype == 'shortage'}" (click)="selectGraph2('shortage')">Shortage</label>
+
+<button  (click)="Print()">Print</button>
+</div>
+<!-- <button class="print" (click)="Print()">Print</button><br> -->
+
+<div id="canvasdiv">
+<canvas baseChart 
+                [datasets]="lineChartData"
+                [labels]="months"
+                [options]="lineChartOptions"
+                [colors]="lineChartColors"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"></canvas>
+</div>
+</div>
+
+</div>

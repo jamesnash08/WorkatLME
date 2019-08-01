@@ -1,0 +1,176 @@
+<!-- sidebar -->
+<div *ngIf="!sideBarShow && !fullBarShow" class="chatShow" style="top:76px; right:0px;">
+		<!-- [ngClass]="{'chatShow':!notification,'chatShowNotify':notification}"> -->
+		<span *ngIf="loggedIn" (click)="popupChat()" style="cursor: pointer;position: relative;vertical-align: top;display: inline-block;width: 20px;"
+		 title="Popup">
+			<div style="border-top: 2px solid white;border-left: 1px solid white;border-right: 1px solid white;border-bottom: 1px solid white;height: 15px;
+			width: 15px;position: absolute;display: block;top: 0px;"></div>
+			<div style="border-top: 2px solid white;border-left: 1px solid white;border-right: 1px solid white;border-bottom: 1px solid white;height: 15px;
+			width: 15px;position: absolute;display: block;top: 5px;left: 5px;background-color: #cc0000;"></div>
+		</span>
+		<span (click)="openChat(true)" style="cursor: pointer;" title="Sidebar">(+)</span>
+		CHAT
+		<span (click)="openChat(false)" style="cursor: pointer;" title="Full Screen">(++)</span>
+	</div>
+	<ng-container *ngIf="!isPopUp && (sideBarShow || fullBarShow)">
+		<!-- Show Full screen or minimize -->
+		<div class="chatShow" style="right:0px; top:76px;">
+			<span *ngIf="loggedIn" (click)="popupChat()" style="cursor: pointer;position: relative;vertical-align: top;display: inline-block;width: 20px;"
+			 title="Popup">
+				<div style="border-top: 2px solid white;border-left: 1px solid white;border-right: 1px solid white;border-bottom: 1px solid white;height: 15px;width: 15px;position: absolute;display: block;top: 0px;"></div>
+				<div *ngIf="!popupBool" style="border-top: 2px solid white;border-left: 1px solid white;border-right: 1px solid white;border-bottom: 1px solid white;height: 15px;width: 15px;position: absolute;display: block;top: 5px;left: 5px;background-color: #cc0000;"></div>
+			</span>
+			<span *ngIf="sideBarShow" (click)="sideBarShow=false; fullBarShow=true;" style="cursor: pointer;" title="Full Screen">(+)</span>
+			<span *ngIf="fullBarShow" (click)="sideBarShow=true; fullBarShow=false;" style="cursor: pointer;" title="Sidebar">(-)</span>
+			CHAT
+			<span *ngIf="sideBarShow" (click)="sideBarShow=false; fullBarShow=false;" style="cursor: pointer;" title="Hide">(-)</span>
+			<span *ngIf="fullBarShow" (click)="sideBarShow=false; fullBarShow=false;" style="cursor: pointer;" title="Hide">(--)</span>
+		</div>
+	</ng-container>
+	
+	<div id="chatSideBar" *ngIf="sideBarShow || fullBarShow || isPopUp" [ngClass]="{'chatPopupBar':isPopUp,'chatFullBar':fullBarShow,'chatSideBar':sideBarShow}">
+		<!-- Show login prompt -->
+		<div *ngIf="!loggedIn">
+			<form>
+				<label style="width:50px;">User</label>
+				<input name="chatUser" [(ngModel)]="chatUser" (change)="chatUser = chatUser.toUpperCase()" placeholder="Username"
+				 required>
+				<br>
+				<label style="width:50px;">Password</label>
+				<input name="chatPassword" [(ngModel)]="chatPassword" type="password" placeholder="Password" (keyup.enter)="chatLogin()"
+				 required>
+				<br>
+				<button (click)="chatLogin()" *ngIf="!loggingIn">Login</button>
+				<br>
+				<label *ngIf="errormsg.error">{{errormsg.error}}</label>
+			</form>
+		</div>
+		<div [ngClass]="{'chatGrid':fullBarShow || isPopUp,'chatSideGrid':sideBarShow}" *ngIf="loggedIn">
+			<!-- Give logged in options -->
+			<div class="chatMenu" style="position: relative;">
+				<!-- <button (click)="sideBarState='profile'" style="max-width:35%; width:30%; height:98%" [ngClass]="{'chatState':sideBarState!='profile','chatStateSel':sideBarState=='profile'}">Profile</button> -->
+				<button (click)="sideBarState='users'" style="width:45%; height:98%; position: absolute; left:5%;" [ngClass]="{'chatState':sideBarState!='users','chatStateSel':sideBarState=='users'}">Users</button>
+				<button (click)="sideBarState='messages'" style="width:45%; height:98%; position: absolute; left:50%;" [ngClass]="{'chatState':sideBarState!='messages','chatStateSel':sideBarState=='messages'}">Inbox</button>
+				<!-- [ngClass]="{'chatGroupButtonNotify':notification,'chatGroupButton':!notification}"   -->
+			</div>
+			<!-- Show Online Users -->
+			<div class="chatOnlineUsers" *ngIf="sideBarState == 'users'">
+				<table>
+					<!-- 
+					<tr>
+						<th>Users</th>
+					</tr> -->
+	
+					<!-- List User Groups -->
+					<ng-container *ngFor="let group of objectkeys(users)">
+						<tr>
+							<td style="border-bottom:1px solid black;">
+								<span class="chatOnlineGroups" (click)="toggleGroup(group)">
+									<span *ngIf="hiddenGroups.indexOf(group) == -1">&rarr;</span>
+									<span *ngIf="hiddenGroups.indexOf(group) != -1">&darr;</span>
+									<span *ngIf="!groupNames[group]">{{group}}</span>
+									<span *ngIf="groupNames[group]">{{groupNames[group]}}</span>
+								</span>
+								<ul *ngIf="hiddenGroups.indexOf(group) != -1">
+									<li (click)="createMassGroup(group)" style="cursor: pointer;">Message Group</li>
+									<li *ngFor="let row of users[group]">
+										<div [ngClass]="{'userOnline':row.online,'userOffline':!row.online}"></div>
+										<!-- <span (click)="createGroup(row.user)">
+											{{row.name}}
+										</span> -->
+										<span (click)="selectedUser==row.user? selectedUser='':selectedUser=row.user">
+											{{row.name}}
+										</span>
+										<span *ngIf="row.vcon=='Y'" style="left:5px;">({{row.vcstatus}})</span>
+										<ul *ngIf="selectedUser==row.user" style="margin-left: 15px;">
+											<li (click)="createGroup(row.user)">Send Message</li>
+											<li (click)="addGroup(row.user,selectedGroup)">Add User to current group</li>
+										</ul>
+									</li>
+								</ul>
+							</td>
+						</tr>
+					</ng-container>
+				</table>
+			</div>
+			<div class="chatOnlineUsers" *ngIf="sideBarState == 'profile'">
+				<table>
+	
+					<tr>
+						<th>Your Profile</th>
+					</tr>
+					<tr>
+						<td>Set Status</td>
+						<td><select>
+								<option>Out of Office (Vacation)</option>
+								<option>At Terminal</option>
+								<option>At lunch</option>
+							</select></td>
+					</tr>
+					<tr>
+						<td>Choose Date:</td>
+						<td>
+						</td>
+					</tr>
+	
+				</table>
+			</div>
+	
+			<!-- Message -->
+			<div class="chatSideGroups" *ngIf="sideBarState == 'messages'">
+				<!-- <label style="font-size: 15px; font-weight: 700;">Inbox</label> -->
+				<br>
+				<div *ngFor="let group of objectkeys(groups)" (click)="selectGroup(group)" [ngClass]="{'chatButtonNotify':checkNotifications(group),'chatButton':!checkNotifications(group),'chatButtonSelected':group==selectedGroup}">
+					<ng-container *ngIf="groups[group][0].USER.substring(0,1) != '*'">
+						<ng-container *ngFor="let row of groups[group]; let i = index;" style="cursor: pointer;">
+							<span *ngIf="i>0">,</span><label> {{row.NAME.substring(0,row.NAME.search("-")-1).trim()}}</label>
+						</ng-container>
+					</ng-container>
+					<ng-container *ngIf="groups[group][0].USER.substring(0,1) == '*'">
+						<label>{{groups[group][0].USER}}</label>
+					</ng-container>
+					<!-- <label *ngIf="checkNotifications(group)">{{notifications[group].length}}</label> -->
+				</div>
+			</div>
+	
+			<div class="chatSideMessages">
+				<!-- Group Title -->
+				<div class="chatSideTitle" *ngIf="selectedGroup > 0">
+					<label>Chatting with </label>
+					<label *ngFor="let row of groups[selectedGroup]; let i = index;">
+						<ng-container *ngIf="i>0">, </ng-container> {{row.NAME.substring(0,row.NAME.search("-")-1).trim()}}
+					</label>
+				</div>
+				<div style="overflow-y: scroll; height: calc(100%); background-color: beige;" id="chatBubble">
+					<!-- Show active people in group -->
+					<div *ngIf="selectedGroup > 0" style="visibility: hidden; margin-bottom: 10px; display:block;">
+						<label>Chatting with </label>
+						<label *ngFor="let row of groups[selectedGroup]; let i = index;">{{row.NAME.substring(0,row.NAME.search("-")-1).trim()}},</label>
+					</div>
+					<!-- Display Messages for selectedGroup -->
+					<ng-container *ngFor="let row of messages[selectedGroup]">
+						<!-- <td>{{row.SENDER}}</td><td>{{row.DATE}}</td><td>{{row.TIME}}</td><td>{{row.MESSAGE}}</td> -->
+						<div [ngClass]="{'chatMessageBubbleSide':row.SENDER.trim()!=chatUser.toUpperCase().trim(),'chatMessageBubbleMeSide':row.SENDER.trim()==chatUser.toUpperCase().trim()}"
+						 *ngIf="row.NAME">
+	
+							<label *ngIf="row.SENDER.trim()!=chatUser.toUpperCase().trim() && row.NAME" style="font-size: larger; width:45%; display: inline-block">{{row.NAME.substring(0,row.NAME.search("-")-1).trim()}}
+							</label>
+							<label *ngIf="row.SENDER.trim()==chatUser.toUpperCase().trim() && row.NAME" style="font-size: larger; width:45%; display: inline-block">{{row.NAME.substring(0,row.NAME.search("-")-1).trim()}}
+							</label>
+							<label style="font-size:smaller; width:54%; text-align: right;">{{returnMDY(row.DATE)}} at
+								{{returnTime(row.TIME)}}</label>
+							<br> {{row.MESSAGE}}
+						</div>
+					</ng-container>
+				</div>
+			</div>
+	
+			<!-- Send Message -->
+			<div class="chatSideMessage" *ngIf="selectedGroup > 0">
+				<textarea [(ngModel)]="chatMessage[selectedGroup]" autocomplete="off" class="chatMessage" (keyup.enter)="sendMessage(chatMessage[selectedGroup],selectedGroup)"
+				 maxlength="450"></textarea>
+				<button (click)="sendMessage(chatMessage[selectedGroup],selectedGroup)" class="chatSendMessage" [ngClass]="{'chatSendMessage':chatMessage[selectedGroup] > '','chatSendMessageDisabled':!chatMessage[selectedGroup] || chatMessage[selectedGroup] == ''}"
+				 placeholder="Enter your message">Send Message</button>
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,22 @@
+
+<button (click)="updateVal()">Update</button>
+<br>
+<table style="width:auto;" *ngIf="tabledisplay.length > 0">
+<thead>
+<tr>
+<th>Tape ID</th>
+<th>Date</th>
+<th>Type</th>
+</tr>
+</thead>
+<tr *ngFor="let row of tabledisplay; let i = index; let odd=odd; let even=even" [ngClass]="{odd2: odd, even2: even}">	
+<td style="text-align:left; white-space:nowrap;"><input [(ngModel)]="tabledisplay[i].TAPEID" maxlength="4" (change)="changeVal(i)"></td>
+<td style="text-align:left; white-space:nowrap;">{{returnMDY(row.CYMD)}}</td>
+<td style="text-align:left; white-space:nowrap;">{{getType(tabledisplay,i)}}</td>
+</tr>
+<!-- <tr *ngFor="let key of objectkeys(tabledisplay); let i = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">	
+    <td style="text-align:left; white-space:nowrap;">{{tabledisplay[key].TAPEID}}</td>
+    <td style="text-align:left; white-space:nowrap;">{{tabledisplay[key].CYMD}}</td>
+    <td style="text-align:left; white-space:nowrap;">{{tabledisplay[key].TYPE}}</td>
+    </tr> -->
+</table>

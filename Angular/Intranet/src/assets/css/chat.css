@@ -1,0 +1,468 @@
+@media only screen and (min-height: 451px) {
+    .chatGrid{
+        display: inline-grid;
+        grid-template-columns:20% 80%;
+        grid-template-rows:5% 85% 10%;
+        width: 100%;
+        height: 100%;
+    }
+
+    .chatSideGrid{
+        display: inline-grid;
+        grid-template-columns:30% 70%;
+        grid-template-rows:5% 85% 10%;
+        width: 100%;
+        height: 100%;
+    }
+}
+@media only screen and (max-height: 450px) {
+    .chatGrid{
+        display: inline-grid;
+        grid-template-columns:20% 80%;
+        grid-template-rows:15% 70% 15%;
+        width: 100%;
+        height: 100%;
+    }
+
+    .chatSideGrid{
+        display: inline-grid;
+        grid-template-columns:30% 70%;
+        grid-template-rows:15% 70% 15%;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.chatSideBarHidden{
+    width:10px;
+    height:20px;
+}
+.chatSideBarHidden div{
+    display: none;
+}
+.chatSideBar{
+    width: 500px;
+    height: calc(100vh - 104px);
+    box-sizing: border-box;
+    position: absolute;
+    right: 0px;
+    top: 104px;
+    background-color: white;
+    border: 2px solid #64605F;
+    z-index: 2;
+    animation-name: expandChat;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+.chatFullBar{
+    height: calc(100vh - 104px);
+    position: absolute;
+    border: 2px solid #64605F;
+    box-sizing: border-box;
+    width: 100%;
+    left: 0px;
+    top: 104px;
+    z-index: 2;
+    background: white;
+    animation-name: expandChat;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+.chatPopupBar{
+    height: 100vh;
+    position: absolute;
+    border: 2px solid #64605F;
+    box-sizing: border-box;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    z-index: 2;
+    background: white;
+}
+
+.chatExpand{
+    animation-name: expandChat;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+
+@keyframes expandChat{
+    0% {top:calc(100vh - 29px);}
+    100% {top:104px;}
+}
+
+
+.chatShow{
+    width:auto; 
+    /* height:5%;  */
+    position: absolute; 
+    /* top:25%;  */
+    max-width:140px;
+    text-align: center;
+    height: 28px;
+    padding:3px;
+    border-top:1px solid black;
+    border-left:1px solid black;
+    border-right:1px solid black;
+    background-color:#CC0000;
+    color:white;
+    z-index: 2;
+}
+
+.chatSender{
+    font-size: 10px;
+    font-weight: 100;
+}
+
+.chatMessage{
+    background-color: white;
+    color:black;
+    margin-bottom: 3px;
+    min-height: 5px;
+    width:80%;
+}
+
+.chatMessage{
+    resize: none;
+    width:81.5%;
+    height: 100%;
+    left: 2px;
+    position: relative;
+}
+.chatSendMessage{
+    width: 17.5%;
+    height: 100%;
+    box-sizing: border-box;
+    color: white;
+    background-color: #cc0000;
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer; 
+}
+.chatSendMessage:active{
+    width: 17.5%;
+    height: 100%;
+    font-weight: 900;
+    font-size: larger;
+    color: white;
+    background-color: #970202;
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+
+}
+.chatSendMessageDisabled{
+    width: 18%;
+    height: 100%;
+    color: white;
+    background-color: #64605F;
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+    cursor: not-allowed; 
+}
+
+.chatGroups{
+    grid-column-start:1;
+    grid-column-end:6;
+    grid-row-start:6;
+    grid-row-end:7;
+}
+.chatButton{
+    /* background-color: #cc0000; */
+    font-size: 1.3em;
+    /* border: 1px solid black; */
+    /* color:white; */
+    padding: 1px;
+    max-width: 200px;
+    word-wrap: normal;
+    margin-bottom: 3px;
+    width:100%;
+    cursor: pointer;
+    border-bottom:1px solid #64605F;
+}
+.chatButtonSelected{
+    font-size: 1.3em;
+    padding: 1px;
+    max-width: 200px;
+    word-wrap: normal;
+    margin-bottom: 3px;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.chatButtonNotify{
+    font-size: 1.3em;
+    color:white;
+    border: 1px solid black;
+    box-sizing: border-box;
+    background-color:#64605F;
+    padding: 5px;
+    word-wrap: normal;
+    /* animation-name: chatNotify2; */
+    /* animation-duration: 3s; */
+    /* animation-iteration-count: infinite; */
+    width:100%;
+    cursor: pointer;
+}
+
+.chatState{
+    /* background-color: #64605F; */
+    border:none;
+    background-color: white;
+    font-size: 1.3em;
+    color:black;
+    padding: 1px;
+    margin-bottom: 3px;
+    position: relative;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    left:2%;
+    right:2%;
+}
+.chatStateSel{
+    background-color: white;
+    font-size: 1.3em;
+    border-bottom: 1px solid black;
+    background-color: #cc0000;
+    color:white;
+    padding: 1px;
+    margin-bottom: 3px;
+    position: relative;
+    left:5%;
+}
+
+.chatOnlineUsers{
+    grid-column-start:1;
+    grid-column-end:2;
+    grid-row-start:2;
+    grid-row-end:3;
+    /* background-color:#64605F; */
+    background-color: white;
+    border: 1px solid black;
+    border-left:none;
+    overflow-y: scroll;
+}
+.chatOnlineUsers table{
+    width:100%;
+}
+.chatOnlineGroups{
+    width:100%;
+    border: 0px;
+    font-size: 15px;
+    /* background-color: #cc0000 !important; */
+    /* color: white !important; */
+}
+.chatOnlineUsers button{
+    width: 100%;
+    text-align: left;
+    background-color: white;
+    /* border: 1px solid black; */
+    border:0px;
+    color: black;
+    margin: 0px;
+    padding: 2px;
+}
+.chatOnlineUsers th{
+    color:black;
+    font-size: 15px;
+    font-weight: 700;
+    border-bottom: 2px solid white;
+}
+.chatOnlineUsers td{
+    color:black;
+    font-size: 15px;
+    /* border-bottom: 2px solid white; */
+    padding-top: 3px;
+}
+.chatOnlineUsers span{
+    min-width: 15px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.chatOnlineUsers textarea {
+    resize: none;
+    width:100%;
+    height:100%;
+ }
+
+.chatOnlineUsers ul{
+    padding-left:5px;
+    list-style-type: none;
+    padding-top: 0px;
+    padding-bottom: 3px;
+}
+.chatOnlineUsers li{
+    font-size: 12px;
+    color: black;
+    cursor: pointer;
+}
+
+.chatMenu{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start:1;
+    grid-row-end:2; 
+}
+
+.chatSideGroups{
+    grid-column-start:1;
+    grid-column-end:2;
+    grid-row-start:2;
+    grid-row-end:3;
+    overflow-y: auto;
+    height: 100%;
+    width:100%;
+    border:1px solid black;
+    border-left: none;
+}
+.chatSideTitle{
+    background-color: aliceblue; 
+    border-bottom:1px solid black;
+    font-size:larger; 
+    min-height:20px;
+    z-index: 3;
+    top: 0px;
+    left:0px;
+    width:100%;
+    display: block;
+    position: absolute;
+}
+
+.chatSideMessages{
+    position: relative;
+    border:1px solid black;
+    border-left:none;
+    border-right:none;
+    grid-column-start:2;
+    grid-column-end:3;
+    grid-row-start:2;
+    grid-row-end:3;
+}
+.chatSideMessage{
+    grid-column-start:1;
+    grid-column-end:3;
+    grid-row-start:3;
+    grid-row-end:4;
+}
+
+.chatMessageBubbleSide{
+    background-color: white;
+    color:black;
+    width:90%;
+    margin-bottom: 5px;
+    border:1px solid black;
+    border-radius: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.chatMessageBubbleMeSide{
+    background-color:#e8e7e6;
+    color:black;
+    width:88%;
+    margin-bottom: 5px;
+    border:1px solid black;
+    border-radius: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    left:12%;
+    position: relative;
+}
+
+.vertical-text span{
+    cursor: pointer;
+}
+
+.chatShowNotify{
+    width:auto; 
+    /* height:5%;  */
+    position: absolute; 
+    top:25%; 
+    padding:3px;
+    background-color:#CC0000;
+    color:white;
+    animation-name: chatShowNotify;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    z-index: 100;
+}
+@keyframes chatShowNotify{
+    0% {background-color: #cc0000;}
+    50% {background-color: #cccc00;}
+    100% {background-color: #cc0000;}
+    /* 0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); } */
+}
+
+.chatMessageBubble{
+    background-color: white;
+    color:black;
+    width:80%;
+    margin-bottom: 5px;
+    border:1px solid black;
+    border-radius: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.chatMessageBubbleMe{
+    background-color:#dcdad9;
+    color:black;
+    width:80%;
+    margin-bottom: 5px;
+    border:1px solid black;
+    border-radius: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    left:20%;
+    position: relative;
+}
+
+.chatSubOption{
+    font-size: 10px;
+}
+
+#notificationScroll{
+    width: 49%;	
+    display: inline-block;	
+    height: 27px;	
+    vertical-align: top;	
+    overflow-y: hidden;
+}
+
+.userOnline{
+    background-color: blue;
+    width:17px;
+    height:17px;
+    display: inline-block;
+    vertical-align: middle;
+    border-bottom:1px solid white;
+}
+
+.userOffline{
+    background-color: gray;
+    width:17px;
+    height:17px;
+    display: inline-block;
+    vertical-align: middle;
+    border-bottom:1px solid white;
+}
+
+sn-selector{
+    position: relative;
+    z-index: 200;
+}
+.sn-selector.sn-content{
+    display:none;
+}

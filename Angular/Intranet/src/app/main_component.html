@@ -1,0 +1,262 @@
+<header id="header">
+	<a routerLink="/home" routerLinkActive="active">
+		<img class="brandingBanner xs-collapse" src="../Graphics/LME-Banner.jpg" alt="Banner">
+	</a>
+	<div id="topControl">
+		<nav id="menu">
+			<div id="mainMenu">
+				<div id="homeDiv" class="dropdown horizontalMenu subMenu">
+					<a id="homeMenu" routerLink="/home" routerLinkActive="active" class="btn btn-default btn-lme-menu">Home</a>
+				</div>
+				<div id="adminDiv" class="dropdown horizontalMenu subMenu" *ngIf="userManagement.hasAuthStrict('ADMIN')">
+					<button class="btn btn-default dropdown-toggle btn-lme-menu" type="button" id="adminMenu" data-toggle="dropdown">Admin</button>
+					<ul id="reportsMenuDetails" class="dropdown-menu" role="menu" aria-labelledby="resourceMenu">
+						<li class="presentation">
+							<a routerLink="/intranetstatus" routerLinkActive="active" class="btn btn-default btn-lme-menu">Status</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/admin/tapeHistory" routerLinkActive="active" class="btn btn-default btn-lme-menu">Tape History</a>
+						</li>
+					</ul>
+				</div>
+
+				<div id="newsletterDiv" class="dropdown horizontalMenu subMenu">
+					<a id="newsletterMenu" routerLink="/document/Newsletter" routerLinkActive="active" class="btn btn-default btn-lme-menu">Newsletter</a>
+				</div>
+
+				<div id="opsReportsDiv" class="dropdown horizontalMenu subMenu">
+					<button class="btn btn-default dropdown-toggle btn-lme-menu" type="button" id="opsReportsMenu" data-toggle="dropdown">OPS</button>
+					<ul id="opsReportsMenuDetails" class="dropdown-menu" role="menu" aria-labelledby="resourceMenu" *ngIf="userManagement.checkLogin()">
+						<li class="presentation" *ngIf="userManagement.hasTerminals('ALL')">
+							<a routerLink="/opsDashboard/ALL" routerLinkActive="active" class="btn btn-default btn-lme-menu">
+								Executive OPS Dashboard</a>
+						</li>
+						<li class="presentation" *ngIf="userManagement.hasTerminals('')">
+							<a routerLink="/opsDashboard/SELECT" routerLinkActive="active" class="btn btn-default btn-lme-menu">
+								Terminal OPS Dashboard</a>
+						</li>
+						<li class="presentation" *ngIf="userManagement.hasTerminals('')">
+							<a routerLink="/opsdaily" routerLinkActive="active" class="btn btn-default btn-lme-menu">System Daily Dashboard</a>
+						</li>
+						<li class="presentation" *ngIf="userManagement.hasTerminals('')">
+							<a routerLink="/publacklist" routerLinkActive="active" class="btn btn-default btn-lme-menu">
+								Customer Black List</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/ops/service" routerLinkActive="active" class="btn btn-default btn-lme-menu">Service</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/lanes" routerLinkActive="active" class="btn btn-default btn-lme-menu">Lanes</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/driverhours" routerLinkActive="active" class="btn btn-default btn-lme-menu">Driver Hours</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/dktnrhistf" routerLinkActive="active" class="btn btn-default btn-lme-menu">DKTNRHISTF</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/terminallabor" routerLinkActive="active" class="btn btn-default btn-lme-menu">
+								Terminal Labor Hours</a>
+						</li>
+						<li class="presentation">
+								<a routerLink="/cityplan" routerLinkActive="active" class="btn btn-default btn-lme-menu">
+									City planning</a>
+							</li>
+					</ul>
+				</div>
+
+				<div id="salesReportsDiv" class="dropdown horizontalMenu subMenu">
+					<button class="btn btn-default dropdown-toggle btn-lme-menu" type="button" id="salesReportsMenu" data-toggle="dropdown">Sales</button>
+					<ul id="reportsMenuDetails" class="dropdown-menu" role="menu" aria-labelledby="resourceMenu" *ngIf="userManagement.checkLogin()">
+						<li class="presentation" *ngIf="userManagement.hasAuth('SLSMGR')">
+							<a routerLink="/salesReports/daily" routerLinkActive="active" class="btn btn-default btn-lme-menu">Daily Sales
+								Report</a>
+						</li>
+						<li class="presentation" *ngIf="userManagement.hasAuth('SLSMGR')">
+							<a routerLink="/salesReports/JohnDeere" routerLinkActive="active" class="btn btn-default btn-lme-menu">John
+								Deere Report</a>
+						</li>
+						<!-- <li class="presentation" *ngIf="userManagement.hasAuth('SLSMGR')"> -->
+						<!-- <a routerLink = "/technology" routerLinkActive="active" class="btn btn-default btn-lme-menu">Sales Dashboard</a> -->
+						<!-- </li> -->
+						<li class="presentation" >
+								<a routerLink="/rdwsales" routerLinkActive="active" class="btn btn-default btn-lme-menu">RDW Sales</a>
+							</li>
+						<!-- <li class="presentation" *ngIf="userManagement.hasAuth('SLSMGR')">
+							<a routerLink="/salesReports/monthly" routerLinkActive="active" class="btn btn-default btn-lme-menu">RDW Report
+								2</a>
+						</li> -->
+						<li class="presentation">
+							<a routerLink="/ops/publacklist" routerLinkActive="active" class="btn btn-default btn-lme-menu">Customer Black List</a>
+						</li>
+					</ul>
+				</div>
+
+				<div id="claimsReportsDiv" class="dropdown horizontalMenu subMenu">
+					<button class="btn btn-default dropdown-toggle btn-lme-menu" type="button" id="claimsReportsMenu" data-toggle="dropdown">Claims</button>
+					<ul id="claimsMenuDetails" class="dropdown-menu" role="menu" aria-labelledby="resourceMenu" *ngIf="userManagement.checkLogin()">
+						<li class="presentation">
+							<a routerLink="/claims/Transaction" routerLinkActive="active" class="btn btn-default btn-lme-menu">Claims by
+								Transaction</a>
+						</li>
+						<li class="presentation" *ngIf="userManagement.hasAuth('ALL')">
+							<a routerLink="/claimsReport/JohnDeere" routerLinkActive="active" class="btn btn-default btn-lme-menu">Claims
+								John
+								Deere</a>
+						</li>
+						<!-- <li class="presentation"> -->
+						<!-- <a routerLink = "/claims/Received" routerLinkActive="active" class="btn btn-default btn-lme-menu">Claims by Received</a> -->
+						<!-- </li> -->
+					</ul>
+				</div>
+
+				<div id="linehaulReportsDiv" class="dropdown horizontalMenu subMenu">
+					<button class="btn btn-default dropdown-toggle btn-lme-menu" type="button" id="linehaulReportsMenu" data-toggle="dropdown">Linehaul</button>
+					<ul id="linehaulMenuDetails" class="dropdown-menu" role="menu" aria-labelledby="resourceMenu" *ngIf="userManagement.checkLogin()">
+						<li class="presentation" *ngIf="userManagement.checkLogin()">
+							<a routerLink="/linehaul/outboundprojection" routerLinkActive="active" class="btn btn-default btn-lme-menu">Outbound
+								Projection</a>
+						</li>
+					</ul>
+				</div>
+
+				<div id="WIDiv" class="dropdown horizontalMenu subMenu">
+					<button class="btn btn-default dropdown-toggle btn-lme-menu" type="button" id="WIMenu" data-toggle="dropdown">W&I</button>
+					<ul id="WIDetails" class="dropdown-menu" role="menu" aria-labelledby="resourceMenu" *ngIf="userManagement.checkLogin()">
+						<li class="presentation">
+							<a routerLink="/wi/dockscan" routerLinkActive="active" class="btn btn-default btn-lme-menu">Cross Dock Scanning</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/wi/weightscales" routerLinkActive="active" class="btn btn-default btn-lme-menu">Weight Scale
+								Data</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/dimensioner" routerLinkActive="active" class="btn btn-default btn-lme-menu">Dimensioner</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/wi/reweigh" routerLinkActive="active" class="btn btn-default btn-lme-menu">Daily reweigh
+								percentages</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/wi/tonnage" routerLinkActive="active" class="btn btn-default btn-lme-menu">Daily Tonnage</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/pnmiles" routerLinkActive="active" class="btn btn-default btn-lme-menu">PeopleNet Miles</a>
+						</li>
+					</ul>
+				</div>
+
+				<div id="documentsDiv" class="dropdown horizontalMenu subMenu">
+					<button class="btn btn-default dropdown-toggle btn-lme-menu" type="button" id="salesReportsMenu" data-toggle="dropdown">Documents</button>
+					<ul id="reportsMenuDetails" class="dropdown-menu" role="menu" aria-labelledby="resourceMenu">
+						<li class="presentation">
+							<a routerLink="/ToDoList" routerLinkActive="active" class="btn btn-default btn-lme-menu">To Do List</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/document/FHA" routerLinkActive="active" class="btn btn-default btn-lme-menu">FHA</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/document/LHLPICS" routerLinkActive="active" class="btn btn-default btn-lme-menu">LHL Pics</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/document/Maintanence" routerLinkActive="active" class="btn btn-default btn-lme-menu">Maintenance
+								Info</a>
+						</li>
+						<li class="dropdown-submenu">
+							<a routerLink="/document/Safety" routerLinkActive="active" class="safety-menu btn btn-default btn-lme-menu">Safety</a>
+						</li>
+						<li class="dropdown-submenu">
+							<a routerLink="/document/Sales" routerLinkActive="active" class="sales-menu btn btn-default btn-lme-menu">Sales</a>
+						</li>
+						<li class="dropdown-submenu">
+							<a class="training-menu btn btn-default btn-lme-menu" routerLink="/document/trainingManual" routerLinkActive="active">Training
+								Modules</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/document/HR" routerLinkActive="active" class="btn btn-default btn-lme-menu">HR/Benefits</a>
+						</li>
+						<li class="presentation">
+							<a routerLink="/document/Claims" routerLinkActive="active" class="btn btn-default btn-lme-menu">Claims/OS&D</a>
+						</li>
+						<li class="dropdown-submenu">
+							<a routerLink="/document/Holiday_Schedule" routerLinkActive="active" class="sales-menu btn btn-default btn-lme-menu">Holiday Schedule</a>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+			<!-- mainMenu -->
+
+		</nav>
+
+	</div>
+	<!-- topControl -->
+
+	<div id="bar"></div>
+
+</header>
+<!-- <contextMenu></contextMenu> -->
+<!-- [top]="contextMenu.getTop()" [left]="contextMenu.getLeft()" -->
+<div id="contextMenu" *ngIf="contextMenu.contextMenuShow" [ngStyle]="{'left.px':contextMenu.getLeft(),'top.px':contextMenu.getTop()}">
+	<ul>
+		<li *ngFor="let row of contextMenu.contextMenuItems" (click)="contextMenu.contextMenuClick(row)" [ngClass]="{'contextMenuBreak':row.break}">{{row.message}}</li>
+	</ul>
+</div>
+
+<modal></modal>
+<div id="content">
+
+	<div id="loginDiv">
+
+		<div *ngIf="!userManagement.checkLogin()">
+
+			<label>Login:</label>
+			<input type="text" id="login" ngDefaultControl [(ngModel)]="user">
+
+			<label>Password:</label>
+			<input type="password" id="password" ngDefaultControl [(ngModel)]="password" (keyup.enter)="login(user, password)">
+
+			<button (click)="login(user, password)" (keyup.enter)="login(user, password)">Login</button>
+			<label id="loginError" *ngIf="!userManagement.getState()">{{userManagement.getResults()}}</label>
+
+		</div>
+		<div *ngIf="userManagement.checkLogin()">
+			<div style="width:49%; display:inline-block;">
+				<button (click)="logout()">Logout</button>
+				<label id="loginStateSuccess" *ngIf="userManagement.getState()">{{userManagement.getStatusMessage('Success')}}</label>
+				<label id="loginStateError" *ngIf="!userManagement.getState()">{{userManagement.getStatusMessage('Error')}}</label>
+			</div>
+			<!-- Chat System Notifications -->
+			<!-- <div *ngIf="loggedIn" id="notificationScroll">
+				<ng-container *ngFor="let key of objectkeys(notifications)">
+					<label id="notification" style="width:80%; height:28px; margin: 0px; top: 0px;bottom: 0px;padding: 0px;">
+					</label>
+				</ng-container>
+			</div> -->
+		</div>
+
+	</div>
+
+	<router-outlet></router-outlet>
+
+</div>
+<chat></chat>
+
+<!-- <simple-notifications [options]="notifyOptions" (onCreate)="created($event)" (onDestroy)="destroyed($event)"></simple-notifications> -->
+<!-- <footer id = "footer">
+	<nav id="footMenu">
+		<ul id="footerFrame" class="nav nav-pills nav-pills xs-collapse companyFooter" role="tablist">
+			<li id= "footerMenu" role="presentation" >
+				<a routerLink = "/sitemap" routerLinkActive="active" class="btn btn-default btn-lme-menu">SiteMap</a>
+			</li>
+			<li id= "footerMenu" role="presentation" >
+				<a routerLink = "/faq" routerLinkActive="active" class="btn btn-default btn-lme-menu">FAQ</a>
+			</li>
+
+		</ul>
+		<div id="copyright">
+			<p>Copyright &#169; 2017-2018 LME, Inc. All Rights Reserved.</p>
+		</div>
+	</nav>
+</footer> -->
+<!-- <div style="display:none;visibility: hidden;" (onopenContextMenu)="openContextMenu2($event)"></div> -->

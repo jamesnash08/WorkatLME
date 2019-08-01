@@ -1,0 +1,60 @@
+<div style="    width: 100px; position: fixed; display: inline-block; z-index: 1000; background-color: white; border: 2px solid black; padding-left: 15px;">
+    <label>Service Days</label>
+    <div style="width:50px;height:25px;display:inline-block;background-color:red;"></div><label style="margin:left:5px">1</label>   
+    <div style="width:50px;height:25px;display:inline-block;background-color:orange;"></div><label style="margin:left:5px">2</label> 
+    <div style="width:50px;height:25px;display:inline-block;background-color:yellow;"></div><label style="margin:left:5px">3</label> 
+    <div style="width:50px;height:25px;display:inline-block;background-color:green;"></div><label style="margin:left:5px">4</label> 
+    <div style="width:50px;height:25px;display:inline-block;background-color:blue;"></div><label style="margin:left:5px">5+</label>  
+    <div style="width:50px;height:25px;display:inline-block;background-color:black;"></div><label style="margin:left:5px">No Service shown</label> 
+    <button (click)="Print()">print</button>
+</div>
+
+<div style="width: 200px; position: absolute; right:0px; display: inline-block; z-index: 1000; background-color: white; border: 2px solid black; padding-left: 15px;" *ngIf="selected.zip > ''">
+    <label>Selected Zip Code: {{selected.zip}}</label> 
+    <label>Service Terminal: {{selected.trm}}</label> 
+    <label>Standard Delivery Days: {{selected.days}}</label> 
+    <label>Origin Add on days: {{selected.odays}}</label> 
+    <label>Destination Add on days: {{selected.ddays}}</label> 
+</div>
+
+<div style="position:absolute; width:100%; top:0px; left:0px; height:100%; z-index:100;">
+<!-- <div id="Print"> -->
+<agm-map  [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="true" [zoomControl]="true"  [maxZoom]="maxzoom" [styles]="mapstyles"
+[usePanning]="true"  >
+<!-- #gm -->
+<!-- class="noprint" -->
+    <!-- #gm -->
+    <!-- (mapClick)="mapClicked($event)" -->
+    <agm-kml-layer style="pointer-events:all;" >
+    <agm-marker *ngFor="let m of markers;" [latitude]="m.lat" [longitude]="m.lng" [label]="m.label" [zIndex]="2000"
+        [markerDraggable]="false" [iconUrl]="'../Graphics/icon26.png'" (dragEnd)="markerDragEnd(m, $event)" (markerClick)="getTerminalData(m)">
+
+        <!-- <agm-info-window>
+
+            <strong>{{m.label}}</strong>
+            <br>
+            <p>{{m.name}}</p>
+            <p>{{m.address}}</p>
+            <p>{{m.city}},{{m.state}} {{m.zip}}</p>
+            <p>{{m.phone}}</p>
+
+            <a id="termGoogle" href='http://maps.google.com/maps?q={{m.address}} {{m.city}} {{m.state}} {{m.zip}}' target='_blank'>Zoom In</a>
+
+        </agm-info-window> -->
+
+    </agm-marker>
+</agm-kml-layer>
+
+    <ng-container *ngIf="polygons.length > 0">
+        <agm-kml-layer style="pointer-events:all;"  class="print">
+    <agm-polygon *ngFor="let row of polygons; let i = index" [paths]="row.paths" [fillColor]="row.fill" 
+     [clickable]="true"    [fillOpacity]="0.5"  [visible]="true" (polyClick)="getPolygonZip(row)" [strokeOpacity]="getPolygonStroke(row.zip)">
+     <!-- (polyClick)="getPolygonZip(row)" [strokeOpacity]="getPolygonStroke(row.zip)" -->
+    
+ 
+</agm-polygon>
+</agm-kml-layer>
+    </ng-container>
+
+</agm-map>
+</div>

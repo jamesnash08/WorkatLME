@@ -1,0 +1,72 @@
+<div>
+    <table>
+        <tr>
+            <th>Terminal</th>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td><input [ngModel]="terminal" (ngModelChange)="terminal=$event.toUpperCase()" maxlength="3" (keyup.enter)="getDriverHours(terminal)"></td>
+            <td><input type="date" name="fromdate" [(ngModel)]="fromdate" (keyup.enter)="getDriverHours(terminal)"></td>
+            <td><input type="date" name="todate" [(ngModel)]="todate" (keyup.enter)="getDriverHours(terminal)"></td>
+            <td><button (click)="getDriverHours(terminal)" (keyup.enter)="getDriverHours(terminal)">Submit</button></td>
+            <td><button (click)="exportExcel()">Export to Excel</button></td>
+        </tr>
+        <tr>
+            <td colspan="4"><label>{{err}}</label></td>
+        </tr>
+    </table>
+    <div *ngIf="empAverage > ''">
+        <table>
+            <tr>
+                <td>EMP</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td *ngFor="let key of objectkeys(displayAverage);">{{titles[key]}}</td>
+            </tr>
+            <tr>
+                <td>{{empAverage}}</td>
+                <td>{{empFName}}</td>
+                <td>{{empLName}}</td>
+                <td *ngFor="let key of objectkeys(displayAverage);">{{displayAverage[key]}}</td>
+            </tr>
+        </table>
+        <br>
+    </div>
+</div>
+<table *ngIf="displaytable" style="width:100%;">
+    <thead>
+        <tr>
+            <th *ngFor="let key of objectkeys(titles);" (click)="sortByKey(key)">
+                <span *ngIf="titles[key]">{{titles[key]}}</span>
+                <span *ngIf="!titles[key]">{{key}}</span>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let row of displaytable; let odd=odd; let even=even;">
+            <tr [ngClass]="{'odd':odd,'even':even}">
+                <td *ngFor="let key of objectkeys(titles);" [title]="titles[key]" (click)="setClick(row,key)" style="cursor:pointer;">
+                    <label *ngIf="key != 'START'">{{displayCell(row,key)}}</label>
+                    <input *ngIf="key == 'START'"[(ngModel)]="row.START" (change)="updateStart(row)" (keyup.enter)="updateStart(row)" title="Entered by {{row.TRNUSR}}" maxlength="4" style="width:50px;">
+                </td>
+            </tr>
+            <ng-container *ngIf="row==TRLRrow && displaytrlr.length > 0">
+                <th></th><th></th><th></th>
+                <th *ngFor="let key of objectkeys(trlrtitles);" (click)="sortByKey(key)">
+                    <span *ngIf="trlrtitles[key]">{{trlrtitles[key]}}</span>
+                    <span *ngIf="!trlrtitles[key]">{{key}}</span>
+                </th>
+                <tr *ngFor="let row2 of displaytrlr; let odd=odd; let even=even;" [ngClass]="{'odd':odd,'even':even}">
+                    <td></td><td></td><td></td>
+                    <td *ngFor="let key2 of objectkeys(trlrtitles);">
+                        <label>{{displayCell(row2,key2)}}</label>
+                    </td>
+                </tr>
+            </ng-container>
+        </ng-container>
+
+    </tbody>
+</table>

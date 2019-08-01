@@ -1,0 +1,28 @@
+<div id = "TableID" style = "width:1280px;">
+<h1 style="display:block" *ngIf="tabledisplay.starttime">Service up Since: {{tabledisplay.starttime}}</h1>
+<h1 style="display:block" *ngIf="!tabledisplay.starttime">Server is currently not responding</h1>
+<br>
+<button (click)="refreshStart()" *ngIf="!refreshRunning"  [disabled]="disableForms">Start Refresh</button>
+<button id="refreshTime" (click)="refreshStop()" *ngIf="refreshRunning">{{refreshMessage}}</button>
+
+<button (click)="startServer()" >Restart Server</button>
+<br>
+<h4 *ngIf="serverMessage > ''">{{serverMessage}}</h4>
+<br>
+
+
+<table style="width:auto;" *ngIf="tabledisplay.starttime">
+<thead>
+<tr>
+<th>Service Route</th>
+<th>Hit Count</th>
+<th>Last Hit</th>
+</tr>
+</thead>
+<tr *ngFor="let row of tabledisplay.routes; let i = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">	
+<td style="text-align:left; white-space:nowrap;"><a href="http://lme.local:8080{{tabledisplay.routes[i]}}" target="_blank">{{tabledisplay.routes[i]}}</a></td>
+<td style="text-align:left; white-space:nowrap;"><label *ngIf="tabledisplay.count[i] > 0">{{tabledisplay.count[i]}}</label></td>
+<td style="text-align:left; white-space:nowrap;"><label *ngIf="tabledisplay.hit[i] != 0">{{tabledisplay.hit[i]}}</label></td>
+</tr>
+</table>
+</div>

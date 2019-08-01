@@ -1,0 +1,5 @@
+<div id="contextMenu" *ngIf="contextMenuShow">
+	<ul>
+		<li *ngFor="let row of contextMenuItems" (click)="contextMenuClick(row)" [ngClass]="{'contextMenuBreak':row.break}">{{row.message}}</li>
+	</ul>
+</div>

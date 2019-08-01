@@ -1,0 +1,23 @@
+.odd { background-color: #F5F5DC;}
+
+.even { background-color: #F0FFFF;}
+
+table tr{
+    padding:0px;
+}
+table{
+    font-size: 12px;
+}
+table th{
+    padding-right: 3px;
+    /* border-right:0.5px solid gray; */
+    cursor: pointer;
+}
+table th:hover{
+    background-color:#CC0000;
+    color:white;
+}
+table td{
+    cursor: pointer;
+    /* border-right:0.5px solid gray; */
+}

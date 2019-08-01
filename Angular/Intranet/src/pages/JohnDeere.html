@@ -1,0 +1,92 @@
+<div><div style="display: inline;">
+<div *ngFor="let key of objectkeys(customers);">
+<label>{{key}}</label>
+<button (click)="setChart(key, 'JDWGT')">Weight</button>
+<button (click)="setChart(key, 'JDSHP')">Shipments</button>
+<button (click)="setChart(key, 'JDREV')">Revenue</button>
+</div>
+<button (click)="showAll=true">Grid View</button>
+<br>
+<a id="saveImage" (click)="saveImage('fullGraph','saveImage')" download="{{chartTitle}}.JPG">Generate Image</a>
+<br>
+<label>Remove Months Newer than:</label><input [(ngModel)]="ignoreMM" type="text">
+<!-- put table showing data used in chart -->
+</div>
+<table class="selectableData" style="display: inline-table; width:45%; position:absolute; top:0px;  border: 1px solid black;" *ngIf="tableYear != ''">
+<thead>
+<tr>
+<th colspan="4">{{tableTitle}}</th>
+</tr>
+<tr>
+<th>Period</th>
+<th>Weight</th>
+<th>Shipments</th>
+<th>Revenue</th>
+</tr>
+</thead>
+<tr *ngFor="let row of tableDisplay[tableCust][tableYear]; let i = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">
+<td style="border-right: 1px solid black">{{barChartLabels[row.JDSORT-1]}}</td>
+<td>{{numberWithCommasDecimal(row.JDWGT)}}</td>
+<td>{{numberWithCommasDecimal(row.JDSHP)}}</td>
+<td>{{numberWithCommasDecimal(row.JDREV)}}</td>
+</tr>
+<tfoot><tr style="border-top:1px solid black;">
+<td style="border-right: 1px solid black">Total</td>
+<td>{{getTotals("JDWGT")}}</td>
+<td>{{getTotals("JDSHP")}}</td>
+<td>{{getTotals("JDREV")}}</td>
+</tr></tfoot>
+</table>
+</div>
+<br>
+<br>
+<!-- <button  (click)="Print()">Print</button> -->
+<div id="Print" *ngIf="!showAll">
+<!-- <table class="selectableData" style="display: inline-table; width:29%; vertical-align:top"> -->
+<!-- <thead> -->
+<!-- <tr> -->
+<!-- <th>Customer</th> -->
+<!-- <th>Year</th> -->
+<!-- <th>Month</th> -->
+<!-- <th>Weight</th> -->
+<!-- <th>Shipments</th> -->
+<!-- <th>Revenue</th> -->
+<!-- </tr> -->
+<!-- </thead> -->
+<!-- <tr *ngFor="let row of totalData; let i = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}"> -->
+<!-- <td>{{row.JDCUST}}</td> -->
+<!-- <td>{{row.JDYEAR}}</td> -->
+<!-- <td>{{row.JDMNTH}}</td> -->
+<!-- <td>{{numberWithCommasDecimal(row.JDWGT)}}</td> -->
+<!-- <td>{{numberWithCommasDecimal(row.JDSHP)}}</td> -->
+<!-- <td>{{numberWithCommasDecimal(row.JDREV)}}</td> -->
+<!-- </tr> -->
+<!-- </table> -->
+<div style="width:80%; top:10px;">
+<!-- <h1>{{chartTitle}}</h1> -->
+<canvas baseChart #myChart="base-chart" id="fullGraph"
+		[datasets]="barChartData"
+		[labels]="barChartLabels"
+		[options]="barChartOptions"
+		[colors]="barChartColors"
+		[legend]="barChartLegend"
+		[chartType]="barChartType">
+	</canvas>
+</div>
+</div>
+
+<div class="prolist" id="navto" *ngIf="showAll" style="height:auto; min-height:300vh;">
+<button (click)="showAll=false">Close</button>
+<div *ngFor="let row of objectkeys(barChartDataFull)" style="display:block; width:100%; height:60%; position:relative;">
+<h1>Customer: {{row}}</h1>
+<div *ngFor="let row2 of objectkeys(barChartDataFull[row])" style="display:inline-block; width:30%; height:100%; position:relative;">
+<h2>{{customers[row][row2]}}</h2>
+<canvas baseChart
+	[datasets]="barChartDataFull[row][row2]"
+	[labels]="barChartLabels"
+	[options]="gridChartOptions"
+	[colors]="barChartColors"
+	[legend]="barChartLegend"
+	[chartType]="barChartType"></canvas>
+</div></div>
+</div>

@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteCond %{SERVER_PORT} 83
+  RewriteRule ^(.*)$ http://lme.local/$1 [R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+
+</IfModule>

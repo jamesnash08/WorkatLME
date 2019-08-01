@@ -1,0 +1,69 @@
+<div style="width: 100%; height: 100%; min-height: 90%; overflow: scroll; background-color: white;">
+    <table style="width:auto;" *ngIf="tablelabels.length > 0">
+
+        <colgroup *ngFor="let row of tablelabels; let odd=odd; let even=even">
+            <col *ngIf="odd" [ngClass]="{odd: odd, even: even}">
+        </colgroup>
+        <thead>
+            <tr>
+                <th style="width:70px;"></th>
+                <th *ngFor="let row of tablelabels; let j = index;" style="width:85px; max-width:85px; min-width:85px">{{row}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let key of objectkeys(tabledata).reverse(); let i = index; let odd=odd; let even=even" [ngClass]="{oddrow: odd, evenrow: even}">
+                <td style="width:70px;">{{returnMDY(key)}}</td>
+                <td *ngFor="let row2 of tablelabels; let j = index;" style="text-align: right;">
+                    <!-- <label style="text-align: left; width: 40px; font-size:smaller;">SCANS</label>
+                            <label style="text-align: right; width: 40px;" *ngIf="tabledata[key][row2]">{{tabledata[key][row2].SCANS}}</label>
+                            <label style="text-align: left; width: 40px; font-size:smaller;">PROS</label>
+                            <label style="text-align: right; width: 40px;" *ngIf="tabledata[key][row2]">{{tabledata[key][row2].PROS}}</label>
+                            <ng-container *ngIf="tabledata[key][row2]">
+                            <ng-container *ngIf="tabledata[key][row2].BILLS">
+                            <label style="text-align: left; width: 40px; font-size:smaller;">BILLS</label>
+                            <label style="text-align: right; width: 40px;" *ngIf="tabledata[key][row2]">{{tabledata[key][row2].BILLS}}</label>
+                            <label style="text-align: left; width: 40px; font-size:smaller;">% Scans</label>
+                            <label style="text-align: right; width: 40px;" *ngIf="tabledata[key][row2]">{{getPercent(tabledata[key][row2].PROS,tabledata[key][row2].BILLS)}}%</label>
+                        </ng-container></ng-container> -->
+                        <table style="width:100%;">
+                            <!-- <tr><td>SCANS</td><td *ngIf="tabledata[key][row2]">{{tabledata[key][row2].SCANS}}</td></tr> -->
+                            <tr><td>PROS</td><td *ngIf="tabledata[key][row2]">{{tabledata[key][row2].PROS}}</td></tr>
+                            <ng-container *ngIf="tabledata[key][row2]">
+                                <ng-container *ngIf="tabledata[key][row2].BILLS">
+                            <tr><td>BILLS</td><td *ngIf="tabledata[key][row2]">{{tabledata[key][row2].BILLS}}</td></tr>
+                            <tr><td>% Scans</td><td *ngIf="tabledata[key][row2]">{{getPercent(tabledata[key][row2].PROS,tabledata[key][row2].BILLS)}}</td></tr>
+                        </ng-container></ng-container>
+                        </table>
+                    
+
+                    <!-- <label *ngIf="tabledata[key][row2]" title="{{returnMDY(key)}} {{row2}}"></label> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 2nd level -->
+
+<!-- <div style="width: 100%; height: 100%; min-height: 90%; overflow: scroll; background-color: white;">
+        <table style="width:auto;" *ngIf="tablelabels.length > 0">
+    
+            <colgroup *ngFor="let row of tablelabels; let odd=odd; let even=even">
+                <col *ngIf="odd" [ngClass]="{odd: odd, even: even}">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th *ngFor="let row of tablelabels; let j = index;" style="width:60px;">{{row}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let key of objectkeys(tabledata).reverse(); let i = index; let odd=odd; let even=even" [ngClass]="{oddrow: odd, evenrow: even}">
+                    <td>{{returnMDY(key)}}</td>
+                    <td *ngFor="let row2 of tablelabels; let j = index;" style="text-align: right; width:60px;">
+                        <label *ngIf="tabledata[key][row2]" title="{{returnMDY(key)}} {{row2}}">{{tabledata[key][row2].length}}</label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->

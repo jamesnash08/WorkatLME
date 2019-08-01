@@ -1,0 +1,271 @@
+<div class="cityheader">
+    <table style="width:100%; height:30px; max-height:30px;" class="headertable">
+        <tr>
+            <td style="width:5%; vertical-align:top;">Terminal</td>
+            <td *ngIf="getTRM"  style="width:10%;"><input [ngModel]="terminal" (ngModelChange)="terminal=$event.toUpperCase()" maxlength="3"
+                    (keyup.enter)="getData2()"></td>
+            <td *ngIf="!getTRM" style="width:4%"><label>{{terminal}}</label></td>
+            <td *ngIf="getTRM" style="width:10%"><button (click)="getData2()" [disabled]="checkProSubmit()">Submit</button></td>
+            <!-- <td><button>Refresh Data</button></td> -->
+            <td><label>{{err}}</label></td>
+            <td style="width:425px; text-align:right;" *ngIf="tabState != ''">
+                <input [(ngModel)]="addPRO" placeholder="Enter PRO" maxlength="11" (keyup.enter)="addPro(addPRO,tabState)" style="width:50%;">
+                <button (click)="addPro(addPRO,tabState)" style="width:47%; font-size:smaller;">Add PRO to {{tabState}}</button>
+            </td>
+
+            <!-- <td style="width:425px; text-align:right; position: relative;" *ngIf="tabState != '' && user=='DPJRN'">
+                <textarea class="hoverTextarea" [(ngModel)]="addPRO" placeholder="Enter PRO" cols="11" rows="10" 
+                (keyup.enter)="getPROS(addPRO,tabState)" id="addPRO"></textarea>
+                <button (click)="getPROS(addPRO,tabState)">Add PRO to {{tabState}}</button>
+            </td> -->
+
+            <td style="width:130px; text-align:right; vertical-align:top;"><button (click)="resetTRM()">New Terminal</button></td>
+        </tr>
+    </table>
+</div>
+
+<div class="selectionDiv" *ngIf="!getTRM">
+    <div (click)="groupShow = groupShow=='TOTAL' ? '': 'TOTAL';" [ngClass]="{'selectedDoor':'TOTAL'==groupShow,'unselectedDoor':'TOTAL'!=groupShow}" style="margin-right: -4px;" id="TOTAL">
+        <table>
+            <!-- Show header for totals -->
+            <tr>
+                <td style="font-size:11px; padding-right:5px;">DOOR</td>
+                <td colspan="2" *ngFor="let key of objectkeys(metrix);" style="font-size:11px;">{{metrix[key]}}</td>
+            </tr>
+            <!-- Show complete totals for each door -->
+            <tr>
+                <td>{{displayTotal['DOOR']}} {{displayTotal['DOOR2']}}</td>
+                <td colspan="2" *ngFor="let key of objectkeys(metrix);" style="font-size:11px;">{{displayTotal[key]}}</td>
+            </tr>
+        </table>
+    </div>
+    <div *ngFor="let group of objectkeys(displaytable);" (click)="groupShow = groupShow==group ? '': group;" 
+    [ngClass]="{'selectedDoor':group==groupShow,'unselectedDoor':group!=groupShow}" [id]="group">
+        <table>
+            <thead><!-- Show header for totals -->
+                <tr>
+                    <td>DOOR</td>
+                    <td colspan="2" *ngFor="let key of objectkeys(metrix);">{{metrix[key]}}</td>
+                </tr><!-- Show totals for door -->
+                <tr>
+                    <td>{{displaytable[group]['DOOR']}} {{displaytable[group]['DOOR2']}}</td>
+                    <td colspan="2" *ngFor="let key of objectkeys(metrix);">{{displaytable[group][key]}}</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div class="DragDiv"  [ngClass]="{'noSelect':tabState==''}" *ngIf="!getTRM">
+    <!-- <ng-container *ngFor="let group of objectkeys(displaytable);"> -->
+    <!-- Show info for each door *ngIf="groupShow==group"-->
+    <table class="oddevenTable" style="height:calc(100%)">
+        <thead><!-- Show header for door details -->
+            <tr><th *ngFor="let key of objectkeys(titles);" (click)="sortByKey(key)" [ngClass]="[key]">{{titles[key]}}</th></tr>
+        </thead>
+        <tbody style="height:calc(100% - 32px)">
+            <!-- Show door details -->
+            <!-- *ngFor="let pro of returnDisplayArray(proSort)" -->
+            <ng-container *ngFor="let pro of proSort;"> 
+                <tr draggable [dragData]="selectedPros" [dragScope]="'door'" [dragClass]="draggingTR" 
+                *ngIf="checkPro(pro)" (dblclick)="buildGooglePlace(pro)" 
+                    [ngClass]="{'trxg':proData[pro].XGOLD > ' ', 'trhz':proData[pro].HAZCOD > ' ','selectedTR':checkIfSelected(pro)}">
+                    <!-- HAZCOD:"HS",
+		XGOLD -->
+                    <td *ngFor="let key of objectkeys(titles);" [title]="titles[key]" [id]="'PRO' + pro" [ngClass]="[key]">
+                        {{displayData(proData[pro],key)}}
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+    <!-- </ng-container> -->
+</div>
+
+<div class="selectionDiv" style="width:90%;display: inline-block;vertical-align: top;" *ngIf="!getTRM">
+    <div (click)="tabState=tabState=='APPT set'?'':'APPT set'" [ngClass]="{'selectedButton':'APPT set'==tabState,'unselectedButton':'APPT set'!=tabState}" 
+        droppable (onDrop)="tabDrop($event,'APPT set')" [dropScope]="['tab','door']" style="cursor: pointer;margin-right: -4px;">APPT set
+        <label style="font-size:smaller;display:block;">PROS: {{tabData['APPT set'].length}}</label>
+    </div>
+
+    <div (click)="tabState=tabState=='APPT needed'?'':'APPT needed'" [ngClass]="{'selectedButton':'APPT needed'==tabState,'unselectedButton':'APPT needed'!=tabState}" 
+        droppable (onDrop)="tabDrop($event,'APPT needed')" [dropScope]="['tab','door']" style="cursor: pointer;margin-right: -4px;">
+        APPT needed
+        <label style="font-size:smaller;display:block;">PROS: {{tabData['APPT needed'].length}}</label>
+    </div>
+
+    <div (click)="tabState=tabState=='Late LNHL'?'':'Late LNHL'" [ngClass]="{'selectedButton':'Late LNHL'==tabState,'unselectedButton':'Late LNHL'!=tabState}" 
+        droppable (onDrop)="tabDrop($event,'Late LNHL')" [dropScope]="['tab','door']" style="cursor: pointer;margin-right: -4px;">
+        Late LNHL
+        <label style="font-size:smaller;display:block;">PROS: {{tabData['Late LNHL'].length}}</label>
+    </div>
+
+    <div (click)="tabState=tabState=='Old S PROs'?'':'Old S PROs'" [ngClass]="{'selectedButton':'Old S PROs'==tabState,'unselectedButton':'Old S PROs'!=tabState}" 
+        droppable (onDrop)="tabDrop($event,'Old S PROs')" [dropScope]="['tab','door']" style="cursor: pointer;margin-right: -4px;">
+        Old S PROs
+        <label style="font-size:smaller;display:block;">PROS: {{tabData['Old S PROs'].length}}</label>
+    </div>
+
+    <div (click)="tabState=tabState=='No plan'?'':'No plan'" [ngClass]="{'selectedButton':'No plan'==tabState,'unselectedButton':'No plan'!=tabState}" 
+        droppable (onDrop)="tabDrop($event,'No plan')" [dropScope]="['tab','door']" style="cursor: pointer;margin-right: -4px;">
+        No plan
+        <label style="font-size:smaller;display:block;">PROS: {{tabData['No plan'].length}}</label>
+    </div>
+
+    <div *ngFor="let tab of tabOptions;" (click)="tabState=tabState==tab?'':tab" [ngClass]="{'selectedButton':tab==tabState,'unselectedButton':tab!=tabState}"  style="cursor: pointer;" [id]="tab"
+        droppable (onDrop)="tabDrop($event,tab)" [dropScope]="['tab','door']">
+        <!-- [id]="addtoEvent([{ 'action': 'ProLookup', 'message': 'Lookup Pro', 'parm':''}])" -->
+        <!-- ['list']=[{ 'action': 'ProLookup', 'message': 'Lookup Pro', 'parm':''}] -->
+        {{tab}}
+        <label style="font-size:smaller;display:block;">PROS: {{tabData[tab].length}}</label>
+        <span *ngIf="tabUpdated[tab]">*</span>
+    </div>
+
+    <div style="margin-left: -4px;">
+        <input [(ngModel)]="newRoute" maxlength="20" (keyup.enter)="checkRouteName(newRoute)" style="width:100%; height:100%;"
+            placeholder="New Route (enter)">
+        <!-- <button [disabled]= (click)="">Add Route</button> -->
+    </div>
+</div>
+<div style="width:9.5%; height:calc(14% - 31px);display: inline-block; position: relative;" *ngIf="!getTRM">
+    <button (click)="viewPlan()" style="width:100%; height:45%; position: relative;">View Plan</button>
+    <button (click)="updateTabs()" style="width:100%; height:45%; position: relative;" *ngIf="showPlanOptions()">Save Plans</button>
+    <!-- <button (click)="updateTabs()" style="width:100%; height:45%; position: relative;">Close load</button> -->
+</div>
+<!-- //DropDiv -->
+<div class="DropDiv" [ngClass]="{'noSelect':tabState==''}" droppable (onDrop)="onItemDrop($event,tabState)" [dropScope]="['door', 'tab']" *ngIf="!getTRM">
+    <div *ngIf="planInfo[tabState]">
+        <table>
+            <tr>
+                <td>Trailer</td>
+                <td><input [ngModel]="planInfo[tabState]['TRLR']" (ngModelChange)="planInfo[tabState]['TRLR']=$event.trim()" (change)="tabUpdated[tabState]=true"></td>
+                <td>SCAC</td>
+                <td><input [ngModel]="planInfo[tabState]['SCAC']" (ngModelChange)="planInfo[tabState]['SCAC']=$event.trim()" (change)="tabUpdated[tabState]=true"></td>
+                <td>Tractor</td>
+                <td><input [(ngModel)]="planInfo[tabState]['TRUCK']" (change)="tabUpdated[tabState]=true"></td>
+                <td>Door</td>
+                <td><input [(ngModel)]="planInfo[tabState]['DOOR']" (change)="tabUpdated[tabState]=true"></td>
+                <td>Driver</td>
+                <td><input [(ngModel)]="planInfo[tabState]['DRVNUM']" (change)="tabUpdated[tabState]=true" list="driverList">
+                <datalist id="driverList">
+                    <option *ngFor="let row of displayDrivers" [value]="row.DRVNUM">{{row.LNAME}},{{row.FNAME}}</option>
+                </datalist>
+                </td>
+                <td>Rename</td>
+                <td><input [(ngModel)]="newName[tabState]" (change)="renameTab(newName[tabState],tabState)"></td>
+            </tr>
+        </table>
+    </div>
+    <table class="oddevenTable" style="height:calc(100% - 32px)">
+        <!-- Show header for door details -->
+        <thead>
+        <tr>
+            <th style="width:70px; min-width:70px;">Remove</th>
+            <th *ngFor="let key of objectkeys(planTitles);" [ngClass]="[key]">{{planTitles[key]}}</th>
+        </tr>
+    </thead>
+    <tbody style="height: calc(100% - 32px);">
+        <ng-container *ngFor="let pro of tabData[tabState]; let i=index;">
+            <tr draggable [dragData]="selectedPros" [dragScope]="'tab'" [id]="i" *ngIf="proData[pro]"
+                [dragClass]="draggingTR" [ngClass]="{'trxg':proData[pro].XGOLD > ' ', 'trhz':proData[pro].HAZCOD > ' ','selectedTR':checkIfSelected(pro)}">
+                <td (click)="onItemRemove(proData[pro].FBNO)" style="width:70px; min-width:70px;">--------</td>
+                
+                <td *ngFor="let key of objectkeys(planTitles);" [title]="planTitles[key]" [id]="'PRO' + pro" [ngClass]="[key]">
+                    {{displayData(proData[pro],key)}}</td>
+            </tr>
+        </ng-container>
+    </tbody>
+    </table>
+    <!-- <li *ngFor="let item of tabData[tabState]" class="list-group-item">{{item.name}}</li> -->
+</div>
+
+<div class="PrintDiv" *ngIf="printing">
+    <button (click)="printing=false;">Back</button>
+    <button (click)="printTab();">Print</button>
+    <button (click)="planned();">Plan for delivery</button>
+    <button (click)="buildGoogleRoutes(tabData[tabState])">Google Maps</button>
+    <button (click)="buildBingRoutes(tabData[tabState])">Bing Maps</button>
+    <button (click)="updateTab(tabState,'');">Save</button>
+    <button (click)="removeTab(tabState);">Delete</button>
+    <div id="Print" style="height:100%;">
+        <div *ngIf="planInfo[tabState]">
+            <table>
+                <tr class="printHide">
+                    <td>Trailer</td>
+                    <td><input [ngModel]="planInfo[tabState]['TRLR']" (ngModelChange)="planInfo[tabState]['TRLR']=$event.trim()" maxlength="6"></td>
+                    <td>SCAC</td>
+                    <td><input [ngModel]="planInfo[tabState]['SCAC']" (ngModelChange)="planInfo[tabState]['SCAC']=$event.trim()" maxlength="4"></td>
+                    <td>Tractor</td>
+                    <td><input [(ngModel)]="planInfo[tabState]['TRUCK']" maxlength="6"></td>
+                    <td>DOOR</td>
+                    <td><input [(ngModel)]="planInfo[tabState]['DOOR']" maxlength="6"></td>
+                    <td>Driver</td>
+                    <td><input [(ngModel)]="planInfo[tabState]['DRVNUM']" maxlength="6" list="driverList"></td>
+                    <datalist id="driverList">
+                        <option *ngFor="let row of displayDrivers" [value]="row.DRVNUM">{{row.LNAME}},{{row.FNAME}}</option>
+                    </datalist>
+                    <td>Name</td>
+                    <td><input [(ngModel)]="newName[tabState]" (change)="renameTab(newName[tabState],tabState)"></td>
+                </tr>
+                <tr class="printShow">
+                    <td>Trailer</td><td>{{planInfo[tabState]['TRLR']}}</td>
+                    <td>SCAC</td><td>{{planInfo[tabState]['SCAC']}}</td>
+                    <td>Tractor</td><td>{{planInfo[tabState]['TRUCK']}}</td>
+                    <td>Tractor</td><td>{{planInfo[tabState]['DOOR']}}</td>
+                    <td>Driver</td><td>{{planInfo[tabState]['DRVNUM']}}</td>
+                    <td>Name</td><td>{{tabState}}</td>
+                </tr>
+                <tr class="printShow noborder">
+                    <td colspan="10">
+                        <ngx-barcode [bc-value]="barcodeTrailer(tabState)" [bc-format]="'CODE39'" [bc-element-type]="svg" [bc-width]="2" [bc-height]="30"></ngx-barcode>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- <table  *ngIf="user !='DPJRN'" style="width:100%;" droppable (onDrop)="onItemDrop($event,tabState)" [dropScope]="['tab']">
+            <tr>
+                <th *ngFor="let key of objectkeys(printTitles); let i = index">{{printTitles[key]}}</th>
+            </tr>
+            <ng-container *ngFor="let pro of tabData[tabState]; let i=index;">
+                <tr draggable [dragData]="selectedPros" [dragScope]="'tab'" [id]="i" 
+                (dblclick)="buildGooglePlace(pro)">
+                    <td *ngFor="let key of objectkeys(printTitles);" [id]="'PRO' + pro" >{{displayData(proData[pro],key)}}</td>
+                </tr>
+                <tr draggable [dragData]="selectedPros" [dragScope]="'tab'" [id]="i" 
+                (dblclick)="buildGooglePlace(pro)">
+                    <td colspan="18">
+                        <ngx-barcode [bc-value]="proData[pro].FBNO.trim()" [bc-format]="'CODE39'" [bc-element-type]="svg" [bc-width]="2" [bc-height]="20"></ngx-barcode>
+                    </td>
+                </tr>
+            </ng-container>
+        </table> -->
+
+        <table style="width:100%;" >
+                <tr>
+                    <th class="SEQ printHide">SEQ</th>
+                    <th *ngFor="let key of objectkeys(printTitles);">{{printTitles[key]}}</th>
+                </tr>
+                <ng-container *ngFor="let pro of tabData[tabState]; let i=index;">
+                    <tr (dblclick)="buildGooglePlace(pro)">
+                        <td class="SEQ printHide"><input maxlength="2" [(ngModel)]="proSEQ[i]" class="SEQ" (change)="updateSEQ(tabState,pro,i,proSEQ[i])"></td>
+                        <td *ngFor="let key of objectkeys(printTitles);" [id]="'PRO' + pro">{{displayData(proData[pro],key)}}</td>
+                    </tr>
+                    <tr  class="printShow noborder" (dblclick)="buildGooglePlace(pro)">
+                        <td colspan="19"  class="noborder">
+                            <ngx-barcode [bc-value]="proData[pro].FBNO.trim()" [bc-format]="'CODE39'" [bc-element-type]="svg" [bc-width]="2" [bc-height]="20"></ngx-barcode>
+                        </td>
+                    </tr>
+                </ng-container>
+                <tr style="font-size:larger;">
+                        <td colspan="9" class="noborder"></td>
+                        <td>Bills</td><td>Total weight</td><td>Handling units</td>
+                </tr>
+                <tr style="font-size:x-large;">
+                    <td colspan="9" class="noborder"></td>
+                    <td>{{tabInfo.bills}}</td><td>{{tabInfo.wgt}}</td><td>{{tabInfo.hu}}</td>
+                </tr>
+            </table>
+
+    </div>
+    <div *ngIf="user == 'DPJRN'" id="bingmaps"></div>
+</div>

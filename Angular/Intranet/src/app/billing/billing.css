@@ -1,0 +1,248 @@
+html{font-size:12px;}
+
+.oddevenTable tr:nth-child(2n+2) { background-color: #F5F5DC;}
+
+.oddevenTable tr:nth-child(2n+1) { background-color: #F0FFFF;}
+
+.trxg.trhz{
+    border-top:1px solid red !important;
+    border-left:1px solid red !important;
+    border-right: 1px solid gold !important;
+    border-bottom:1px solid gold !important;
+}
+.trxg{
+    border-top:1px solid gold;
+    border-left:1px solid gold;
+    border-right: 1px solid gold;
+    border-bottom:1px solid gold;
+}
+.trhz{
+    border-top:1px solid red;
+    border-left:1px solid red;
+    border-right: 1px solid red;
+    border-bottom:1px solid red;
+}
+
+.oddevenTable{
+    width:100%;
+}
+
+table tr{
+    padding:0px;
+}
+table{
+    width:100%;
+    font-size: 0.5rem;
+}
+table th{
+    padding-right: 3px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: beige;
+    color:black;
+    padding:5px;
+    /* border-right:0.5px solid gray; */
+    cursor: pointer;
+    border-right:1px solid white;
+}
+/* table th:hover{
+    background-color:#CC0000;
+    color:white;
+} */
+table td{
+    cursor: pointer;
+    font-size: 0.6rem;
+    font-weight: 200;
+    /* border-right:0.5px solid gray; */
+}
+
+.cityheader{
+    height:30px;
+    /* border:1px solid black; */
+    box-sizing: border-box;
+}
+
+.tabInput{
+    width:100%;
+    height:100%;
+    background-color: transparent;
+    border: none;
+}
+
+.selectionDiv{
+    width:100%;
+    height:81px;
+    display: block;
+    overflow-y: scroll;
+    border:1px solid black;
+    box-sizing: border-box;
+}
+
+.selectionDiv > div, .selectionDiv > input{
+    width:14%;
+    height:40px;
+    display: inline-block;
+    right:10px;
+    vertical-align: top;
+    border:1px solid black;
+    box-sizing: border-box;
+}
+
+.selectedButton{
+    background-color:#cc0000;
+    color: white;
+}
+.unselectedButton{
+    background-color:#555555;
+    color: white;
+}
+
+.selectedDoor{
+background-color:#cc0000;
+color:white;
+}
+.unselectedDoor{
+
+background-color:#555555;
+color:white;
+}
+	.selectedDoor td, .unselectedDoor td{
+        font-size:0.6rem !important;
+    }
+	
+@media only screen and (max-width: 800px) {
+	.selectedDoor td, .unselectedDoor td{
+        width:28% !important;
+    }
+}
+
+.DragDiv{
+    width:100%;
+    display: inline-block;
+    height: calc(50% - 120px);
+    /* overflow: scroll; */
+    border:1px solid black;
+    box-sizing: border-box;
+    animation-duration: 1s;
+    animation-name: DragSlideUp;
+    position: relative;
+}
+
+.DragDiv.noSelect{
+    height: calc(100% - 213px);
+    animation-duration: 1s;
+    animation-name: DragSlideDown;
+}
+@keyframes DragSlideDown{
+    from{
+        height: calc(50% - 120px);
+    }
+    to{
+        height: calc(100% - 213px);
+    }
+}
+@keyframes DragSlideUp{
+    from{
+        height: calc(100% - 213px);
+    }
+    to{
+        height: calc(50% - 120px);
+    }
+}
+
+.selectedTR{
+    background-color:aquamarine !important;
+}
+
+.printShow{
+    display:none;
+}
+
+.DropDiv{
+    /* overflow: scroll; */
+    width:100%;
+    display:inline-block;
+    height: calc(50% - 83px);
+    position: relative;
+    background-color:gainsboro;
+    border:1px solid black;
+    box-sizing: border-box;
+}
+.DropDiv.noSelect{
+    height:0px;
+    display:none;
+}
+
+.PrintDiv{
+    overflow: scroll;
+    width:100%;
+    height:100%;
+    z-index: 1000;
+    display:block;    
+    position: absolute;
+    top:0px;
+    left:0px;
+    background-color:white;
+}
+#Print{
+    width:100%;
+    
+}
+
+.draggingTR{
+    border:1px solid black;
+    background-color: #555555;
+    color:white;
+}
+
+.oddevenTable{
+    position: relative;
+    height: 100%;
+}
+.oddevenTable thead{
+    height:32px;
+    display: block;
+    position: relative;
+}
+.oddevenTable tbody{
+    height: calc(100% - 60px);
+    display: block;
+    overflow-y: scroll;
+    position: relative;
+}
+.headertable td{
+    font-size:0.8rem;
+}
+.hoverTextarea{
+    overflow: auto;
+    height:28px;
+    position: relative;
+    vertical-align:middle;
+    resize:none;
+
+}
+.hoverTextarea:focus{
+    left:0px;
+    height:100%;
+    z-index: 999;
+    resize:none;
+    position: absolute;
+}
+
+.SEQ{width:40px; min-width:40px;}
+.FBNO{width:83px; min-width:83px;text-align: right;}
+.HAZCOD,.XGOLD,.RESD,.LGD,.SUFFIX{width:40px;max-width:40px; min-width:40px;border-left:1px solid beige;text-align:center;}
+.APPTDT, .RDDDAT{width:60px; min-width:60px;text-align:right;}
+.FROMA, .TOA{width:48px;min-width:48px;}
+.DOORNO, .DOORN2{width:68px;min-width:68px;}
+.CNSNME,.CNSADR{width:185px;min-width:185px;}
+.CNSCTY{width:110px; max-width:110px;min-width:110px;}
+.CNSSTA{width:32px;min-width:32px;}
+.CNSZIP{width:43px;min-width:43px;text-align:right;}
+.TTLPCS, .TTLWT, .HDUNITS{width:49px;min-width:49px;text-align:right;}
+.TRKTRM{width:36px;min-width:36px;}
+.STATUS{min-width:145px;width:auto;}
+
+/* .gridBody:nth-child(2n+2) { background-color: #F5F5DC;}
+
+.gridBody:nth-child(2n+1) { background-color: #F0FFFF;} */

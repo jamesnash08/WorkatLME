@@ -1,0 +1,162 @@
+<table *ngIf="!Polls[selectedPoll]" style="font-size:x-large;">
+    <tr *ngIf="this.userManagement.hasAuthStrict('POLLS')"><td><button (click)="createNew();">Create new Poll</button></td></tr>
+    <tr><th>Poll name</th><th>Description</th></tr>
+<tr *ngFor="let poll of objectkeys(Polls)" (click)="selectedPoll=poll" class="pollCheck">
+<td>{{Polls[poll].NAME}}</td>
+<td>{{Polls[poll].DESC}}</td>
+</tr>
+</table>
+
+<div *ngIf="Polls[selectedPoll] && !showResults && !showNew">
+    <form (ngSubmit)="writeResult(Polls[selectedPoll].Q)">
+    <h1>{{Polls[selectedPoll].NAME}}</h1>
+    <p>{{Polls[selectedPoll].DESC}}</p>
+
+    <table>    
+            <button (click)="showResults=false;selectedPoll=''">Close</button>
+        <ng-container *ngFor="let row of Polls[selectedPoll].Q; let i=index;">
+            <tr>
+                <th>Question {{i+1}}:</th>
+                <th>{{row.TITLE}}</th>
+            </tr>
+            <tr>
+                <th></th>
+                <td><p>{{row.DESC}}</p></td>
+            </tr>
+
+            <tr *ngIf="row.TYPE == 'BOOL'">
+                <th></th>
+                <td>
+                    <ul style="list-style: none;">
+                    <li>
+                        <input type="radio" name="Poll{{row.POLLID}}Question{{row.SEQ}}" value="true" [(ngModel)]="row.ANSWER"  id="Poll{{row.POLLID}}Question{{row.SEQ}}-True" name="Poll{{row.POLLID}}Question{{row.SEQ}}-True" required>
+                        <label for="Poll{{row.POLLID}}Question{{row.SEQ}}-True" style="cursor: pointer;">True</label>
+                    </li>
+                    <li>
+                        <input type="radio" name="Poll{{row.POLLID}}Question{{row.SEQ}}" value="false" [(ngModel)]="row.ANSWER"  id="Poll{{row.POLLID}}Question{{row.SEQ}}-False" name="Poll{{row.POLLID}}Question{{row.SEQ}}-False" required>
+                        <label for="Poll{{row.POLLID}}Question{{row.SEQ}}-False" style="cursor: pointer;">False</label>
+                    </li>
+                    </ul> 
+                </td>
+            </tr>
+
+            <tr *ngIf="row.TYPE == 'SATISFY'">
+                <th></th>
+                <td><table><tr><td *ngFor="let sat of Satisfy;let j=index">
+                    <input type="radio" name="Poll{{row.POLLID}}Question{{row.SEQ}}" [value]="sat" [(ngModel)]="row.ANSWER"  id="Poll{{row.POLLID}}Question{{row.SEQ}}-{{j}}" name="Poll{{row.POLLID}}Question{{row.SEQ}}-{{j}}"  required>
+                    <label for="Poll{{row.POLLID}}Question{{row.SEQ}}-{{j}}" style="cursor: pointer;">{{SatisfyDisplay[j]}}</label>
+                </td></tr></table></td>
+            </tr>
+
+            <tr *ngIf="row.TYPE == 'COMMENT'">
+                    <th></th>
+                    <td><textarea [(ngModel)]="row.ANSWER" name="Poll{{row.POLLID}}Question{{row.SEQ}}" rows="4" cols="50" required></textarea></td>
+            </tr>
+
+            <tr *ngIf="row.TYPE == 'CHOICE'">
+                    <th></th>
+                    <td>
+                        <ul style="list-style: none;">
+                            <li *ngFor="let choice of Choices">
+                                <input type="radio" name="Poll{{row.POLLID}}Question{{row.SEQ}}" [value]="row['C' + choice]" [(ngModel)]="row.ANSWER"  id="Poll{{row.POLLID}}Question{{row.SEQ}}-{{choice}}" name="Poll{{row.POLLID}}Question{{row.SEQ}}-{{choice}}" required>
+                                <label for="Poll{{row.POLLID}}Question{{row.SEQ}}-{{choice}}" style="cursor: pointer;">{{row['C'+ choice]}}</label>
+                            </li>
+                        </ul> 
+                    </td>
+            </tr>
+            
+        </ng-container>
+        <tr>
+            <td><button type="submit">Submit</button></td>
+        </tr>
+    </table>
+</form>
+</div>
+<div *ngIf="showResults && !showNew">
+        <button (click)="showResults=false;selectedPoll=''">Close</button>
+    <ng-container *ngFor="let seq of objectkeys(PollResults); let i=index;">
+            <tr>
+                <th>Question {{i+1}}:</th>
+                <th>{{Polls[selectedPoll].Q[i].TITLE}}</th>
+            </tr>
+            <tr>
+                    <th></th>
+                    <td>{{Polls[selectedPoll].Q[i].DESC}}</td>
+                </tr>
+            <!-- <tr *ngFor="let answer of objectkeys(PollResults[seq].ANSWER);">
+                <th></th>
+                <td>{{displayPollResult(seq,answer)}}</td>
+            </tr> -->
+            <tr><td></td>
+                <td>
+                    
+                                <canvas baseChart 
+                                [data]="pieChartData[seq]" 
+                                [labels]="pieChartLabels[seq]" 
+                                [chartType]="pieChartType"
+                                [options]="pieChartOptions"
+                                [legend]="pieChartLegend">
+                              </canvas>
+        
+                              <!-- [plugins]="pieChartPlugins" -->
+                        </td>
+                
+            </tr>
+    </ng-container>
+</div>
+
+<div *ngIf="showNew">
+    <button (click)="showNew=false">Close</button>
+    <button (click)="createPoll()">Create Poll</button>
+    <table style="width:auto;">
+        <tr>
+            <td>Name:</td><td><input [(ngModel)]="newPoll.NAME"></td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <!-- <td> <input [(ngModel)]="newPoll.DESC"></td> -->
+            <td colspan="2"><textarea [(ngModel)]="newPoll.DESC" rows="4" cols="50"></textarea></td>
+        </tr>
+        <tr>
+            <td>Start Date:</td><td> <input [(ngModel)]="newPoll.CDATE" placeholder="YYYYMMDD"></td>
+            <td>End Date:</td><td> <input [(ngModel)]="newPoll.EDATE" placeholder="YYYYMMDD"></td>
+        </tr>
+        <tr>
+            <td><button (click)="addQuestion()">Add Question</button></td>
+        </tr>
+        <ng-container *ngFor="let q of newPoll.Q; let i=index;">
+        <tr>
+            <td>Question: {{i+1}}</td><td>Title:</td>
+            <td><input [(ngModel)]="q.TITLE"></td>
+        </tr>
+        <tr>
+            <td></td><td>Description:</td>
+            <td colspan="2"><textarea [(ngModel)]="q.DESC" rows="4" cols="50"></textarea></td>
+        </tr>
+        <tr><td></td>
+            <td>Type:</td>
+            <td>
+                <select [(ngModel)]="q.TYPE">
+                    <option value="BOOL">True/False</option>
+                    <option value="SATISFY">Satisfaction</option>
+                    <option value="COMMENT">Comments</option>
+                    <option value="CHOICE">Multiple choice</option>
+                </select>
+            </td>
+        </tr>
+        <ng-container *ngIf="q.TYPE == 'CHOICE'">
+            <tr><td></td><td>Choice 1</td>
+                <td><input [(ngModel)]="q['C1']" maxlength="40"></td></tr>
+            <tr><td></td><td>Choice 2</td>
+                <td><input [(ngModel)]="q['C2']" maxlength="40"></td></tr>
+            <tr><td></td><td>Choice 3</td>
+                <td><input [(ngModel)]="q['C3']" maxlength="40"></td></tr>
+            <tr><td></td><td>Choice 4</td>
+                <td><input [(ngModel)]="q['C4']" maxlength="40"></td></tr>
+            <tr><td></td><td>Choice 5</td>
+                <td><input [(ngModel)]="q['C5']" maxlength="40"></td></tr>
+        </ng-container>
+        <tr><td></td></tr>
+        </ng-container>
+    </table>
+</div>

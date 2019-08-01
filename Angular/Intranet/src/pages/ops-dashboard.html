@@ -1,0 +1,140 @@
+<div *ngIf="trmscreen"><label>Select Terminal:</label><input type="text" maxlength="3" [(ngModel)]="trm" placeholder="Terminal" (keyup)="trm=trm.toUpperCase()" (keyup.enter)="getTRMData(trm)">
+<button (click)="getTRMData(trm)">Submit</button><label>{{errmsg}}</label>
+</div>
+
+<div *ngFor="let year of years; let y = index">
+<div *ngFor="let months of years[y]; let x = index" style="display:inline-block">
+<label *ngIf="x == 0">Year 20{{years[y][0]}}</label>
+<ng-container *ngIf="x > 0">
+<input type="radio" name="period" value="{{y}}-{{x}}" [(ngModel)]="periodSelect" id="radio{{y}}-{{x}}" style="display:none">
+<label for="radio{{y}}-{{x}}" [ngClass]="{'LMEButton':periodSelect != y + '-' + x, 'LMEButtonPress':periodSelect == y + '-' + x}" (click)="selectPeriod(years[y][0],years[y][x])" style="width:80px; margin-right:5px;">Period: {{years[y][x]}}</label>
+</ng-container>
+</div>
+
+</div>
+
+
+<H1><div id ="TableHeader" align="center"></div></H1>
+
+<div id = "TableID" style = "width:1280px;" *ngIf="tableState=='OPS'">
+<table *ngIf="showTable()">
+<thead>
+<tr>
+<th *ngIf="tabledisplay[0].trm != 'ALL'">TRM</th>
+<th>Date</th>
+<th class="tablebreak"></th>			
+<th (click)="selectGraph('tothours')">Total</th>
+<th (click)="selectGraph('drivhours')">Driver</th>
+<th (click)="selectGraph('dockhours')">Dock</th>
+<th (click)="selectGraph('pdmiles')">PD Miles</th>
+<th class="tablebreak"></th>		
+<th (click)="selectGraph('rvrev')">RV REV</th>
+<th (click)="selectGraph('rvwgt')">RV WGT</th>
+<th (click)="selectGraph('rvshp')">RV SHP</th>
+<th (click)="selectGraph('lhmiles')">LH Miles</th>
+<th>Bills / TRLR</th>
+<th class="tablebreak"></th>		
+<th (click)="selectGraph('ibrev')">I/B REV</th>
+<th (click)="selectGraph('ibwgt')">I/B WGT</th>
+<th (click)="selectGraph('ibshp')">I/B SHP</th>
+<th class="tablebreak"></th>		
+<th (click)="selectGraph('obrev')">O/B REV</th>
+<th (click)="selectGraph('obwgt')">O/B WGT</th>
+<th (click)="selectGraph('obshp')">O/B SHP</th>
+</tr>
+</thead>
+<tr *ngFor="let row of tabledisplay; let i = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">
+<td *ngIf="tabledisplay[0].trm != 'ALL'" (click)="router.navigate(['/opsDashboard/'+row.trm.toUpperCase()]);">{{row.trm}}</td>
+<td (click)="getDate(row.date)">{{returnMDY(row.date)}}</td>	
+<td class="tablebreak"></td>		
+<td (click)="getHours(row.date,row.trm)">{{row.tothours}}</td>
+<td (click)="getHours(row.date,row.trm)">{{row.drivhours}}</td>
+<td (click)="getHours(row.date,row.trm)">{{row.dockhours}}</td>
+<td>{{row.pdmiles}}</td>
+<td class="tablebreak"></td>	
+<td>{{row.rvrev}}</td>
+<td>{{row.rvwgt}}</td>
+<td>{{row.rvshp}}</td>
+<td>{{row.lhmiles}}</td>
+<td>{{row.billtrlr}}</td>
+<td class="tablebreak"></td>	
+<td>{{row.ibrev}}</td>
+<td>{{row.ibwgt}}</td>
+<td>{{row.ibshp}}</td>
+<td class="tablebreak"></td>	
+<td>{{row.obrev}}</td>
+<td>{{row.obwgt}}</td>
+<td>{{row.obshp}}</td>
+</tr>
+<tr *ngFor="let row of tabletotals; let i = index;" class="totals">
+<th *ngIf="tabledisplay[0].trm != 'ALL'">{{row.trm}}</th>
+<th>{{row.date}}</th>	
+<td class="tablebreak"></td>		
+<th>{{row.tothours}}</th>
+<th>{{row.drivhours}}</th>
+<th>{{row.dockhours}}</th>
+<th>{{row.pdmiles}}</th>
+<td class="tablebreak"></td>
+<th>{{row.rvrev}}</th>
+<th>{{row.rvwgt}}</th>
+<th>{{row.rvshp}}</th>
+<th>{{row.lhmiles}}</th>
+<th></th>
+<td class="tablebreak"></td>
+<th>{{row.ibrev}}</th>
+<th>{{row.ibwgt}}</th>
+<th>{{row.ibshp}}</th>
+<td class="tablebreak"></td>
+<th>{{row.obrev}}</th>
+<th>{{row.obwgt}}</th>
+<th>{{row.obshp}}</th>
+</tr>
+</table>
+</div>
+
+<div *ngIf="tableState=='HOURS'">
+<table id = "TableID" style="min-width:800px; width:100%; font-size:18px;">
+	<thead>
+		<tr>
+		<th>TRM</th>
+		<th>Date</th>
+		<th>Employee#</th>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<th>Department</th>
+		<th>Dock</th>
+		<th>Driver</th>
+		<th>Admin</th>
+		<th>Linehaul</th>
+		</tr>
+	</thead>
+	<tr *ngFor="let row of tableHours; let i = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">
+		<td>{{row.CTTRML}}</td>
+		<td>{{returnYMDtoMDY(row.CTDATE)}}</td>
+		<td>{{row.CTEMP}}</td>
+		<td>{{row.FNAME}}</td>
+		<td>{{row.LNAME}}</td>
+		<td>{{row.DEPTCD}}</td>
+		<td style="text-align:right;">{{row.CTDOCK}}</td>
+		<td style="text-align:right;">{{row.CTDRIV}}</td>
+		<td style="text-align:right;">{{row.CTADMN}}</td>
+		<td style="text-align:right;">{{row.CTLNHL}}</td>
+	</tr>
+</table>
+</div>
+
+<div class="prolist" id="navto" *ngIf="lineChartData.length > 0">
+
+	<button (click)="lineChartData=[]">Close Chart</button> 
+	<!-- <button class="print" (click)="Print()">Print</button><br> -->
+	
+	<div id="canvasdiv">
+	<canvas baseChart 
+					[datasets]="lineChartData"
+					[labels]="lineChartLabel"
+					[options]="lineChartOptions"
+					[colors]="lineChartColors"
+					[legend]="lineChartLegend"
+					[chartType]="lineChartType"></canvas>
+	</div>
+	</div>

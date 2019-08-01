@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://v2.webservice.pickup.lme.com"
+    xmlns:impl="http://v2.webservice.pickup.lme.com"
+    xmlns:intf="http://v2.webservice.pickup.lme.com"
+    xmlns:tns2="http://data.v2.webservice.pickup.lme.com"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsi="http://ws-i.org/profiles/basic/1.1/xsd"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://data.v2.webservice.pickup.lme.com"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <complexType name="PickupHeader">
+                <sequence>
+                    <element name="shipmentDetails" nillable="true" type="tns2:ArrayOfCommodityLine"/>
+                    <element name="customerNum" nillable="true" type="xsd:string"/>
+                    <element name="dockCloseTime" nillable="true" type="xsd:string"/>
+                    <element name="food" nillable="true" type="xsd:string"/>
+                    <element name="insidepickup" nillable="true" type="xsd:string"/>
+                    <element name="liftgaterequired" nillable="true" type="xsd:string"/>
+                    <element name="limitedaccpickup" nillable="true" type="xsd:string"/>
+                    <element name="oversize" nillable="true" type="xsd:string"/>
+                    <element name="paymentTerms" nillable="true" type="xsd:string"/>
+                    <element name="shipperPhone" nillable="true" type="xsd:string"/>
+                    <element name="pickDate" nillable="true" type="xsd:string"/>
+                    <element name="pickTime" nillable="true" type="xsd:string"/>
+                    <element name="poison" nillable="true" type="xsd:string"/>
+                    <element name="privaterespickup" nillable="true" type="xsd:string"/>
+                    <element name="requestorContact" nillable="true" type="xsd:string"/>
+                    <element name="requestorPhone" nillable="true" type="xsd:string"/>
+                    <element name="shipAddress" nillable="true" type="xsd:string"/>
+                    <element name="shipCity" nillable="true" type="xsd:string"/>
+                    <element name="shipCompany" nillable="true" type="xsd:string"/>
+                    <element name="shipContact" nillable="true" type="xsd:string"/>
+                    <element name="shipState" nillable="true" type="xsd:string"/>
+                    <element name="shipZip" nillable="true" type="xsd:string"/>
+                    <element name="specialInstructions" nillable="true" type="xsd:string"/>
+                    <element name="thirdPartyPayor" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <complexType name="CommodityLine">
+                <sequence>
+                    <element name="consigneeName" nillable="true" type="xsd:string"/>
+                    <element name="destZipCode" nillable="true" type="xsd:string"/>
+                    <element name="freezable" nillable="true" type="xsd:string"/>
+                    <element name="hazMat" nillable="true" type="xsd:string"/>
+                    <element name="loadNum" nillable="true" type="xsd:string"/>
+                    <element name="units" nillable="true" type="xsd:string"/>
+                    <element name="unitType" nillable="true" type="xsd:string"/>
+                    <element name="weight" nillable="true" type="xsd:string"/>
+                    <element name="xgold" nillable="true" type="xsd:string"/>
+                    <element name="destCity" nillable="true" type="xsd:string"/>
+                    <element name="destState" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <complexType name="ArrayOfCommodityLine">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" name="CommodityLine" nillable="true" type="tns2:CommodityLine"/>
+                </sequence>
+            </complexType>
+            <complexType name="PickupResponse">
+                <sequence>
+                    <element name="pickupNumber" nillable="true" type="xsd:string"/>
+                    <element name="returnCode" nillable="true" type="xsd:string"/>
+                    <element name="errorDescription" nillable="true" type="xsd:string"/>
+                    <element name="errorVariables" nillable="true" type="tns2:ArrayOf_1160347182_1440052060_nillable_string"/>
+                    <element name="fullErrorMessage" nillable="true" type="xsd:string"/>
+                    <element name="additionalMessage" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <complexType name="ArrayOf_1160347182_1440052060_nillable_string">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" name="string" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+        </schema>
+        <schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://v2.webservice.pickup.lme.com"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns2="http://data.v2.webservice.pickup.lme.com"
+            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://data.v2.webservice.pickup.lme.com"/>
+            <element name="RequestPickupResponse">
+                <complexType>
+                    <sequence>
+                        <element name="RequestPickupReturn" nillable="true" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="RequestPickup_v2">
+                <complexType>
+                    <sequence>
+                        <element name="pickup" nillable="true" type="tns2:PickupHeader"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="RequestPickup_v2Response">
+                <complexType>
+                    <sequence>
+                        <element name="RequestPickup_v2Return" nillable="true" type="tns2:PickupResponse"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="RequestPickup">
+                <complexType>
+                    <sequence>
+                        <element name="pickup" nillable="true" type="tns2:PickupHeader"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="PickupException">
+                <sequence>
+                    <element name="errorCode" nillable="true" type="xsd:string"/>
+                    <element name="errorDescription" nillable="true" type="xsd:string"/>
+                    <element name="variables" nillable="true" type="impl:ArrayOf_1140235022_1440052060_nillable_string"/>
+                </sequence>
+            </complexType>
+            <complexType name="ArrayOf_1140235022_1440052060_nillable_string">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" name="string" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <element name="PickupException" nillable="true" type="impl:PickupException"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="RequestPickup_v2Response">
+        <wsdl:part element="impl:RequestPickup_v2Response" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="PickupException">
+        <wsdl:part element="impl:PickupException" name="fault"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="RequestPickup_v2Request">
+        <wsdl:part element="impl:RequestPickup_v2" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="RequestPickupRequest">
+        <wsdl:part element="impl:RequestPickup" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="RequestPickupResponse">
+        <wsdl:part element="impl:RequestPickupResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="PickupRequestMethodsV2">
+        <wsdl:operation name="RequestPickup">
+            <wsdl:input message="impl:RequestPickupRequest" name="RequestPickupRequest"></wsdl:input>
+            <wsdl:output message="impl:RequestPickupResponse" name="RequestPickupResponse"></wsdl:output>
+            <wsdl:fault message="impl:PickupException" name="PickupException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="RequestPickup_v2">
+            <wsdl:input message="impl:RequestPickup_v2Request" name="RequestPickup_v2Request"></wsdl:input>
+            <wsdl:output message="impl:RequestPickup_v2Response" name="RequestPickup_v2Response"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PickupRequestMethodsV2SoapBinding" type="impl:PickupRequestMethodsV2">
+        <wsaw:UsingAddressing wsdl:required="false"
+            xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"/>
+            <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+            <wsdl:operation name="RequestPickup">
+                <wsdlsoap:operation soapAction="RequestPickup"/>
+                <wsdl:input name="RequestPickupRequest">
+                    <wsdlsoap:body use="literal"/>
+                </wsdl:input>
+                <wsdl:output name="RequestPickupResponse">
+                    <wsdlsoap:body use="literal"/>
+                </wsdl:output>
+                <wsdl:fault name="PickupException">
+                    <wsdlsoap:fault name="PickupException" use="literal"/>
+                </wsdl:fault>
+            </wsdl:operation>
+            <wsdl:operation name="RequestPickup_v2">
+                <wsdlsoap:operation soapAction="RequestPickup_v2"/>
+                <wsdl:input name="RequestPickup_v2Request">
+                    <wsdlsoap:body use="literal"/>
+                </wsdl:input>
+                <wsdl:output name="RequestPickup_v2Response">
+                    <wsdlsoap:body use="literal"/>
+                </wsdl:output>
+            </wsdl:operation>
+        </wsdl:binding>
+        <wsdl:service name="PickupRequestMethodsV2Service">
+            <wsdl:port binding="impl:PickupRequestMethodsV2SoapBinding" name="PickupRequestMethodsV2SoapBinding">
+                <wsdlsoap:address location="https://lme4me.com:8081/wsdl/pickup2"/>
+            </wsdl:port>
+        </wsdl:service>
+    </wsdl:definitions>

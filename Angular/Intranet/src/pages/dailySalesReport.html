@@ -1,0 +1,26 @@
+<div>
+
+	<div class="repsTab">
+
+		<h5>Sales Reps</h5>
+		<label (click)="allSalesPersons()">All Sales Persons</label>
+		<div *ngFor="let row of this.salesPerson; let i = index;">
+			<input type="radio" name="years"  value="{{i}}" id="{{row}}" style="display:none">
+			<label id="salesPerson" for="{{row}}" (click)="selectSalesPerson(i)">{{row}}</label>
+		</div>
+
+	</div>
+
+	<div class="canvasFrame">
+	<canvas id = "DailySalesGraph" baseChart #myChart="base-chart"
+		[datasets]="barChartData"
+		[labels]="barChartLabels"
+		[options]="barChartOptions"
+		[colors]="barChartColors"
+		[legend]="barChartLegend"
+		[chartType]="barChartType">
+	</canvas>
+	</div>
+
+</div>
+

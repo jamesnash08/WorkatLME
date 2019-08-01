@@ -1,0 +1,51 @@
+.datatable tr:nth-child(2n+2) { background-color: #F5F5DC;}
+
+.datatable tr:nth-child(2n+1) { background-color: #F0FFFF;}
+
+table tr{
+    padding:0px;
+}
+table{
+    font-size: 12px;
+    height: 90%;
+    width:100%;
+}
+table th{
+    padding-right: 3px;
+    /* border-right:0.5px solid gray; */
+    cursor: pointer;
+}
+table th:hover{
+    background-color:#CC0000;
+    color:white;
+}
+table td{
+    cursor: pointer;
+    /* border-right:0.5px solid gray; */
+}
+
+table tbody, table thead
+{
+    display: block;
+}
+table tbody 
+{
+   overflow: auto;
+   height: 100%;
+}
+table th:nth-child(1), td:nth-child(1) { width: 72px; }
+table th:nth-child(2), td:nth-child(2) { min-width: 72px;}
+table th:nth-child(3), td:nth-child(3) { min-width: 128px;  }
+table th:nth-child(4), td:nth-child(4) { min-width: 120px; }
+table th:nth-child(5), td:nth-child(5) { min-width: 47px; }
+table th:nth-child(6), td:nth-child(6) { min-width: 56px; }
+table th:nth-child(7), td:nth-child(7) { min-width: 88px; }
+table th:nth-child(8), td:nth-child(8) { min-width: 56px; }
+table th:nth-child(9), td:nth-child(9) { min-width: 62px; }
+table th:nth-child(10), td:nth-child(10) { min-width: 54px; }
+table th:nth-child(11), td:nth-child(11) { min-width: 86px; }
+table th:nth-child(12), td:nth-child(12) { min-width: 76px; }
+table th:nth-child(13), td:nth-child(13) { min-width: 63px; }
+table th:nth-child(14), td:nth-child(14) { min-width: 87px; }
+table th:nth-child(15), td:nth-child(15) { min-width: 67px; }
+table th:nth-child(16), td:nth-child(16) { min-width: 81px; }

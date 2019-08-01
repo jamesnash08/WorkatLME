@@ -1,0 +1,43 @@
+<div>
+    <table>
+        <tr>
+            <th *ngFor="let year of objectkeys(displaytable)"><button (click)="curYear=year">Year:{{year}}</button></th>
+            <!-- <td><input [ngModel]="terminal" (ngModelChange)="terminal=$event.toUpperCase()" maxlength="3" (keyup.enter)="getDriverHours(terminal)"></td> -->
+    
+            <!-- <td><button (click)="exportExcel()">Export to Excel</button></td> -->
+            <!-- <td *ngIf="detailtable.length > 0"><button (click)="exportExcel()">Export Detail to Excel</button></td> -->
+            <td><label>{{err}}</label></td>
+        </tr>
+    </table>
+
+</div>
+<table *ngIf="curYear != ''" class="datatable">
+    <thead>
+        <tr>
+            <td *ngFor="let key of objectkeys(titles);" (click)="sortByKey(key)">
+                <span *ngIf="titles[key]">{{titles[key]}}</span>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let slsrep of objectkeys(displaytable[curYear]);">
+            <tr>
+                <td *ngFor="let key of objectkeys(titles);" [title]="titles[key]" style="cursor:pointer;" (click)="clickCheck(displaytable[curYear][slsrep],key)">
+                    <label style="cursor:pointer;">{{displayCell(displaytable[curYear][slsrep],key)}}</label>
+                </td>
+            </tr>
+            <ng-container *ngIf="showDetail(displaytable[curYear][slsrep])">
+                <!-- <td colspan="{{objectkeys(titles).length}}"> -->
+                <tr>
+                    <th *ngFor="let key of objectkeys(detailtable[0])" colspan="2">{{key}}</th>
+                    <th>Year {{this.displayKeys.year}}</th><th>Period {{this.displayKeys.period}}</th>
+                </tr>
+                <tr *ngFor="let row of detailtable;">
+                    <td colspan="2" *ngFor="let key of objectkeys(row)">
+                        {{row[key]}}
+                    </td>
+                </tr>     
+            </ng-container>
+        </ng-container>
+    </tbody>
+</table>

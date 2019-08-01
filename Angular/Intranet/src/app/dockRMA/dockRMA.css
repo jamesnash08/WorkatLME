@@ -1,0 +1,32 @@
+.datatable tr:nth-child(2n+2) { background-color: #F5F5DC;}
+
+.datatable tr:nth-child(2n+1) { background-color: #F0FFFF;}
+
+/* .datatable tr td:nth-child(2n+2) { background-color: #F5F5DC;} */
+
+/* .datatable tr td:nth-child(2n+1) { background-color: rgba(0.6,0.6,0.6,0.1);} */
+
+table tr{
+    padding:0px;
+}
+table{
+    font-size: 12px;
+}
+.datatable{
+    min-width: 100%;
+    width:auto;
+}
+table th{
+    padding-right: 3px;
+    /* border-right:0.5px solid gray; */
+    cursor: pointer;
+}
+/* table th:hover{
+    background-color:#CC0000;
+    color:white;
+} */
+table td{
+    text-align: right;
+    padding: 2px;
+    /* border-right:0.5px solid gray; */
+}

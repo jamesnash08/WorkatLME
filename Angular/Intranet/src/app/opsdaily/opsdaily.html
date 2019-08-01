@@ -1,0 +1,79 @@
+<table *ngIf="displaytable != null && lineChartData.length < 1" style="display:inline-table; width:48%; vertical-align:top;">
+<thead><tr style="height:75px;">
+<th *ngFor="let key of objectkeys(displaytable[0][0])" (click)="selectGraph1(key)" [ngClass]="{'selectableTH':key!='TMCYMD'}">{{titles[key]}}</th>
+<!-- <th>Date</th><th>Trade</th><th>Fuel</th><th>Revenue</th><th>SYSAVG</th> -->
+</tr></thead>
+<ng-container *ngFor="let row of displaytable[2].slice().reverse(); let q = index; let odd=odd; let even=even">
+    <tr [ngClass]="{odd: odd, even: even}" *ngIf="row.TMCYMD != 0">
+    <!-- <td *ngFor="let key of objectkeys(row)">{{row[key]}}</td> -->
+    <td style="text-align:right;">{{returnMDY(row.TMCYMD)}}</td>
+    <td style="text-align:right;">{{row.JUL}}</td>
+    <td style="text-align:right;">{{numberWithCommasDecimal(row.TRADE)}}</td>
+    <td style="text-align:right;">{{numberWithCommasDecimal(row.FUEL)}}</td>
+    <td style="text-align:right;">{{numberWithCommasDecimal(row.REV)}}</td>
+    <td style="text-align:right;">{{row.SYSAVG}}</td>
+</tr>
+</ng-container>
+<ng-container *ngFor="let row of displaytable[1].slice().reverse(); let q = index; let odd=odd; let even=even">
+    <tr [ngClass]="{odd: odd, even: even}" *ngIf="row.TMCYMD != 0">
+    <!-- <td *ngFor="let key of objectkeys(row)">{{row[key]}}</td> -->
+    <td style="text-align:right;">{{returnMDY(row.TMCYMD)}}</td>
+    <td style="text-align:right;">{{row.JUL}}</td>
+    <td style="text-align:right;">{{numberWithCommasDecimal(row.TRADE)}}</td>
+    <td style="text-align:right;">{{numberWithCommasDecimal(row.FUEL)}}</td>
+    <td style="text-align:right;">{{numberWithCommasDecimal(row.REV)}}</td>
+    <td style="text-align:right;">{{row.SYSAVG}}</td>
+</tr>
+</ng-container>
+<ng-container *ngFor="let row of displaytable[0].slice().reverse(); let q = index; let odd=odd; let even=even">
+<tr [ngClass]="{odd: odd, even: even}" *ngIf="row.TMCYMD != 0">
+    <!-- <td *ngFor="let key of objectkeys(row)">{{row[key]}}</td> -->
+    <td style="text-align:right;">{{returnMDY(row.TMCYMD)}}</td>
+    <td style="text-align:right;">{{row.JUL}}</td>
+    <td style="text-align:right;">{{numberWithCommasDecimal(row.TRADE)}}</td>
+    <td style="text-align:right;">{{numberWithCommasDecimal(row.FUEL)}}</td>
+    <td style="text-align:right;">{{numberWithCommasDecimal(row.REV)}}</td>
+    <td style="text-align:right;">{{row.SYSAVG}}</td>
+</tr>
+</ng-container>
+
+</table>
+
+<table *ngIf="displaytable2 != null" style="display:inline-table; width:48%">
+<thead><tr style="height:75px;">
+<th *ngFor="let key of objectkeys(displaytable2[0])" (click)="selectGraph2(key)" [ngClass]="{'selectableTH':key!='date'}">{{titles[key]}}</th>
+<!-- <th>Date</th><th>Trade</th><th>Fuel</th><th>Revenue</th><th>SYSAVG</th> -->
+</tr></thead>
+<tr *ngFor="let row of displaytable2; let q = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">
+<!-- <td *ngFor="let key of objectkeys(row)">{{row[key]}}</td> -->
+<td style="text-align:right;">{{returnMDY(row.date)}}</td>
+<td style="text-align:right;">{{numberWithCommasDecimal(row.miles)}}</td>
+<td style="text-align:right;">{{numberWithCommasDecimal(row.loaded)}}</td>
+<td style="text-align:right;">{{numberWithCommasDecimal(row.empty)}}</td>
+<td style="text-align:right;">{{row.loadcount}}</td>
+<td style="text-align:right;">{{row.emptycount}}</td>
+<td style="text-align:right;">{{numberWithCommasDecimal(row.loadavgwgt)}}</td>
+</tr>
+</table>
+
+<br>
+<!-- <table *ngIf="displayinfo != null"> -->
+<!-- <tr *ngFor="let key of objectkeys(displayinfo)"><th>{{key}}</th><td>{{numberWithCommasDecimal(displayinfo[key])}}</td></tr> -->
+<!-- <tr *ngFor="let row of displayinfo; let q = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}"> --> 
+<!-- </table> -->
+
+<div class="prolist" id="navto" *ngIf="lineChartData.length > 0">
+
+<button (click)="lineChartData=[]">Close Chart</button> 
+<!-- <button class="print" (click)="Print()">Print</button><br> -->
+
+<div id="canvasdiv">
+<canvas baseChart 
+                [datasets]="lineChartData"
+                [labels]="lineChartLabel"
+                [options]="lineChartOptions"
+                [colors]="lineChartColors"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"></canvas>
+</div>
+</div>

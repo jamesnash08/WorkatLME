@@ -1,0 +1,46 @@
+<div>
+    <table>
+        <tr>
+            <th>Terminal</th>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th></th>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input [ngModel]="terminal" (ngModelChange)="terminal=$event.toUpperCase()" maxlength="3" (keyup.enter)="getData(terminal)"></td>
+            <td><input type="date" name="fromdate" [(ngModel)]="fromdate" (keyup.enter)="getData(terminal)"></td>
+            <td><input type="date" name="todate" [(ngModel)]="todate" (keyup.enter)="getData(terminal)"></td>
+            <td><button (click)="getData(terminal)" (keyup.enter)="getData(terminal)">Submit</button></td>
+            <td><input type="radio" name="dataState" id="Dock" value="DCK" [(ngModel)]="dataState"><label for="outship">Dock</label></td>
+            <td><input *ngIf="userManagement.hasAuth('OPSMGR')" type="radio" name="dataState" id="Office" value="OFC" [(ngModel)]="dataState"><label for="inship">Office</label></td>
+            <td><button (click)="exportExcel()">Export to Excel</button></td>
+        </tr>
+        <tr>
+            <td colspan="4"><label>{{err}}</label></td>
+        </tr>
+    </table>
+
+</div>
+<table *ngIf="displaytable[dataState]" class="datatable" style="width:100%;">
+    <thead>
+        <tr>
+            <th *ngFor="let key of objectkeys(titles[dataState]);" (click)="sortByKey(key)">
+                {{titles[dataState][key]}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let row of displaytable[dataState]; let odd=odd; let even=even;">
+            <tr>
+                <td *ngFor="let key of objectkeys(titles[dataState]);" [title]="titles[dataState][key]" (click)="setClick(row,key)" style="cursor:pointer;">
+                        <label *ngIf="key != 'START'">{{displayCell(row,key)}}</label>
+                        <input *ngIf="key == 'START'"[(ngModel)]="row.START" (change)="updateStart(row)" (keyup.enter)="updateStart(row)" title="Entered by {{row.TRNUSR}}" maxlength="4" style="width:50px;">
+                </td>
+            </tr>
+        </ng-container>
+
+    </tbody>
+</table>

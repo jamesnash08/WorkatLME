@@ -1,0 +1,49 @@
+
+/* 
+.oddevenTable tr:nth-child(2n+2) { background-color: #F5F5DC;}
+
+.oddevenTable tr:nth-child(2n+1) { background-color: #F0FFFF;}
+ */
+
+
+.oddevenTable{
+    width:100%;
+}
+
+table tr{
+    padding:0px;
+}
+table{
+    width:100%;
+    font-size: 0.5rem;
+}
+table th{
+    font-size: 18px;
+    font-weight: 800;
+}
+/* table th:hover{
+    background-color:#CC0000;
+    color:white;
+} */
+table td{
+    cursor: pointer;
+    font-size: 13px;;
+    font-weight: 100;
+}
+
+label{
+    display:inline;
+}
+
+textarea {
+    resize: none;
+    width:100%;
+  }
+
+.pollcheck{
+    width:9%;
+    height:36px;
+    font-size: x-large;
+    cursor: pointer;
+    border:1px solid black;
+}

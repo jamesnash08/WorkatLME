@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservice.lme.com"
+    xmlns:p548="http://webservice.lme.com"
+    xmlns:intf="http://webservice.lme.com"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <schema elementFormDefault="qualified" targetNamespace="http://webservice.lme.com"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <element name="getCustomerRateByQuoteNumber">
+                <complexType>
+                    <sequence>
+                        <element name="username" nillable="true" type="xsd:string"/>
+                        <element name="password" nillable="true" type="xsd:string"/>
+                        <element name="quoteNumber" nillable="true" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="CRIOutput_Extended">
+                <complexContent>
+                    <extension base="p548:CRIOutput">
+                        <sequence>
+                            <element name="customerType" nillable="true" type="xsd:string"/>
+                            <element name="paymentType" nillable="true" type="xsd:string"/>
+                            <element name="codShipment" nillable="true" type="xsd:string"/>
+                            <element name="codType" nillable="true" type="xsd:string"/>
+                            <element name="codAmount" type="xsd:float"/>
+                            <element maxOccurs="unbounded" name="accChargesExt" nillable="true" type="p548:CRIAccessoryCharge_Extended"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="CRIOutput">
+                <sequence>
+                    <element maxOccurs="unbounded" name="accCharges" nillable="true" type="p548:CRIAccessoryCharge"/>
+                    <element name="arrivalDate" nillable="true" type="xsd:string"/>
+                    <element maxOccurs="unbounded" name="commCharges" nillable="true" type="p548:CRICommodityCharge"/>
+                    <element name="destCityState" nillable="true" type="xsd:string"/>
+                    <element name="destService" nillable="true" type="xsd:string"/>
+                    <element name="destTermFax" nillable="true" type="xsd:string"/>
+                    <element name="destTerminal" nillable="true" type="xsd:string"/>
+                    <element name="destTermPhone" nillable="true" type="xsd:string"/>
+                    <element name="destZip" nillable="true" type="xsd:string"/>
+                    <element name="discountAmount" type="xsd:float"/>
+                    <element name="discountPercent" type="xsd:float"/>
+                    <element name="fuelSurcharge" type="xsd:float"/>
+                    <element name="fuelSurchargePercent" type="xsd:float"/>
+                    <element name="netCharge" type="xsd:float"/>
+                    <element name="netChargeTextMsg" nillable="true" type="xsd:string"/>
+                    <element name="origCityState" nillable="true" type="xsd:string"/>
+                    <element name="origService" nillable="true" type="xsd:string"/>
+                    <element name="origTermFax" nillable="true" type="xsd:string"/>
+                    <element name="origTerminal" nillable="true" type="xsd:string"/>
+                    <element name="origTermPhone" nillable="true" type="xsd:string"/>
+                    <element name="origZip" nillable="true" type="xsd:string"/>
+                    <element name="pickupDate" nillable="true" type="xsd:string"/>
+                    <element name="quoteNumber" nillable="true" type="xsd:string"/>
+                    <element name="serviceDay" type="xsd:int"/>
+                    <element name="subTotal" type="xsd:float"/>
+                    <element name="tariff" nillable="true" type="xsd:string"/>
+                    <element name="tariffEffectiveDate" nillable="true" type="xsd:string"/>
+                    <element name="totalCharge" type="xsd:float"/>
+                    <element name="ratedAsWeight" type="xsd:float"/>
+                    <element name="destTerm800" nillable="true" type="xsd:string"/>
+                    <element name="origTerm800" nillable="true" type="xsd:string"/>
+                    <element name="deficitCharge" type="xsd:float"/>
+                    <element name="deficitRate" type="xsd:float"/>
+                    <element name="deficitWeight" type="xsd:int"/>
+                </sequence>
+            </complexType>
+            <complexType name="CRIAccessoryCharge">
+                <sequence>
+                    <element name="accCharge" type="xsd:float"/>
+                    <element name="accText" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <complexType name="CRICommodityCharge">
+                <sequence>
+                    <element name="commCharge" type="xsd:float"/>
+                    <element name="commClass" nillable="true" type="xsd:string"/>
+                    <element name="commWeight" type="xsd:float"/>
+                    <element name="ratePerCWT" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <complexType name="CRIAccessoryCharge_Extended">
+                <complexContent>
+                    <extension base="p548:CRIAccessoryCharge">
+                        <sequence>
+                            <element name="code" nillable="true" type="xsd:string"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <element name="getCustomerRateByQuoteNumberResponse">
+                <complexType>
+                    <sequence>
+                        <element name="getCustomerRateByQuoteNumberReturn" nillable="true" type="p548:CRIOutput_Extended"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="CRIException">
+                <sequence>
+                    <element name="errorCode" nillable="true" type="xsd:string"/>
+                    <element name="errorDescription" nillable="true" type="xsd:string"/>
+                    <element maxOccurs="unbounded" name="variables" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <element name="CRIException" nillable="true" type="p548:CRIException"/>
+            <complexType name="CRIInputStatic">
+                <sequence>
+                    <element name="protectFreeze" nillable="true" type="xsd:string"/>
+                    <element name="accountNumber" nillable="true" type="xsd:string"/>
+                    <element name="callConsgBfrDel" nillable="true" type="xsd:string"/>
+                    <element name="callforAppmnt" nillable="true" type="xsd:string"/>
+                    <element name="callforCarrierConv" nillable="true" type="xsd:string"/>
+                    <element name="COD" nillable="true" type="xsd:string"/>
+                    <element name="CODAmount" type="xsd:float"/>
+                    <element name="CODPayTerms" nillable="true" type="xsd:string"/>
+                    <element name="commClass1" nillable="true" type="xsd:string"/>
+                    <element name="commClass10" nillable="true" type="xsd:string"/>
+                    <element name="commClass8" nillable="true" type="xsd:string"/>
+                    <element name="commClass2" nillable="true" type="xsd:string"/>
+                    <element name="commClass3" nillable="true" type="xsd:string"/>
+                    <element name="commClass4" nillable="true" type="xsd:string"/>
+                    <element name="commClass5" nillable="true" type="xsd:string"/>
+                    <element name="commClass6" nillable="true" type="xsd:string"/>
+                    <element name="commClass7" nillable="true" type="xsd:string"/>
+                    <element name="commClass9" nillable="true" type="xsd:string"/>
+                    <element name="commweight1" type="xsd:float"/>
+                    <element name="commweight10" type="xsd:float"/>
+                    <element name="commweight2" type="xsd:float"/>
+                    <element name="commweight3" type="xsd:float"/>
+                    <element name="commweight4" type="xsd:float"/>
+                    <element name="commweight5" type="xsd:float"/>
+                    <element name="commweight6" type="xsd:float"/>
+                    <element name="commweight7" type="xsd:float"/>
+                    <element name="commweight8" type="xsd:float"/>
+                    <element name="commweight9" type="xsd:float"/>
+                    <element name="customerType" nillable="true" type="xsd:string"/>
+                    <element name="destCity" nillable="true" type="xsd:string"/>
+                    <element name="destState" nillable="true" type="xsd:string"/>
+                    <element name="destZip" nillable="true" type="xsd:string"/>
+                    <element name="fullValueCoverage" nillable="true" type="xsd:string"/>
+                    <element name="fvcAmount" type="xsd:float"/>
+                    <element name="hazMat" nillable="true" type="xsd:string"/>
+                    <element name="insideDel" nillable="true" type="xsd:string"/>
+                    <element name="insidePckup" nillable="true" type="xsd:string"/>
+                    <element name="lftgtReqDel" nillable="true" type="xsd:string"/>
+                    <element name="lftgtRqrdPckup" nillable="true" type="xsd:string"/>
+                    <element name="lmtAccessDel" nillable="true" type="xsd:string"/>
+                    <element name="lmtdAccessPckup" nillable="true" type="xsd:string"/>
+                    <element name="origCity" nillable="true" type="xsd:string"/>
+                    <element name="origState" nillable="true" type="xsd:string"/>
+                    <element name="origZip" nillable="true" type="xsd:string"/>
+                    <element name="palletCount" type="xsd:int"/>
+                    <element name="palletType" nillable="true" type="xsd:string"/>
+                    <element name="password" nillable="true" type="xsd:string"/>
+                    <element name="paymentType" nillable="true" type="xsd:string"/>
+                    <element name="prvtRsdncDel" nillable="true" type="xsd:string"/>
+                    <element name="prvtRsdncPckup" nillable="true" type="xsd:string"/>
+                    <element name="shipDate" nillable="true" type="xsd:string"/>
+                    <element name="usePalletPricing" nillable="true" type="xsd:string"/>
+                    <element name="username" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <element name="getCustomerRateStatic">
+                <complexType>
+                    <sequence>
+                        <element name="criInStatic" nillable="true" type="p548:CRIInputStatic"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getCustomerRateStaticResponse">
+                <complexType>
+                    <sequence>
+                        <element name="getCustomerRateStaticReturn" nillable="true" type="p548:CRIOutput"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="CRIInput">
+                <sequence>
+                    <element name="protectFreeze" nillable="true" type="xsd:string"/>
+                    <element name="accountNumber" nillable="true" type="xsd:string"/>
+                    <element name="callConsgBfrDel" nillable="true" type="xsd:string"/>
+                    <element name="callforAppmnt" nillable="true" type="xsd:string"/>
+                    <element name="callforCarrierConv" nillable="true" type="xsd:string"/>
+                    <element name="COD" nillable="true" type="xsd:string"/>
+                    <element name="CODAmount" type="xsd:float"/>
+                    <element name="CODPayTerms" nillable="true" type="xsd:string"/>
+                    <element maxOccurs="unbounded" name="commLines" nillable="true" type="p548:CRICommodityLines"/>
+                    <element name="customerType" nillable="true" type="xsd:string"/>
+                    <element name="destCity" nillable="true" type="xsd:string"/>
+                    <element name="destState" nillable="true" type="xsd:string"/>
+                    <element name="destZip" nillable="true" type="xsd:string"/>
+                    <element name="fullValueCoverage" nillable="true" type="xsd:string"/>
+                    <element name="fvcAmount" type="xsd:float"/>
+                    <element name="hazMat" nillable="true" type="xsd:string"/>
+                    <element name="insideDel" nillable="true" type="xsd:string"/>
+                    <element name="insidePckup" nillable="true" type="xsd:string"/>
+                    <element name="lftgtReqDel" nillable="true" type="xsd:string"/>
+                    <element name="lftgtRqrdPckup" nillable="true" type="xsd:string"/>
+                    <element name="lmtAccessDel" nillable="true" type="xsd:string"/>
+                    <element name="lmtdAccessPckup" nillable="true" type="xsd:string"/>
+                    <element name="origCity" nillable="true" type="xsd:string"/>
+                    <element name="origState" nillable="true" type="xsd:string"/>
+                    <element name="origZip" nillable="true" type="xsd:string"/>
+                    <element name="palletCount" type="xsd:int"/>
+                    <element name="palletType" nillable="true" type="xsd:string"/>
+                    <element name="password" nillable="true" type="xsd:string"/>
+                    <element name="paymentType" nillable="true" type="xsd:string"/>
+                    <element name="prvtRsdncDel" nillable="true" type="xsd:string"/>
+                    <element name="prvtRsdncPckup" nillable="true" type="xsd:string"/>
+                    <element name="shipDate" nillable="true" type="xsd:string"/>
+                    <element name="usePalletPricing" nillable="true" type="xsd:string"/>
+                    <element name="username" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <complexType name="CRICommodityLines">
+                <sequence>
+                    <element name="commClass" nillable="true" type="xsd:string"/>
+                    <element name="commweight" type="xsd:float"/>
+                </sequence>
+            </complexType>
+            <element name="getCustomerRate">
+                <complexType>
+                    <sequence>
+                        <element name="criIn" nillable="true" type="p548:CRIInput"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getCustomerRateResponse">
+                <complexType>
+                    <sequence>
+                        <element name="getCustomerRateReturn" nillable="true" type="p548:CRIOutput"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="CRIException">
+        <wsdl:part element="p548:CRIException" name="fault"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerRateResponse">
+        <wsdl:part element="p548:getCustomerRateResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerRateStaticRequest">
+        <wsdl:part element="p548:getCustomerRateStatic" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerRateByQuoteNumberResponse">
+        <wsdl:part element="p548:getCustomerRateByQuoteNumberResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerRateRequest">
+        <wsdl:part element="p548:getCustomerRate" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerRateByQuoteNumberRequest">
+        <wsdl:part element="p548:getCustomerRateByQuoteNumber" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerRateStaticResponse">
+        <wsdl:part element="p548:getCustomerRateStaticResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:portType name="CRIMethods">
+        <wsdl:operation name="getCustomerRateByQuoteNumber">
+            <wsdl:input message="p548:getCustomerRateByQuoteNumberRequest" name="getCustomerRateByQuoteNumberRequest"/>
+            <wsdl:output message="p548:getCustomerRateByQuoteNumberResponse" name="getCustomerRateByQuoteNumberResponse"/>
+            <wsdl:fault message="p548:CRIException" name="CRIException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getCustomerRateStatic">
+            <wsdl:input message="p548:getCustomerRateStaticRequest" name="getCustomerRateStaticRequest"/>
+            <wsdl:output message="p548:getCustomerRateStaticResponse" name="getCustomerRateStaticResponse"/>
+            <wsdl:fault message="p548:CRIException" name="CRIException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getCustomerRate">
+            <wsdl:input message="p548:getCustomerRateRequest" name="getCustomerRateRequest"/>
+            <wsdl:output message="p548:getCustomerRateResponse" name="getCustomerRateResponse"/>
+            <wsdl:fault message="p548:CRIException" name="CRIException"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CRIMethodsSoapBinding" type="p548:CRIMethods">
+        <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getCustomerRateByQuoteNumber">
+            <wsdlsoap:operation soapAction="getCustomerRateByQuoteNumber"/>
+            <wsdl:input name="getCustomerRateByQuoteNumberRequest">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCustomerRateByQuoteNumberResponse">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="CRIException">
+                <wsdlsoap:fault name="CRIException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCustomerRateStatic">
+            <wsdlsoap:operation soapAction="getCustomerRateStatic"/>
+            <wsdl:input name="getCustomerRateStaticRequest">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCustomerRateStaticResponse">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="CRIException">
+                <wsdlsoap:fault name="CRIException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCustomerRate">
+            <wsdlsoap:operation soapAction="getCustomerRate"/>
+            <wsdl:input name="getCustomerRateRequest">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCustomerRateResponse">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="CRIException">
+                <wsdlsoap:fault name="CRIException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CRIMethodsService">
+        <wsdl:port binding="p548:CRIMethodsSoapBinding" name="CRIMethods">
+            <wsdlsoap:address location="/webapp/CustomPricing/services/CRIMethods"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,77 @@
+
+<div>
+
+	<div class="tabs" style="display: block;" *ngFor="let row of this.years; let i = index;">
+		<button class="" (click) = "this.selectYear(i)">{{ row }}</button>
+	</div>
+
+	<table id="salesTable" class="sortable">
+		<thead>
+			<tr class="normal">
+				<th>S#</th>
+				<th>SLS Name</th>
+				<th>January</th>
+				<th>February</th>
+				<th>March</th>
+				<th>Q1 AVG</th>
+				<th>April</th>
+				<th>May</th>
+				<th>June</th>
+				<th>Q2 AVG</th>
+				<th>Q2 +/-</th>
+				<th>July</th>
+				<th>August</th>
+				<th>September</th>
+				<th>Q3 AVG</th>
+				<th>Q3 +/-</th>
+				<th>October</th>
+				<th>November</th>
+				<th>December</th>
+				<th>Q4 AVG</th>
+				<th>Q4 +/-</th>
+				<th>Annual AVG</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr *ngFor="let row of this.months; let i = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">
+				<ng-container *ngIf="this.currentTotal == displayYear[i].substring(0,2)">
+					<td>{{ this.salesId[i] }}</td>
+					<td style="white-space: nowrap"> {{ this.salesPerson[i] }}</td>
+					<td>{{ this.numberWithCommas(row[0]) }}</td>
+					<td>{{ this.numberWithCommas(row[1]) }}</td>
+					<td>{{ this.numberWithCommas(row[2]) }}</td>
+
+					<td>{{ this.sumQuarter( row[0], row[1], row[2] ) }}</td>
+
+					<td>{{ this.numberWithCommas(row[3]) }}</td>
+					<td>{{ this.numberWithCommas(row[4]) }}</td>
+					<td>{{ this.numberWithCommas(row[5]) }}</td>
+
+					<td>{{ this.sumQuarter( row[3], row[4], row[5] ) }}</td>
+					<td>{{ this.compareQuarter( row[0], row[1], row[2], row[3], row[4], row[5] ) }}</td>
+
+					<td>{{ this.numberWithCommas(row[6]) }}</td>
+					<td>{{ this.numberWithCommas(row[7]) }}</td>
+					<td>{{ this.numberWithCommas(row[8]) }}</td>
+
+					<td>{{ this.sumQuarter( row[6], row[7], row[8] ) }}</td>
+					<td>{{ this.compareQuarter( row[3], row[4], row[5], row[6], row[7], row[8] ) }}</td>
+
+					<td>{{ this.numberWithCommas(row[9]) }}</td>
+					<td>{{ this.numberWithCommas(row[10]) }}</td>
+					<td>{{ this.numberWithCommas(row[11]) }}</td>
+					<td>{{ this.sumQuarter( row[9], row[10], row[11] ) }}</td>
+					<td>{{ this.compareQuarter( row[6], row[7], row[8], row[9], row[10], row[11] ) }}</td>
+					<td>{{ this.yearAverage( row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11] )}}</td>
+
+				</ng-container>
+
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+
+
+<!-- <tr *ngFor="let row of tabledisplay; let i = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}"> -->

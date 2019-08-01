@@ -1,0 +1,22 @@
+<div style="width: 100%; height: 100%; min-height: 90%; overflow: scroll; background-color: white;" >
+    <table style="width:auto;" *ngIf="tabledata.length > 0">
+        <colgroup *ngFor="let row of tablelabels; let odd=odd; let even=even">
+            <col [ngClass]="{odd: odd, even: even}">
+            <!-- <col *ngIf="even" style="border: 1px solid rgb(255, 255, 255);"> -->
+        </colgroup>
+        <thead>
+            <tr>
+                <th *ngFor="let row of tablelabels; let j = index;">{{tablelabelsdisplay[row]}}</th>
+            </tr>
+        </thead>
+        <tbody>
+                <!--  -->
+            <tr *ngFor="let row of tabledata; let i = index; let odd=odd; let even=even" [ngClass]="{oddrow: odd, evenrow: even}">
+                <td *ngFor="let key of tablelabels; let j = index;" style="text-align: right;">
+                    <label *ngIf="row[key] != 0">{{row[key]}}</label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- 2nd level -->

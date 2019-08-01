@@ -1,0 +1,128 @@
+<div id="modal" *ngIf="modalShow">
+	<div id="closeDiv"><label id="modalTitle">{{modalDisplay}}</label>
+		<a (click)="closeModal()">X</a>
+	</div>
+	
+	<div *ngIf="modalType=='prodetail'">
+		<div id="modaloverflow" class="collapse in">
+			<table style="width:100%;">
+				<tr *ngIf="modalData.billing">
+					<td>Payment Type: {{modalData.billing.PAYTYP}}</td>
+					<td colspan="5">
+						{{modalData.billing.ADVCL}}
+						{{modalData.billing.ADVNAM}}
+						{{modalData.billing.ADVDAT}}
+						{{modalData.billing.ADVPRO}}
+						{{modalData.billing.BYDCL}}
+						{{modalData.billing.BYDNAM}}
+					</td>
+				</tr>
+				<tr *ngIf="modalData.billing">
+					<td colspan="6">{{modalData.billing.ORGA}}{{modalData.billing.DSTA}}</td>
+				</tr>
+				<tr *ngIf="modalData.billing">
+					<td colspan="2">
+						<label>Shipper: {{modalData.billing.SHIP}}</label><br>
+						<label style="white-space:wrap;">{{modalData.billing.SHPNAM}}</label><br>
+						<label style="white-space:wrap;">{{modalData.billing.SHPATN}}</label><br>
+						<label style="white-space:wrap;">{{modalData.billing.SHPADR}}</label><br>
+						<label>{{modalData.billing.SHPCTY}},{{modalData.billing.SHPST}},{{modalData.billing.SHPZP6}}</label>
+					</td>
+					<td colspan="2">
+						<label>Consignee: {{modalData.billing.CONS}}</label><br>
+						<label style="white-space:wrap;">{{modalData.billing.CNSNAM}}</label><br>
+						<label style="white-space:wrap;">{{modalData.billing.CNSATN}}</label><br>
+						<label style="white-space:wrap;">{{modalData.billing.CNSADR}}</label><br>
+						<label>{{modalData.billing.CNSCTY}},{{modalData.billing.CNSST}},{{modalData.billing.CNSZP6}}</label>
+					</td>
+				<!-- </tr>
+				<tr *ngIf="modalData.billing"> -->
+					<td colspan="2">
+						<label>Third Party: {{modalData.billing.PAYOR}}</label><br>
+						<label style="white-space:wrap;">{{modalData.billing.PAYNAM}}</label><br>
+						<label style="white-space:wrap;">{{modalData.billing.PAYATN}}</label><br>
+						<label style="white-space:wrap;">{{modalData.billing.PAYADR}}</label><br>
+						<label>{{modalData.billing.PAYCTY}},{{modalData.billing.PAYST}},{{modalData.billing.PAYZP6}}</label>
+					</td>
+				</tr>
+				<!-- BLDNBR, HDUNIT, TPCS, TWGT, TOTCHG, ADVREV, OURREV, BYDREV, COD, CODFEE, CFPPD, REVDAT -->
+				<tr *ngIf="modalData.billing">
+					<td colspan="6" style="vertical-align:top;">
+
+						<table>
+							<tr>
+								<th>PCS</th>
+								<th>Description</th>
+								<th>CLS</th>
+								<th>Weight</th>
+							</tr>
+							<tr *ngFor="let row of modalData.items; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">
+								<td>{{row.BDPCS}}</td>
+								<td>{{row.BDFORM}} {{row.BDDESC}}</td>
+								<td>{{row.BDCLSS}}</td>
+								<td>{{row.BDWGT}}</td>
+							</tr>
+						</table>
+
+					</td>
+
+				</tr>
+
+			</table>
+			<h1>Tracking</h1>
+			<table *ngIf="modalData.track.length > 0">
+				<!-- style="width:48%; margin-right:2%; display:inline-block;" -->
+				<thead>
+					<tr>
+						<th *ngFor="let key of objectkeys(modalData.track[0]);">{{key}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let row2 of modalData.track; let q = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">
+						<td *ngFor="let key of objectkeys(row2);">{{displayData(key,row2)}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h1>Notes</h1>
+			<table *ngIf="modalData.notes.length > 0">
+				<!-- style="width:48%; margin-left:2%; display:inline-block;" -->
+				<thead>
+					<tr>
+						<th>TIME</th><th>DATE</th><th>CN</th><th>USER</th><th>INT</th><th>NOTES</th>
+						<!-- <th *ngFor="let key of objectkeys(modalData.notes[0]);">{{key}}</th> -->
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let row2 of modalData.notes; let q = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">
+						<td *ngFor="let key of objectkeys(row2);">{{displayData(key,row2)}}</td>
+					</tr>
+					<tr *ngFor="let row2 of modalReturn[modalType]['NOTES']; let q = index; let odd=odd; let even=even" [ngClass]="{odd: odd, even: even}">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><input [(ngModel)]="row2['NOTES']"  maxlength="40" (keyup.enter)="submitNotes()" (change)="row2['NOTES']=row2['NOTES'].toUpperCase()" style="width:100%;"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+
+	<div *ngIf="modalType=='proImaging'">
+		<button (click)="getDocument(modalSelect)" class="modalButton">Display</button>
+		<table >
+			
+			<tr>
+				<th>Doc type</th><th>Date</th><th>Description</th>
+			</tr>
+			<tr *ngFor="let row of modalData" style="cursor: pointer;" [ngClass]="{'modalSelectedrow':row==modalSelect}" (click)="modalSelect=row" (dblclick)="getDocument(modalSelect)">
+				<td>{{displayData('AKDOCT',row)}}</td>
+				<td>{{displayData('DATE',row)}}</td>
+				<td>{{displayData('AKTEXT',row)}}</td>
+			</tr>
+		</table>
+	</div>
+</div>

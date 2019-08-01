@@ -1,0 +1,107 @@
+<button  (click)="Print()">Print</button>
+
+<!-- <div *ngFor="let year of objectkeys(quarterData);">
+    <button *ngFor="let quarter of quarterData[year]; let i = index " (click)="setPeriod(year,i)">Year 20{{year}} Quarter {{i+1}}</button>
+</div> -->
+
+<div *ngFor="let year of objectkeys(quarterData);">
+    <label>Year 20{{year}}</label>
+    <div *ngFor="let quarter of quarterData[year]; let i = index " style="display:inline-block">
+    <input type="radio" name="period" value="{{year}}-{{i}}" [(ngModel)]="quarterSelect" id="radio{{year}}-{{i}}" style="display:none">
+    <label for="radio{{year}}-{{i}}" 
+    [ngClass]="{'LMEButton':quarterSelect != year + '-' + i, 'LMEButtonPress':quarterSelect == year + '-' + i}" (click)="setPeriod(year,i)" style="width:80px; margin-right:5px;">Quarter {{i+1}}</label>
+    </div>
+    </div>
+
+
+<div id="Print">
+
+
+<div *ngIf="Xpos > 0">
+<ng-container *ngFor="let key of objectkeys2(quarterData[Xpos][Ypos]); let t = index;">
+<table  class="claimsJDTable" [ngClass]="{'pagebreak':t == 4}">
+    <thead>
+        <tr [style]="getColor(key)">
+            <th colspan="2">Year 20{{Xpos}}</th>
+            <th colspan="2"><ng-container *ngIf="key != 'YTD'">Quarter {{Ypos + 1}}</ng-container></th>
+            <th colspan="8" style="text-align:left">{{accTitle[key]}}{{key}}</th>
+        </tr>
+        <tr [style]="getColor(key)">
+            <th>Type</th>
+            <th>Claims Rec</th>
+            <th>Amount</th>
+            <th># Claims Concl.</th>
+            <th>$ Claims Concl.</th>
+            <th>Type</th>
+            <th># Paid</th>
+            <th>$ Paid</th>
+            <th># Denied</th>
+            <th>$ Denied</th>
+            <th># Pending</th>
+            <th>$ Pending</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let type of types">
+            <td>{{typesDisplay[type]}}</td>
+            <td>{{getRecTOT(key,type)}}</td>
+            <td>{{getRecAMT(key,type)}}</td>
+            <td>{{getConTOT(key,type)}}</td>
+            <td>{{getConAMT(key,type)}}</td>
+            <td>{{typesDisplay[type]}}</td>
+            <td class="selectableTD" (click)="selectGraph(Xpos,key,type + 'Paid')">{{quarterData[Xpos][Ypos][key][type +"PaidTOT"]}}</td>
+            <td class="selectableTD" (click)="selectGraph(Xpos,key,type + 'Paid')">{{numberWithCommasDecimal(quarterData[Xpos][Ypos][key][type +"PaidAMT"])}}</td>
+            <td class="selectableTD" (click)="selectGraph(Xpos,key,type + 'Deny')">{{quarterData[Xpos][Ypos][key][type +"DenyTOT"]}}</td>
+            <td class="selectableTD" (click)="selectGraph(Xpos,key,type + 'Deny')">{{numberWithCommasDecimal(quarterData[Xpos][Ypos][key][type +"DenyAMT"])}}</td>
+            <td class="selectableTD" (click)="selectGraph(Xpos,key,type + 'Pend')">{{quarterData[Xpos][Ypos][key][type +"PendTOT"]}}</td>
+            <td class="selectableTD" (click)="selectGraph(Xpos,key,type + 'Pend')">{{numberWithCommasDecimal(quarterData[Xpos][Ypos][key][type +"PendAMT"])}}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>TOTAL</td>
+            <td>{{getRecTOT(key,'c') + getRecTOT(key,'s') + getRecTOT(key,'v')}}</td>
+            <td>{{getRecAMTTotal(key)}}</td>
+            <td>{{getConTOT(key,'c') + getConTOT(key,'s') + getConTOT(key,'v')}}</td>
+            <td>{{getRecAMTTotal(key)}}</td>
+            <td>TOTAL</td>
+            <td>{{getAMT(key,"PaidTOT")}}</td>
+            <td>{{getAMT(key,"PaidAMT")}}</td>
+            <td>{{getAMT(key,"DenyTOT")}}</td>
+            <td>{{getAMT(key,"DenyAMT")}}</td>
+            <td>{{getAMT(key,"PendTOT")}}</td>
+            <td>{{getAMT(key,"PendAMT")}}</td>
+        </tr>
+    </tfoot>
+</table>
+</ng-container>
+</div>
+
+<div class="prolist" id="navto" *ngIf="lineChartData.length > 0">
+
+<button (click)="lineChartData=[]">Close Chart</button> 
+
+
+<!-- <button class="print" (click)="Print()">Print</button><br> -->
+
+<div style="height:45%;">
+<canvas baseChart 
+                [datasets]="lineChartData[0]"
+                [labels]="lineChartLabel"
+                [options]="lineChartOptions"
+                [colors]="lineChartColors"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"></canvas>
+</div>
+<div style="height:45%;">
+        <canvas baseChart 
+                        [datasets]="lineChartData[1]"
+                        [labels]="lineChartLabel"
+                        [options]="lineChartOptions"
+                        [colors]="lineChartColors"
+                        [legend]="lineChartLegend"
+                        [chartType]="lineChartType"></canvas>
+        </div>
+</div>
+
+</div>

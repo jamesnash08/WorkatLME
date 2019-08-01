@@ -1,0 +1,27 @@
+<label>Search:</label><input type="text" (change)="searchDocs(searchterm)" [(ngModel)]="searchterm">
+<label>{{docMessage}}</label>
+
+<table class="table table-dark">
+	<thead>
+		<th scope="col">Name</th><th *ngIf="parentdir == 'LHLPICS'">Manifest</th>
+		<th *ngIf="userManagement.hasAuthStrict('FTPDELETE')">Delete</th>
+	</thead>
+	<tbody>
+		<tr *ngIf="userManagement.hasAuthStrict('FTPUPLOAD')">
+			<td><input type="file"  style="cursor:pointer;" (change)="fileChangeEvent($event)" placeholder="Upload file" accept=".pdf,.doc,.docx" [(ngModel)]="chosenFile" style="width:50%;">
+			<br><button (click)="upload()"  style="cursor:pointer;">Upload</button><label>{{uploadStatus}}</label></td>
+		</tr>
+		<tr *ngFor="let file of displayList">
+			<ng-container *ngIf="!file.directory; else directory">
+				<td><a style="width:100%;  " href = "http://lme.local/Documents/{{pagereplace}}/{{file.file}}" target="_blank" ><div class="fileicon"></div>{{file.file}}</a></td>
+				<td><a *ngIf="isManifest(file.file)" (click)="getManifest(file.file)" style="cursor:pointer;">Manifest</a></td>
+				<td *ngIf="userManagement.hasAuthStrict('FTPDELETE')"><button (click)="removeFile(pagereplace,file.file)" style="font-size: 18px">-</button></td>
+			</ng-container>
+			<ng-template #directory>
+				<td *ngIf="file.file == 'Parent Directory'"><a style="width:100%;" routerLink = "/document/{{parentdir}}" style="cursor:pointer;"><div class="documentfoldericon"></div>{{file.file}}</a></td>
+				<!-- <td><a href = "http://lme.local/Documents/{{page}}/{{file.file}}" target="_blank">{{file.file}}</a></td> -->
+				<td *ngIf="file.file != 'Parent Directory'"><a style="width:100%;" routerLink = "/document/{{page}}^{{file.file}}"  style="cursor:pointer;"><div class="documentfoldericon"></div>{{file.file}}</a></td>
+			</ng-template>
+		</tr>
+	</tbody>
+</table>

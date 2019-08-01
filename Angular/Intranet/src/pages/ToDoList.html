@@ -1,0 +1,37 @@
+<!-- <div *ngIf="!showIframe">
+	<table *ngIf="documentList.length > 0"  class="table table-dark">
+		<tr><Th>Document</Th></tr>
+		<tr *ngFor="let row of documentList" (click)="returnGoogleDoc(row.USER,row.LINKEDIT,row.LINKBROWSE,row.TITLE)"  style="cursor:pointer;">
+			<td style="font-size: 18px">{{row.TITLE}}</td>
+			<td style="font-size: smaller;">{{row.DESC}}</td>
+		</tr>
+	</table>
+</div> -->
+<div *ngIf="!showIframe">
+	<table *ngIf="documentList.length > 0" class="table table-dark">
+		<tr>
+			<Th>Document</Th><th>{{selectedGroup}}</th>
+		</tr>
+		<ng-container *ngFor="let key of objectkeys(documentGroups)">
+			<tr *ngIf="selectedGroup == ''" (click)="selectedGroup=key" style="cursor:pointer;">
+				<td colspan="2">{{key}}</td>
+			</tr>
+			<ng-container *ngIf="key==selectedGroup">
+				<tr>
+					<td colspan="2" (click)="selectedGroup=''" style="cursor:pointer;">Back</td>
+				</tr>
+				<tr *ngFor="let row of documentGroups[key]" (click)="returnGoogleDoc(row.USER,row.LINKEDIT,row.LINKBROWSE,row.TITLE)" style="cursor:pointer;">
+					<td style="font-size: 18px; width:450px;">{{row.TITLE}}</td>
+					<td style="font-size: smaller;">{{row.DESC}}</td>
+				</tr>
+			</ng-container>
+		</ng-container>
+	</table>
+</div>
+
+<div *ngIf="showIframe" style="width:100%; height:100%;">
+	<button style="height:30px;" (click)="showIframe=false; srcURL=''">Back</button>
+	<!-- <button (click)="reloadIframe()">reload</button> -->
+	<label>{{docTitle}}</label>
+	<iframe id="iframe" [src]="srcURL" style="width:100%; height:calc(100% - 30px);"></iframe>
+</div>

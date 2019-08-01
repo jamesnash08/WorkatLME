@@ -1,0 +1,12 @@
+<listing>
+	<table class="table table-dark">
+	   <thead>
+	      <th scope="col">Name</th>
+	   </thead>
+	   <tbody>
+	      <tr *ngFor="let file of fileList">
+	         <td><a href = "http://lme.local/Documents/Newsletter/{{file.file}}" target="_blank">{{file.file}}</a></td>
+	      </tr>
+	   </tbody>
+	</table>
+</listing>

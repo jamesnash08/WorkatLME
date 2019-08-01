@@ -1,0 +1,443 @@
+/** ##########################################################################################################
+#### Global Variables for color to keep it simple
+########################################################################################################### **/
+:root {
+	--lmeRedColor           : #CC0000;
+	--textColor             : #FFFFFF;
+	--sideBarColors         :#64605F;
+	--pageColor             : #FFFFFF;
+	--backgroundColor       : #C0C0C0;
+}
+@media only screen and (min-width: 3000px) {
+	html{font-size: 25px;}
+	}
+@media only screen and (min-width: 1501px) {
+	html{font-size: 20px;}
+	}
+@media only screen and (max-width: 1500px) {
+	html{font-size: 16px;}
+}
+
+body {
+	/* max-width: 1280px; */
+	/* max-height: 1024px; */
+	height:100vh;
+	width:calc(100vw - 10px);
+	min-width: 300px;
+	min-height: 350px;
+	margin-left: auto;
+	margin-right: auto;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	font-family: sans serif;
+	font-weight: bold;
+	background: #C0C0C0;
+
+}
+my-app {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	min-height:720px;
+	max-width: 100%;
+	width: 100%;
+    min-width: 400px;
+	height:100%;
+	margin-bottom: auto;
+	display: block;
+	background: #FFFFFF
+}
+
+/** ##########################################################################################################
+#### Here is where we change the default behavior of bootstrap.. Maby learn how to use better instead
+#### Here we overide the default color for the buttons from Bootstrap
+########################################################################################################### **/
+.nav-pills > li {
+	margin: 2px;
+}
+.nav-pills > li > a {
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+}
+.nav-pills > li > a:hover,
+.nav-pills > li > a:focus {
+	color: #FFFFFF !important;
+	background-color: #64605f !important;
+}
+.nav-pills > li > div > a:hover,
+.nav-pills > li > div > a:focus {
+	color: #FFFFFF !important;
+	background-color: #64605f !important;
+}
+.btn-lme-menu:hover,
+.btn-lme-menu:focus {
+	color: #FFFFFF;
+	background-color: #cc0000;
+}
+/** Same as above but inverse **/
+.btn-lme:hover,
+.btn-lme:active {
+	color: #FFFFFF !important;
+	background-color: #64605F;
+}
+.btn-lme {
+	background: #cc0000;
+	color: #FFFFFF;
+	font-size: 1rem;
+	font-weight: bold;
+	text-rendering: none;
+	text-shadow: none;
+	width: 140px;
+	cursor: default;
+}
+.btn-lme-menu {
+	/* color: black; */
+	font-size: 1rem;
+	font-weight: bold;
+	position: relative;
+	text-align: -webkit-match-parent;
+	-webkit-tap-highlight-color: #cc0000;
+	border: none;
+	text-rendering: none;
+	text-shadow: none;
+	border-color: #cc0000;
+	border-left-color: #CC0000;
+	border-right-color: #CC0000;
+	border-top-color: #CC0000;
+	border-bottom-color: #CC0000;
+	background-color: transparent !important;
+	background: transparent !important;
+}
+
+.dropdown:hover{
+	background-color: #CC0000;
+	color:white;
+}
+.btn-lme-sub-menu {
+	position:relative;
+	border:0;
+	margin:0;
+	padding:0;
+	cursor:pointer;
+	font-size: 1rem;
+	font-weight:bold;
+	color: white;
+	/* background:transparent; */
+	border-radius:.25rem;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-touch-callout: none;
+}
+.btn-lme-sub-menu,
+.btn-lme-sub-menu:after,
+.btn-lme-sub-menu:before {
+	padding:.6875rem 2rem;
+	-webkit-transition:-webkit-transform 0.75s,background-color .125s;
+	-moz-transition:-moz-transform 0.75s,background-color .125s;
+	-ms-transition:-ms-transform 0.75s,background-color .125s;
+	transition:transform 0.75s,background-color .125s;
+	-webkit-transform-style:preserve-3d;
+	-moz-transform-style:preserve-3d;
+	-ms-transform-style:preserve-3d;
+	transform-style:preserve-3d;
+}
+.btn-lme-sub-menu:after,
+.btn-lme-sub-menu:before {
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	border-radius:.25rem;
+	-webkit-backface-visibility:hidden;
+	-moz-backface-visibility:hidden;
+	-ms-backface-visibility:hidden;
+	backface-visibility:hidden;
+}
+
+.xs-collapse {
+	display: block;
+	visibility: visible;
+}
+.xs-toggle {
+	display: none;
+	visibility: hidden;
+}
+.companyLink {
+	font-size: 1rem;
+	color: black;
+}
+.line-separator {
+	height:1px;
+	/* background: #999; */
+	border-bottom: 1px solid #333;
+}
+
+
+.btn-default.active{
+	border-color: #64605F;
+	background-color:#64605F !important;
+	color:white;
+}
+.btn-lme-menu:hover,
+.btn-lme-menu:focus{
+	border-color: #64605F;
+	background-color: #64605F;
+	color:white;
+}
+.dropdown-menu{
+	background-color: #CC0000;
+}
+.dropdown-menu li:hover{
+	background-color:#64605F !important;
+	/* color */
+}
+.dropdown-menu a{
+	color: white !important;
+}
+
+	.loggedin-toggle {
+		display: none;
+		visibility: hidden;
+	}
+	.loggedout-toggle {
+		display: block;
+		visibility: visible;
+	}
+	input:required:invalid, input:focus:invalid {
+		background-image: url(/assets/Graphics/invalid.png);
+		background-position: right top;
+		background-repeat: no-repeat;
+	}
+	input:required:valid {
+		background-image: url(/images/valid.png);
+		background-position: right top;
+		background-repeat: no-repeat;
+	}
+	#loginButtonMenu {
+		display:inline-block;
+		visibility: visible;
+	}
+	#logoutButtonMenu {
+		display: none;
+		visibility: hidden;
+	}
+
+	#loginStateSuccess {
+		color: green;
+	}
+
+	#loginStateError {
+		color: red;
+	}
+
+	#loginError {
+		color: red;
+	}
+
+/** ##########################################################################################################
+#### Header -- Here is the Header and Menu
+########################################################################################################### **/
+/** Here is the branding for the Logo. We have it set for specfic height and width **/
+.brandingBanner {
+	background: #FFFFFF;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	width: 108px;
+	height: 52px;
+	display: inline;
+}
+/** This is initial location of menu.. It is updated in media query **/
+.companyHeader {
+	background: transparent;
+}
+#bar {
+	position: relative;
+	top: -52px;
+	left: 0px;
+	width: 100%;
+	height: 20px;
+	color: #cc0000;
+	background-color: #CC0000;
+}
+#header {
+	position: relative;
+	top: 0;
+	width: 100%;
+	height: 72px;
+	overflow: visible;
+	display: inline-block;
+	z-index: 4;
+	background: transparent;
+}
+#topControl {
+	position: relative;
+	top: -52px;
+	left: 108px;
+	height: 52px;
+	width: 1172px;
+	background: #FFFFFF;
+}
+#menu {
+	position: relative;
+	top: 20px;
+	width: 1170px;
+	height: 42px;
+	display: inline-block;
+	visibility: visible;
+}
+.horizontalMenu {
+	display: inline-block;
+}
+
+/** ##########################################################################################################
+#### Article Content
+########################################################################################################### **/
+INSERTAGENAMESHERE,
+home,
+opsdashboard,
+documents,
+monthlysales,
+claimsbyTransaction,
+status,
+claimsJohnDeere,
+LMEchat,
+dockscan,
+weightscales,
+dimensioner,
+tonnage,
+ops,
+tapeHistory,
+CityPlan,
+Polls,
+mmm,
+service{
+	position: relative;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	display: inline-block;
+	overflow: auto;
+	overflow-x: auto;
+	overflow-y: auto;
+	/*   white-space: nowrap; */
+	vertical-align:top;
+	background-color: #FFFFFF;
+	z-index:10;
+}
+#content {
+	position: relative;
+	top: 0px;
+	left: 0px;/*
+	padding-left:5px; */
+	/* height: calc(100vh - 125px); */
+	height: calc(100vh - 112px);
+	/* width: calc((100vw - 170px)); */
+	width:100%;
+	/* max-width: 1105px; */
+	display: inline-block;
+	/*   padding-bottom: 150px; */
+	background-color: #FFFFFF;
+	z-index: 1;
+	/*   border: solid; */
+}
+/** ##########################################################################################################
+#### Footer -- Here is the Page Footer Content Definition
+########################################################################################################### **/
+footer {
+	position: relative;
+	bottom: 0px;
+	background-color: #cc0000;
+	max-width:100%;
+	width:100vw;
+	/* height: 52px; */
+	height:32px;
+	display: block;
+	overflow: hidden;
+	z-index: 50;
+}
+
+#footerFrame {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	width: 750px;
+}
+#footerMenu {
+	background: transparent;
+	color: black;
+	font-size: 1rem;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	padding-top: 5px;
+	text-align: center;
+	text-shadow: none;
+	height: 33px;
+	width: 110px;
+}
+.companyFooter {
+	position:relative;
+	float: left;
+	height: 0px;
+	width: 480px;
+	bottom: 0px;
+	left: 0px;
+	padding: 0px 0px 0px 0px;
+}
+#copyright {
+	position: relative;
+	top: 5px;
+	right: 5px;
+	bottom: 0px;
+	float: right;
+	font-size: 1.25rem;
+}
+
+.presentation{
+	width:100%;
+	padding-left:0px;
+	padding-right:0px;
+}
+.presentation .btn-lme-menu{
+	padding-left:5px;
+	padding-right:0px;
+	width:100%;
+}
+.dropdown-menu{
+	width:auto;
+	height:auto !important;
+	min-width:160px;
+}
+.dropdown-menu li a{
+	padding-left:5px;
+}
+
+.dropdown-submenu{
+	background: transparent;
+	width:163px;
+	height:auto !important;
+}
+.dropdown-submenu .dropdown-menu{
+	position: absolute;
+	top: 0px;
+	left: 160px;
+	width:163px;
+	background: transparent;
+	height:auto !important;
+}
+.modal select, .modal option{
+	color:black;
+}
+
+.sn-content{
+	display:none;
+}
+.simple-notification.alert {
+    background: #cc0000 !important;
+}
+
+a {
+	cursor: pointer;
+}

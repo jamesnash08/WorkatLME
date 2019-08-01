@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservice.shipping.lme.com" xmlns:impl="http://webservice.shipping.lme.com" xmlns:intf="http://webservice.shipping.lme.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsi="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types>
+  <schema targetNamespace="http://webservice.shipping.lme.com" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <element name="getShipmentByProResponse">
+    <complexType>
+     <sequence>
+      <element name="getShipmentByProReturn" nillable="true" type="impl:Shipment"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getShipmentsByBL">
+    <complexType>
+     <sequence>
+      <element name="in_bl" nillable="true" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getShipmentsByBLResponse">
+    <complexType>
+     <sequence>
+      <element name="getShipmentsByBLReturn" nillable="true" type="impl:ArrayOfShipment"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getShipmentByPro">
+    <complexType>
+     <sequence>
+      <element name="in_pro" nillable="true" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="Shipment">
+    <sequence>
+     <element name="advancecl" nillable="true" type="xsd:string"/>
+     <element name="billdatestring" nillable="true" type="xsd:string"/>
+     <element name="billoflading" nillable="true" type="xsd:string"/>
+     <element name="consigneecity" nillable="true" type="xsd:string"/>
+     <element name="destTerminal" nillable="true" type="xsd:string"/>
+     <element name="estDelDate" nillable="true" type="xsd:string"/>
+     <element name="pieces" type="xsd:int"/>
+     <element name="pronumber" nillable="true" type="xsd:string"/>
+     <element name="purchaseorder" nillable="true" type="xsd:string"/>
+     <element name="shippercity" nillable="true" type="xsd:string"/>
+     <element name="shippingstatus" nillable="true" type="xsd:string"/>
+     <element name="weight" type="xsd:double"/>
+     <element name="details" nillable="true" type="impl:ArrayOfShipmentDetails"/>
+    </sequence>
+   </complexType>
+   <complexType name="ShipmentDetails">
+    <sequence>
+     <element name="proNumber" nillable="true" type="xsd:string"/>
+     <element name="scac" nillable="true" type="xsd:string"/>
+     <element name="statusDate" nillable="true" type="xsd:string"/>
+     <element name="statusDateString" nillable="true" type="xsd:string"/>
+     <element name="statusTime" nillable="true" type="xsd:string"/>
+     <element name="statusTimeString" nillable="true" type="xsd:string"/>
+     <element name="terminal" nillable="true" type="xsd:string"/>
+     <element name="trackingCode" nillable="true" type="xsd:string"/>
+     <element name="trackingStatus" nillable="true" type="xsd:string"/>
+     <element name="trailer" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfShipmentDetails">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="ShipmentDetails" nillable="true" type="impl:ShipmentDetails"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfShipment">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="Shipment" nillable="true" type="impl:Shipment"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getShipmentByProRequest">
+     <wsdl:part element="impl:getShipmentByPro" name="parameters"/>
+
+  </wsdl:message>
+
+   <wsdl:message name="getShipmentByProResponse">
+     <wsdl:part element="impl:getShipmentByProResponse" name="parameters"/>
+
+  </wsdl:message>
+
+   <wsdl:message name="getShipmentsByBLRequest">
+     <wsdl:part element="impl:getShipmentsByBL" name="parameters"/>
+
+  </wsdl:message>
+
+   <wsdl:message name="getShipmentsByBLResponse">
+     <wsdl:part element="impl:getShipmentsByBLResponse" name="parameters"/>
+
+  </wsdl:message>
+
+   <wsdl:portType name="ShipmentTracking">
+     <wsdl:operation name="getShipmentByPro">
+       <wsdl:input message="impl:getShipmentByProRequest" name="getShipmentByProRequest"/>
+
+       <wsdl:output message="impl:getShipmentByProResponse" name="getShipmentByProResponse"/>
+
+    </wsdl:operation>
+
+     <wsdl:operation name="getShipmentsByBL">
+       <wsdl:input message="impl:getShipmentsByBLRequest" name="getShipmentsByBLRequest"/>
+
+       <wsdl:output message="impl:getShipmentsByBLResponse" name="getShipmentsByBLResponse"/>
+
+    </wsdl:operation>
+
+  </wsdl:portType>
+
+   <wsdl:binding name="ShipmentTrackingSoapBinding" type="impl:ShipmentTracking">
+     <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+     <wsdl:operation name="getShipmentByPro">
+       <wsdlsoap:operation soapAction=""/>
+
+       <wsdl:input name="getShipmentByProRequest">
+         <wsdlsoap:body use="literal"/>
+
+      </wsdl:input>
+
+       <wsdl:output name="getShipmentByProResponse">
+         <wsdlsoap:body use="literal"/>
+
+      </wsdl:output>
+
+    </wsdl:operation>
+
+     <wsdl:operation name="getShipmentsByBL">
+       <wsdlsoap:operation soapAction=""/>
+
+       <wsdl:input name="getShipmentsByBLRequest">
+         <wsdlsoap:body use="literal"/>
+
+      </wsdl:input>
+
+       <wsdl:output name="getShipmentsByBLResponse">
+         <wsdlsoap:body use="literal"/>
+
+      </wsdl:output>
+
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+   <wsdl:service name="ShipmentTrackingService">
+     <wsdl:port binding="impl:ShipmentTrackingSoapBinding" name="ShipmentTrackingSoapBinding">
+       <wsdlsoap:address location="https://lme4me.com:8082/wsdl/tracking"/>
+
+    </wsdl:port>
+
+  </wsdl:service>
+
+</wsdl:definitions>

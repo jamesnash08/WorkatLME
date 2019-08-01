@@ -1,0 +1,580 @@
+/* Generic */
+* {
+  font-family: sans-serif;
+}
+
+/* Home Page */
+.homeontime {
+  position: relative;
+  top: 20px;
+  width: 39%;
+  margin-left: 5%;
+  margin-right: 5%;
+  font-size: 2.25rem;
+  color: white;
+  text-align: center;
+  border: 5px solid black;
+  border-radius: 25px;
+  background-color: #CC0000;
+  position: relative;
+}
+
+#TableID table {
+  /* border: 5px solid black; */
+  padding: 2px;
+  float: left;
+  margin-left: 5px;
+  width: 97%;
+}
+
+#TableID table tr:hover {
+  background-color: #64605F !important;
+  color: white;
+}
+
+#TableID table td {
+  font-size: 1rem;
+  text-align: center;
+  padding-right: 2px;
+  border: 1px solid black;
+  width: 70px;
+  height: 25px;
+}
+
+.tablebreak {
+  width: 10px !important;
+  background-color: transparent;
+  border-bottom: none !important;
+  border-top: none !important;
+  visibility: hidden;
+}
+
+td {
+  padding: 2px !important;
+}
+
+.documentfoldericon {
+  height: 22px;
+  width: 27px;
+  display: inline-block;
+  background-image: url("../Graphics/folder.gif");
+  background-repeat: no-repeat;
+}
+
+.documentfoldericon:hover,
+td:hover .documentfoldericon {
+  height: 22px;
+  width: 27px;
+  display: inline-block;
+  background-image: url("../Graphics/folder.open.gif");
+  background-repeat: no-repeat;
+}
+
+.fileicon {
+  height: 22px;
+  width: 27px;
+  display: inline-block;
+  background-image: url("../Graphics/generic.gif");
+  background-repeat: no-repeat;
+}
+
+.fileicon:hover,
+td:hover .fileicon {
+  height: 22px;
+  width: 27px;
+  display: inline-block;
+  background-image: url("../Graphics/link.gif");
+  background-repeat: no-repeat;
+}
+
+.opslist {
+  list-style: none;
+}
+
+.opslist li {
+  display: inline-block;
+}
+
+.opslist button {
+  margin-right: 5px;
+  width: 75px;
+  height: 35px;
+  background-color: #CC0000;
+  color: white;
+  font-size: 0.75rem;
+  border: 2px solid black;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.prolist {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: white;
+}
+
+#OverflowDiv table {
+  width: 100%;
+}
+
+#OverflowDiv table tr {
+  height: auto;
+}
+
+#OverflowDiv table td {
+  /* border:1px solid black; */
+}
+
+.selectableData thead,
+.selectableData thead tr:hover {
+  background-color: #CC0000 !important;
+  color: white !important;
+  border: 2px solid #64605F;
+}
+
+.selectableData th,
+.selectableData td {
+  text-align: right;
+}
+
+.selectableData tr:hover,
+.selectableTR:hover {
+  background-color: #64605F !important;
+  color: white;
+}
+
+.selectableTD:hover {
+  background-color: #CC0000 !important;
+  color: white !important;
+  /* border:1px solid black; */
+}
+
+.selectableTH:hover {
+  background-color: #64605F !important;
+  color: white;
+  /* border:1px solid black; */
+}
+
+.selectableData tr td label {
+  width: 100%;
+  height: 100%;
+}
+
+#OverflowDiv {
+  width: 100%;
+  height: auto;
+  min-height: 90%;
+  overflow: auto;
+  background-color: white;
+}
+
+.LMEButton {
+  white-space: nowrap;
+  background-color: #CC0000;
+  color: white;
+  border: 2px solid #64605F;
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.LMEButtonPress {
+  background-color: #64605F;
+  color: white;
+  border: 2px solid #CC0000;
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
+  cursor: not-allowed;
+}
+
+.print {
+  position: absolute;
+  right: 5px;
+}
+
+#canvasdiv {
+  position: relative;
+  width: 90%;
+  height: 90%;
+}
+
+.claimsJDTable {
+  border: 1px solid black;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.claimsJDTable td {
+  border: 1px solid black;
+  text-align: right;
+}
+
+.claimsJDTable th {
+  /* background-color: #CC0000; */
+  /* color:white; */
+  font-size: 1.1rem;
+  border: 1px solid #64605F;
+}
+
+
+/* canvas{ */
+/* height:auto; */
+/* max-height:92%; */
+/* width:100%; */
+/* } */
+
+@media only screen and (min-width: 451px) {
+  #slideShow {
+    position: relative;
+    top: 0px;
+    left: 200px;
+    width: 820px;
+    height: 310px;
+    border: solid;
+  }
+
+  .slide {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+  }
+
+}
+
+@media only screen and (max-width: 450px) {
+  .slide {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+  }
+
+  #slideShow {
+    position: relative;
+    top: 0px;
+    left: 200px;
+    width: 450px;
+    height: 172px;
+    border: none;
+  }
+}
+
+.odd {
+  background-color: #F5F5DC;
+}
+
+.even {
+  background-color: #F0FFFF;
+}
+
+.oddrow td {
+  font-weight: bold;
+  font-size: 0.9rem;
+  background-color: rgba(150, 150, 150, 0.3);
+}
+
+.evenrow td {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.vertical-text {
+  transform: rotate(270deg);
+  transform-origin: right bottom 0;
+}
+
+#instructionGrid {
+  display: inline-grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 15%;
+  width: 100%;
+  height: 100%;
+}
+
+.instructions {
+  list-style: none;
+}
+
+.instructions> :first-child {
+  font-size: 1rem;
+}
+
+#loadinggif {
+  top: calc(50% - 50px);
+  left: calc(50% - 125px);
+  position: fixed;
+  width: 125px;
+  height: 125px;
+  z-index: 1000;
+  opacity: 1;
+}
+
+#loadingdiv {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.7);
+  top: 0px;
+  opacity: 1;
+  z-index: 999;
+}
+
+.oddrow td {
+  font-weight: bold;
+  font-size: 0.9rem;
+  background-color: rgba(150, 150, 150, 0.3);
+}
+
+.evenrow td {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.totals th {
+  font-size: 1.05rem;
+  text-align: center;
+  padding-right: 2px;
+  background-color: white;
+  color: black;
+  border: 1px solid blue;
+  width: 60px;
+  height: 50px;
+  font-weight: bold;
+}
+
+/* thead th { font-size: 16px;text-align: center; border: 2px solid black; border-bottom: 2px solid black; padding-right: 2px; color: white; background-color: #CC0000;    min-width: 70px;    height: 30px;} */
+td label {
+  width: 100%;
+  height: 100%;
+}
+
+.hidecolumn {
+  background-color: white !important;
+  color: white !important;
+  width: 5px !important;
+  border: 0px !important;
+}
+
+/* .GridViewScrollItem:hover{
+    background-color:rgba(150,150,150,0.3);
+} */
+.GridViewScrollItem td {
+  width: 60px;
+  box-sizing: border-box;
+  height: 28px;
+  max-height: 28px;
+  min-height: 28px;
+  max-width: 60px;
+}
+
+.GridViewFreeze {
+  background-color: #CC0000;
+  color: white;
+  width: 60px !important;
+  height: 28px;
+  max-height: 28px;
+  min-height: 28px;
+}
+
+td .gridViewScrollHelper label {
+  margin: 0px;
+}
+
+.GridViewScrollHeader th {
+  background-color: #CC0000;
+  color: white;
+  width: 60px;
+  box-sizing: border-box;
+  min-width: 60px;
+  max-width: 60px;
+  text-align: center;
+}
+
+.tabButton {
+  height: 35px;
+  width: 100px;
+  background-color: yellow;
+  border: 1px solid black;
+  border-bottom: none;
+  border-radius: 10px 20px 0px 0px;
+  margin-right: 5px;
+}
+
+.tabOverlay {
+  /* background-color: yellow; */
+  box-shadow: 0px -1px black;
+}
+
+#contextMenu {
+  position: absolute;
+  left: 0px;
+  top: 10px;
+  height: auto;
+  width: 200px;
+  z-index: 100;
+  background-color: white;
+}
+
+#contextMenu ul {
+  border: 1px solid black;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 3px;
+  z-index: 10;
+}
+
+#contextMenu ul li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: solid 1px #dfdfdf;
+  cursor: pointer;
+
+}
+
+#contextMenu ul li:hover {
+  background-color: #F5F5DC;
+  cursor: pointer;
+
+}
+
+#contextMenu ul li:last-child {
+  border-bottom: none;
+}
+
+.contextmenu {
+  cursor: context-menu !important;
+}
+
+.contextMenuBreak {
+  border-bottom: 2px solid black !important;
+  margin-bottom: 5px;
+}
+
+#modal {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background-color: rgb(255, 255, 255);
+  top: -2px;
+  left: 0px;
+  color: black;
+  opacity: 1;
+  z-index: 3;
+  font-size: 1.1rem;
+}
+
+#modal table {
+  width: 100%;
+}
+
+#closeDiv {
+  width: 100%;
+  display: block;
+  position: relative;
+
+}
+
+#closeDiv * {
+  height: 40px;
+}
+
+#closeDiv a {
+  position: absolute;
+  font-size: 1.8rem;
+  right: 0px;
+  color: #cc0000;
+  font-weight: 700;
+  width: 40px;
+  padding-right: 10px;
+}
+
+#closeDiv a:hover {
+  position: absolute;
+  font-size: 1.8rem;
+  color: #cc0000;
+  box-sizing: border-box;
+  /* border:1px solid black; */
+  width: 40px;
+  right: 0px;
+  display: block;
+  font-weight: 700;
+  text-align: right;
+  padding-right: 10px;
+}
+
+#modalTitle {
+  font-size: 1.8rem;
+  position: relative;
+  left: 15px;
+  font-family: sans-serif;
+}
+
+#modaloverflow {
+  width: 100%;
+  height: auto;
+  overflow-y: scroll;
+  background-color: white;
+  max-height: calc(100vh - 120px);
+}
+
+.modalSelectedrow {
+  background-color: darkblue;
+  color: white;
+}
+
+.modalButton {
+  box-shadow: 2px 2px #888888;
+  position: relative;
+  left: 10px;
+  padding: 10px 20px;
+  background-color: #cc0000;
+  color: white;
+  border: none;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.modalButton:hover {
+  box-shadow: 2px 2px #888888;
+  position: relative;
+  left: 10px;
+  padding: 10px 20px;
+  background-color: #64605F;
+  color: white;
+  border: none;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.indentDiv {
+  box-shadow: 2px 2px #888888;
+}
+
+@media print {
+
+  /* *{
+        visibility: hidden;
+        height:0px;
+    }
+    .printable, .printable > *, .printable *{
+        visibility: visible !important;
+        height: auto !important;
+    } */
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+}

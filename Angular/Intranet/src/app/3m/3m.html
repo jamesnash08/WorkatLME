@@ -1,0 +1,24 @@
+<!-- <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabel" [options]="lineChartOptions" [colors]="lineChartColors"
+             [legend]="lineChartLegend" [chartType]="lineChartType"></canvas> -->
+             
+
+             <div style="display: inline-block; width:50%; position:relative;">
+                Bar chart yearly
+                <canvas baseChart
+                  [datasets]="performanceData"
+                  [labels]="monthlyLabels"
+                  [options]="barChartOptions"
+                  [legend]="true"
+                  [chartType]="'bar'">
+                </canvas>
+              </div>
+              <div style="display: inline-block; width:50%; position:relative;">
+                Bar chart yearly
+                <canvas baseChart
+                  [datasets]="netCHGData"
+                  [labels]="monthlyLabels"
+                  [options]="barChartOptions"
+                  [legend]="true"
+                  [chartType]="'bar'">
+                </canvas>
+              </div>

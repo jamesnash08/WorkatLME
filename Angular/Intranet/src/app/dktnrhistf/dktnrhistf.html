@@ -1,0 +1,40 @@
+<div>
+    <!-- <table>
+        <tr>
+            <th>Terminal</th>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td><input [ngModel]="terminal" (ngModelChange)="terminal=$event.toUpperCase()" maxlength="3" (keyup.enter)="getDriverHours(terminal)"></td>
+            <td><input type="date" name="fromdate" [(ngModel)]="fromdate" (keyup.enter)="getDriverHours(terminal)"></td>
+            <td><input type="date" name="todate" [(ngModel)]="todate" (keyup.enter)="getDriverHours(terminal)"></td>
+            <td><button (click)="getDriverHours(terminal)" (keyup.enter)="getDriverHours(terminal)">Submit</button></td>
+        </tr>
+        <tr>
+            <td colspan="4"><label>{{err}}</label></td>
+        </tr>
+    </table> -->
+
+</div>
+<table *ngIf="displaytable" style="width:100%;">
+    <thead>
+        <tr>
+            <th *ngFor="let key of objectkeys(titles);" (click)="sortByKey(key)">
+                <span *ngIf="titles[key]">{{titles[key]}}</span>
+                <span *ngIf="!titles[key]">{{key}}</span>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let row of displaytable; let odd=odd; let even=even;">
+            <tr [ngClass]="{'odd':odd,'even':even}">
+                <td *ngFor="let key of objectkeys(titles);" [title]="titles[key]" (click)="setClick(row,key)" style="cursor:pointer;">
+                    <label>{{displayCell(row,key)}}</label>
+                </td>
+            </tr>
+        </ng-container>
+
+    </tbody>
+</table>
